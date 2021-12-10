@@ -1,13 +1,14 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import AppContext from './ContextAPI';
 
 function Provider({ children }) {
-  const [foods] = useState([]);
-  const [drinks] = useState([]);
+  const [foods, setFoods] = useState([]);
+  const [drinks, setDrinks] = useState([]);
 
+  const context = { foods, drinks };
   return (
-    <AppContext.Provider value={ { foods, drinks } }>
+    <AppContext.Provider value={ context }>
       { children }
     </AppContext.Provider>
   );
