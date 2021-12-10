@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-// import './Header.css';
 import profileIcon from '../images/profileIcon.svg';
-import searchIcon from '../images/searchIcon.svg';
 
-export default function Header({ value }) {
+export default function GenericHeader({ value }) {
   return (
     <div>
       <header>
@@ -20,14 +18,11 @@ export default function Header({ value }) {
         <h1 data-testid="page-title">
           { value }
         </h1>
-        <button type="button">
-          <img src={ searchIcon } alt="search-icon" data-testid="search-top-btn" />
-        </button>
       </header>
     </div>
   );
 }
 
-Header.propTypes = {
+GenericHeader.propTypes = {
   value: PropTypes.node.isRequired,
 };

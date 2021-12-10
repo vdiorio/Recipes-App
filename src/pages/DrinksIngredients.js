@@ -1,9 +1,11 @@
 import React from 'react';
+import GenericHeader from '../components/GenericHeader';
 
 export default function DrinksIngredients() {
+  const value = 'Explorar Ingredientes';
   return (
     <div>
-      DrinksIngredients
+      <GenericHeader value={ value } />
     </div>
   );
 }
