@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 export default function CategoryButtons({ handleFilterChange, categories, filter }) {
-  return (
+  return (// Componentização dos botões de categorias
     <div
       className="btn-group"
       role="group"
