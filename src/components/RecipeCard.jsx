@@ -5,6 +5,7 @@ import './RecipeCard.css';
 
 export default function RecipeCard({ recipe, index }) {
   const recipeType = recipe.idDrink ? 'Drink' : 'Meal'; // Detecta se está recebendo drinks ou comidas
+  const linkReference = recipe.idDrink ? 'bebidas' : 'comidas'; // Detecta se está recebendo drinks ou comidas
   const name = recipe[`str${recipeType}`]; // Acessa a propriedade de acordo com o tipo de receita recebido
   const image = recipe[`str${recipeType}Thumb`];
   const id = recipe[`id${recipeType}`];
@@ -12,7 +13,7 @@ export default function RecipeCard({ recipe, index }) {
     <Link
       className="card hover"
       style={ { width: '45%', marginBottom: 10 } }
-      to={ `/comidas/${id}` }
+      to={ `/${linkReference}/${id}` }
       data-testid={ `${index}-recipe-card` }
     >
       <img
