@@ -1,0 +1,9 @@
+.card:hover {
+  transition-duration: 1s;
+  transform: translateY(-10px);
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}

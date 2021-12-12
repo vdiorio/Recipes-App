@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 import AppContext from './ContextAPI';
 
 function Provider({ children }) {
-  const [foods] = useState([]);
-  const [drinks] = useState([]);
+  const [foods, setFoods] = useState([]);
+  const [drinks, setDrinks] = useState([]);
 
   return (
-    <AppContext.Provider value={ { foods, drinks } }>
+    <AppContext.Provider value={ { foods, drinks, setFoods, setDrinks } }>
       { children }
     </AppContext.Provider>
   );
