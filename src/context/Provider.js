@@ -8,7 +8,11 @@ function Provider({ children }) {
 
   const context = { foods, drinks };
   return (
+<<<<<<< HEAD
     <AppContext.Provider value={ context }>
+=======
+    <AppContext.Provider value={ { foods, drinks, setFoods, setDrinks } }>
+>>>>>>> 7f78bcf27247a8a43a2b34f58b783efe051989de
       { children }
     </AppContext.Provider>
   );

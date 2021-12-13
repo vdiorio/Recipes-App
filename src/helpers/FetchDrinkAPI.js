@@ -1,5 +1,5 @@
-const fetchDrinkAPI = async () => {
-  const callAPI = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+const fetchDrinkAPI = async (URI = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=') => {
+  const callAPI = await fetch(URI);
   const APIjson = await callAPI.json();
   return APIjson;
 };
