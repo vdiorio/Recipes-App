@@ -1,0 +1,14 @@
+.card:hover {
+  transform: translateY(-10px);
+  transition-duration: 1s;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+}
