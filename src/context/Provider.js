@@ -6,13 +6,9 @@ function Provider({ children }) {
   const [foods, setFoods] = useState([]);
   const [drinks, setDrinks] = useState([]);
 
-  const context = { foods, drinks };
+  const context = { foods, drinks, setFoods, setDrinks };
   return (
-<<<<<<< HEAD
     <AppContext.Provider value={ context }>
-=======
-    <AppContext.Provider value={ { foods, drinks, setFoods, setDrinks } }>
->>>>>>> 7f78bcf27247a8a43a2b34f58b783efe051989de
       { children }
     </AppContext.Provider>
   );
