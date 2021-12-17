@@ -17,8 +17,7 @@ export default function Drinks() {
     FetchDrinkAPI().then((r) => {
       setDrinks(r.drinks.filter((_m, i) => i < MAX_CARDS));
     });
-    fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list')
-      .then((response) => response.json())
+    FetchDrinkAPI('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list')
       .then((obj) => setCategories(obj.drinks.filter((_c, i) => i < MAX_CATEGORIES)));
   }, [setDrinks]);
 
@@ -27,8 +26,7 @@ export default function Drinks() {
       setDrinks([]);
       const URI = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${filter}`;
       setFilter(filter);
-      fetch(URI)
-        .then((response) => response.json())
+      FetchDrinkAPI(URI)
         .then((resp) => setDrinks(resp.drinks.filter((_r, i) => i < MAX_CARDS)));
     } else {
       setDrinks([]);

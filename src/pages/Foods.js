@@ -16,8 +16,7 @@ export default function Foods() {
     FetchFoodApi().then((r) => {
       setFoods(r.meals.filter((_m, i) => i < MAX_CARDS));
     });
-    fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list')
-      .then((response) => response.json())
+    FetchFoodApi('https://www.themealdb.com/api/json/v1/1/list.php?c=list')
       .then((obj) => setCategories(obj.meals.filter((_c, i) => i < MAX_CATEGORIES)));
   }, [setFoods]);
 
@@ -26,8 +25,7 @@ export default function Foods() {
       setFoods([]);
       const URI = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${filter}`;
       setFilter(filter);
-      fetch(URI)
-        .then((response) => response.json())
+      FetchFoodApi(URI)
         .then(({ meals }) => setFoods(meals.filter((_r, i) => i < MAX_CARDS)));
     } else {
       setFoods([]);

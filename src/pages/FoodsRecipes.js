@@ -1,13 +1,19 @@
 import PropTypes from 'prop-types';
-import React, { useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ContextAPI from '../context/ContextAPI';
 import shareIcon from '../images/shareIcon.svg';
 import favorite from '../images/whiteHeartIcon.svg';
+import Carousel from '../components/Carousel';
+import './FoodsRecipes.css';
+import fetchFoodAPI from '../helpers/FetchFoodApi';
 
 export default function FoodsRecipes({ match }) {
-  const { foods } = useContext(ContextAPI);
-  const selectedRecipe = foods.filter((food) => food.idMeal === match.params.id);
+  const [foodSelected, setFoodSelected] = useState([]);
+
+  useEffect(() => {
+    fetchFoodAPI(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${match.params.id}`)
+      .then((response) => setFoodSelected(response.meals));
+  }, [match]);
 
   function selectedRange(MIN, MAX, arrayToBeFiltered) {
     return arrayToBeFiltered.filter((_item, index) => (
@@ -47,21 +53,20 @@ export default function FoodsRecipes({ match }) {
 
   return (
     <div>
-      {selectedRecipe.map((recipe, index) => (
+      {foodSelected.map((recipe, index) => (
         <div key={ index }>
           <img
             src={ recipe.strMealThumb }
             alt={ recipe.strMeal }
-            width="360"
-            height="200"
             data-testid="recipe-photo"
+            className="recipe-photo"
           />
           <div>
             <h1 data-testid="recipe-title">{recipe.strMeal}</h1>
-            <button type="button" data-testid="share-btn">
+            <button type="button" data-testid="share-btn" className="media-btn">
               <img src={ shareIcon } alt="Share Icon" width="20px" />
             </button>
-            <button type="button" data-testid="favorite-btn">
+            <button type="button" data-testid="favorite-btn" className="media-btn">
               <img src={ favorite } alt="Favorite Icon" width="20px" />
             </button>
           </div>
@@ -77,11 +82,17 @@ export default function FoodsRecipes({ match }) {
             width="360"
             src={ recipe.strYoutube.replace('watch?v=', 'embed/') }
           >
-            <p>Your browsert does not support this content</p>
+            <p>Your browser does not support this content</p>
           </iframe>
           <h3>Recomendadas</h3>
-          <div data-testid="${index}-recomendation-card">test</div>
-          <button type="button" data-testid="start-recipe-btn">Start Recipe</button>
+          <Carousel />
+          <button
+            type="button"
+            data-testid="start-recipe-btn"
+            className="star-recipe-btn"
+          >
+            Start Recipe
+          </button>
         </div>))}
     </div>
   );
