@@ -9,8 +9,8 @@ a {
 
 .star-recipe-btn {
   bottom: 0;
-  position: fixed;
   left: 50%;
+  position: fixed;
   text-align: center;
   transform: translateX(-50%);
   width: 120px;
