@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useState } from 'react';
+import ReactLoading from 'react-loading';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import shareIcon from '../images/shareIcon.svg';
 import favorite from '../images/whiteHeartIcon.svg';
@@ -18,8 +19,8 @@ export default function FoodsRecipes({ match }) {
   }, [match]);
 
   return (
-    <div>
-      {drinkSelected.map((recipe, index) => (
+    <div className="all">
+      {drinkSelected.length > 0 ? (drinkSelected.map((recipe, index) => (
         <div key={ index }>
           <img
             src={ recipe.strDrinkThumb }
@@ -40,7 +41,13 @@ export default function FoodsRecipes({ match }) {
           <h3>Ingredients</h3>
           { ingredientsAndMeasures(recipe, 'drink') }
           <h3>Instructions</h3>
-          <p data-testid="instructions">{recipe.strInstructions}</p>
+          <p
+            data-testid="instructions"
+            className="instructions"
+          >
+            {recipe.strInstructions}
+
+          </p>
           <h3>Recomendadas</h3>
           <Carousel
             genre={ Object.keys(drinkSelected[0])[0] }
@@ -52,7 +59,15 @@ export default function FoodsRecipes({ match }) {
           >
             Start Recipe
           </button>
-        </div>))}
+        </div>))
+      ) : (
+        <ReactLoading
+          type="spinningBubbles"
+          color="cyan"
+          height={ 30 }
+          width={ 30 }
+        />
+      )}
     </div>
   );
 }

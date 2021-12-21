@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useState } from 'react';
+import ReactLoading from 'react-loading';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import shareIcon from '../images/shareIcon.svg';
 import favorite from '../images/whiteHeartIcon.svg';
@@ -18,8 +19,8 @@ export default function FoodsRecipes({ match }) {
   }, [match]);
 
   return (
-    <div>
-      {foodSelected.map((recipe, index) => (
+    <div className="all">
+      { foodSelected.length > 0 ? (foodSelected.map((recipe, index) => (
         <div key={ index }>
           <img
             src={ recipe.strMealThumb }
@@ -40,7 +41,13 @@ export default function FoodsRecipes({ match }) {
           <h3>Ingredients</h3>
           { ingredientsAndMeasures(recipe, 'meal') }
           <h3>Instructions</h3>
-          <p data-testid="instructions">{recipe.strInstructions}</p>
+          <p
+            data-testid="instructions"
+            className="instructions"
+          >
+            {recipe.strInstructions}
+
+          </p>
           <h3>Video</h3>
           {recipe.strYoutube === '' ? (
             <p>No video avaiable</p>
@@ -48,7 +55,7 @@ export default function FoodsRecipes({ match }) {
             <iframe
               data-testid="video"
               title="Recipe Video"
-              width="360"
+              className="video-frame"
               src={ recipe.strYoutube.replace('watch?v=', 'embed/') }
             >
               <p>Your browser does not support this content</p>
@@ -64,7 +71,15 @@ export default function FoodsRecipes({ match }) {
           >
             Start Recipe
           </button>
-        </div>))}
+        </div>))
+      ) : (
+        <ReactLoading
+          type="spinningBubbles"
+          color="cyan"
+          height={ 30 }
+          width={ 30 }
+        />
+      )}
     </div>
   );
 }

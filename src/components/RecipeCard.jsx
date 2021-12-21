@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './RecipeCard.css';
 
-export default function RecipeCard({ recipe, index }) {
+export default function RecipeCard({ recipe, index, place }) {
   const recipeType = recipe.idDrink ? 'Drink' : 'Meal'; // Detecta se está recebendo drinks ou comidas
   const linkReference = recipe.idDrink ? 'bebidas' : 'comidas'; // Detecta se está recebendo drinks ou comidas
   const name = recipe[`str${recipeType}`]; // Acessa a propriedade de acordo com o tipo de receita recebido
@@ -11,13 +10,12 @@ export default function RecipeCard({ recipe, index }) {
   const id = recipe[`id${recipeType}`];
   return (
     <Link
-      className="card hover"
-      style={ { width: '45%', marginBottom: 10 } }
+      className={ place === 'main' ? 'card' : 'recommended-card' }
       to={ `/${linkReference}/${id}` }
       data-testid={ `${index}-recipe-card` }
     >
       <img
-        className="card-img-top"
+        className={ place === 'main' ? 'card-img-top' : 'recommended-image' }
         src={ image }
         alt={ `${recipe.strArea} meal` }
         data-testid={ `${index}-card-img` }
@@ -33,6 +31,7 @@ export default function RecipeCard({ recipe, index }) {
 }
 
 RecipeCard.propTypes = {
+  place: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   recipe: PropTypes.shape({
     idDrink: PropTypes.string,

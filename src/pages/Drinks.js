@@ -5,6 +5,7 @@ import FetchDrinkAPI from '../helpers/FetchDrinkAPI';
 import ContextAPI from '../context/ContextAPI';
 import RecipeCard from '../components/RecipeCard';
 import CategoryButtons from '../components/CategoryButtons';
+import '../components/RecipeCard.css';
 
 export default function Drinks() {
   const { setDrinks, drinks } = useContext(ContextAPI);
@@ -69,6 +70,7 @@ export default function Drinks() {
                 recipe={ drink }
                 key={ drink.idDrink }
                 index={ index }
+                place="main"
               />
             ))
             : (

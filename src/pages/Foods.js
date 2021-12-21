@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
+import ReactLoading from 'react-loading';
 import Header from '../components/Header';
 import FetchFoodApi from '../helpers/FetchFoodApi';
 import ContextAPI from '../context/ContextAPI';
 import RecipeCard from '../components/RecipeCard';
 import CategoryButtons from '../components/CategoryButtons';
+import '../components/RecipeCard.css';
 
 export default function Foods() {
   const { setFoods, foods } = useContext(ContextAPI);
@@ -68,11 +70,15 @@ export default function Foods() {
                 recipe={ food }
                 key={ food.idMeal }
                 index={ index }
+                place="main"
               />))
             : (
-              <div className="spinner-border text-primary" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </div>)
+              <ReactLoading
+                type="spinningBubbles"
+                color="cyan"
+                height={ 30 }
+                width={ 30 }
+              />)
         }
       </div>
     </div>
