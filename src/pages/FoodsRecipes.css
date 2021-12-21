@@ -8,25 +8,25 @@ a {
 }
 
 .star-recipe-btn {
-  width: 120px;
-  text-align: center;
-  position: fixed;
   bottom: 0;
+  position: fixed;
   left: 50%;
+  text-align: center;
   transform: translateX(-50%);
+  width: 120px;
   z-index: 3;
 }
 
 .media-btn {
-  object-fit: fill;
   background: transparent;
   border: 0;
+  object-fit: fill;
 }
 
 .recipe-photo {
+  height: 100%;
   object-fit: cover;
   width: 100%;
-  height: 100%;
 }
 
 .video-frame {
@@ -34,6 +34,6 @@ a {
 }
 
 .instructions {
-  padding-right: 10px;
   padding-left: 5px;
+  padding-right: 10px;
 }
