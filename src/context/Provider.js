@@ -36,7 +36,9 @@ function Provider({ children }) {
             key={ index }
             data-testid={ `${index}-ingredient-name-and-measure` }
           >
-            {`${ingredientsArray[index]} - ${measuresArray[index] === null ? 'to your taste' : measuresArray[index]}`}
+            {`${
+              ingredientsArray[index]} - ${
+              measuresArray[index] === null ? 'to your taste' : measuresArray[index]}`}
 
           </p>,
         );
