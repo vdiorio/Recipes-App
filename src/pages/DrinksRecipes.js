@@ -9,27 +9,29 @@ import './FoodsRecipes.css';
 import fetchDrinkAPI from '../helpers/FetchDrinkAPI';
 import ContextAPI from '../context/ContextAPI';
 
-export default function FoodsRecipes({ match }) {
-  const { ingredientsAndMeasures } = useContext(ContextAPI);
-  const [drinkSelected, setDrinkSelected] = useState([]);
+export default function FoodsRecipes({ match, location }) {
+  const { ingredientsAndMeasures, handleStartRecipe } = useContext(ContextAPI);
+  const [drinkSelected, setDrinkSelected] = useState();
+  const urlID = match.params.id;
+  const pathName = location.pathname;
 
   useEffect(() => {
-    fetchDrinkAPI(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${match.params.id}`)
+    fetchDrinkAPI(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${urlID}`)
       .then((response) => setDrinkSelected(response.drinks));
-  }, [match]);
+  }, [urlID]);
 
   return (
     <div className="all">
-      {drinkSelected.length > 0 ? (drinkSelected.map((recipe, index) => (
-        <div key={ index }>
+      {drinkSelected ? (
+        <div>
           <img
-            src={ recipe.strDrinkThumb }
-            alt={ recipe.strDrink }
+            src={ drinkSelected[0].strDrinkThumb }
+            alt={ drinkSelected[0].strDrink }
             data-testid="recipe-photo"
             className="recipe-photo"
           />
           <div>
-            <h1 data-testid="recipe-title">{recipe.strDrink}</h1>
+            <h1 data-testid="recipe-title">{drinkSelected[0].strDrink}</h1>
             <button type="button" data-testid="share-btn" className="media-btn">
               <img src={ shareIcon } alt="Share Icon" width="20px" />
             </button>
@@ -37,15 +39,15 @@ export default function FoodsRecipes({ match }) {
               <img src={ favorite } alt="Favorite Icon" width="20px" />
             </button>
           </div>
-          <p data-testid="recipe-category">{recipe.strAlcoholic}</p>
+          <p data-testid="recipe-category">{drinkSelected[0].strAlcoholic}</p>
           <h3>Ingredients</h3>
-          { ingredientsAndMeasures(recipe, 'drink') }
+          { ingredientsAndMeasures(drinkSelected[0], 'drink') }
           <h3>Instructions</h3>
           <p
             data-testid="instructions"
             className="instructions"
           >
-            {recipe.strInstructions}
+            {drinkSelected[0].strInstructions}
 
           </p>
           <h3>Recomendadas</h3>
@@ -56,10 +58,11 @@ export default function FoodsRecipes({ match }) {
             type="button"
             data-testid="start-recipe-btn"
             className="star-recipe-btn"
+            onClick={ () => handleStartRecipe(pathName) }
           >
             Start Recipe
           </button>
-        </div>))
+        </div>
       ) : (
         <ReactLoading
           type="spinningBubbles"
@@ -74,4 +77,5 @@ export default function FoodsRecipes({ match }) {
 
 FoodsRecipes.propTypes = {
   match: PropTypes.shape().isRequired,
+  location: PropTypes.shape().isRequired,
 };

@@ -9,27 +9,29 @@ import './FoodsRecipes.css';
 import fetchFoodAPI from '../helpers/FetchFoodApi';
 import ContextAPI from '../context/ContextAPI';
 
-export default function FoodsRecipes({ match }) {
-  const { ingredientsAndMeasures } = useContext(ContextAPI);
-  const [foodSelected, setFoodSelected] = useState([]);
+export default function FoodsRecipes({ match, location }) {
+  const { ingredientsAndMeasures, handleStartRecipe } = useContext(ContextAPI);
+  const [foodSelected, setFoodSelected] = useState();
+  const urlID = match.params.id;
+  const pathName = location.pathname;
 
   useEffect(() => {
-    fetchFoodAPI(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${match.params.id}`)
+    fetchFoodAPI(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${urlID}`)
       .then((response) => setFoodSelected(response.meals));
-  }, [match]);
+  }, [urlID]);
 
   return (
     <div className="all">
-      { foodSelected.length > 0 ? (foodSelected.map((recipe, index) => (
-        <div key={ index }>
+      { foodSelected ? (
+        <div>
           <img
-            src={ recipe.strMealThumb }
-            alt={ recipe.strMeal }
+            src={ foodSelected[0].strMealThumb }
+            alt={ foodSelected[0].strMeal }
             data-testid="recipe-photo"
             className="recipe-photo"
           />
           <div>
-            <h1 data-testid="recipe-title">{recipe.strMeal}</h1>
+            <h1 data-testid="recipe-title">{foodSelected[0].strMeal}</h1>
             <button type="button" data-testid="share-btn" className="media-btn">
               <img src={ shareIcon } alt="Share Icon" width="20px" />
             </button>
@@ -37,26 +39,26 @@ export default function FoodsRecipes({ match }) {
               <img src={ favorite } alt="Favorite Icon" width="20px" />
             </button>
           </div>
-          <p data-testid="recipe-category">{recipe.strCategory}</p>
+          <p data-testid="recipe-category">{foodSelected[0].strCategory}</p>
           <h3>Ingredients</h3>
-          { ingredientsAndMeasures(recipe, 'meal') }
+          { ingredientsAndMeasures(foodSelected[0], 'meal') }
           <h3>Instructions</h3>
           <p
             data-testid="instructions"
             className="instructions"
           >
-            {recipe.strInstructions}
+            {foodSelected[0].strInstructions}
 
           </p>
           <h3>Video</h3>
-          {recipe.strYoutube === '' ? (
+          {foodSelected[0].strYoutube === '' ? (
             <p>No video avaiable</p>
           ) : (
             <iframe
               data-testid="video"
               title="Recipe Video"
               className="video-frame"
-              src={ recipe.strYoutube.replace('watch?v=', 'embed/') }
+              src={ foodSelected[0].strYoutube.replace('watch?v=', 'embed/') }
             >
               <p>Your browser does not support this content</p>
             </iframe>)}
@@ -68,10 +70,11 @@ export default function FoodsRecipes({ match }) {
             type="button"
             data-testid="start-recipe-btn"
             className="star-recipe-btn"
+            onClick={ () => handleStartRecipe(pathName) }
           >
             Start Recipe
           </button>
-        </div>))
+        </div>
       ) : (
         <ReactLoading
           type="spinningBubbles"
@@ -86,4 +89,5 @@ export default function FoodsRecipes({ match }) {
 
 FoodsRecipes.propTypes = {
   match: PropTypes.shape().isRequired,
+  location: PropTypes.shape().isRequired,
 };

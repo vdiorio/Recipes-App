@@ -1,12 +1,15 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import AppContext from './ContextAPI';
 import fetchFoodAPI from '../helpers/FetchFoodApi';
 import fetchDrinkAPI from '../helpers/FetchDrinkAPI';
+import { saveRecipeInProgress } from '../helpers/SaveLocalStorage';
 
 function Provider({ children }) {
   const [foods, setFoods] = useState([]);
   const [drinks, setDrinks] = useState([]);
+  const history = useHistory();
 
   function requestRecipes(MAX_AMOUNT, requestLink) { // fetch para os cards de recomendacoes
     if (requestLink === 'meal') {
@@ -49,22 +52,22 @@ function Provider({ children }) {
 
   function ingredientsAndMeasures(obj, recipeType) { // responsavel pela selecao e juncao dos ingredientes e medidas
     const fullArray = Object.values(obj);
-    const MIN_INGREDIENTS = 9;
-    const MAX_INGREDIENTS = 28;
-    const MIN_MEASURES = 29;
-    const MAX_MEASURES = 48;
-    const MIN_DRINK_INGREDIENTS = 17;
-    const MAX_DRINK_INGREDIENTS = 31;
-    const MIN_DRINK_MEASURES = 32;
-    const MAX_DRINK_MEASURES = 47;
     if (recipeType === 'meal') {
       const MAX_RANGE = 19;
+      const MIN_INGREDIENTS = 9;
+      const MAX_INGREDIENTS = 28;
+      const MIN_MEASURES = 29;
+      const MAX_MEASURES = 48;
       const ingredientsOnly = selectedRange(MIN_INGREDIENTS, MAX_INGREDIENTS, fullArray);
       const measuresOnly = selectedRange(MIN_MEASURES, MAX_MEASURES, fullArray);
       return concatIngredientsAndMeasures(ingredientsOnly, measuresOnly, MAX_RANGE);
     }
     if (recipeType === 'drink') {
       const MAX_RANGE = 14;
+      const MIN_DRINK_INGREDIENTS = 17;
+      const MAX_DRINK_INGREDIENTS = 31;
+      const MIN_DRINK_MEASURES = 32;
+      const MAX_DRINK_MEASURES = 47;
       const ingredientsOnly = selectedRange(
         MIN_DRINK_INGREDIENTS, MAX_DRINK_INGREDIENTS, fullArray,
       );
@@ -75,12 +78,25 @@ function Provider({ children }) {
     }
   }
 
+  function linkToInProgress(newPath) { // direciona para tela de receita em progresso,
+    // existe a possibilidade de flexibilizar esta funcao para atender outras paginas tambem como a pagina de login
+    history.push(newPath);
+  }
+
+  function handleStartRecipe(pathName) {
+    saveRecipeInProgress(pathName);
+    linkToInProgress(`${pathName}/in-progress`);
+  }
+
   const context = { foods,
     drinks,
     setFoods,
     setDrinks,
     requestRecipes,
-    ingredientsAndMeasures };
+    ingredientsAndMeasures,
+    selectedRange,
+    handleStartRecipe,
+  };
   return (
     <AppContext.Provider value={ context }>
       { children }
