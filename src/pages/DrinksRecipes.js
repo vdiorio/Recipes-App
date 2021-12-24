@@ -84,7 +84,9 @@ export default function FoodsRecipes({ match, location }) {
                 ingredientsToNumbersArray(drinkSelected[0], type, urlID),
               ) }
             >
-              Start Recipe
+              { localStorage.getItem('inProgressRecipes') !== null
+              && JSON.parse(localStorage.getItem('inProgressRecipes'))[type][urlID]
+                ? 'Continuar Receita' : 'Iniciar Receita'}
             </button>)}
         </div>
       ) : (

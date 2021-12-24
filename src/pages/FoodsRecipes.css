@@ -14,7 +14,7 @@ a {
   position: fixed;
   text-align: center;
   transform: translateX(-50%);
-  width: 120px;
+  width: 200px;
   z-index: 3;
 }
 
