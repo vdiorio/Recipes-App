@@ -13,17 +13,18 @@ export default function FoodsRecipes({ match, location }) {
   const {
     ingredientsAndMeasures,
     handleStartRecipe,
+    ingredientsToNumbersArray,
   } = useContext(ContextAPI);
   const [isNotDone, setIsNotDone] = useState(false);
   const [foodSelected, setFoodSelected] = useState();
   const urlID = match.params.id;
   const pathName = location.pathname;
+  const type = pathName.split('/')[1] === 'comidas' ? 'meals' : 'cocktails';
 
-  function isRecipeNotDone(path) {
+  function isRecipeNotDone(path) { // verifica se receita foi finalizada
     console.log('botao');
-    if (localStorage.getItem('inProgressRecipes') !== null) {
-      const isItDone = localStorage
-        .getItem('inProgressRecipes').includes(path.split('/')[2]);
+    if (localStorage.getItem('doneRecipes') !== null) {
+      const isItDone = localStorage.getItem('doneRecipes').includes(path.split('/')[2]);
       if (isItDone) {
         return false;
       }
@@ -32,7 +33,6 @@ export default function FoodsRecipes({ match, location }) {
   }
 
   useEffect(() => {
-    console.log('renderiza');
     fetchFoodAPI(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${urlID}`)
       .then((response) => setFoodSelected(response.meals));
     setIsNotDone(isRecipeNotDone(pathName));
@@ -90,7 +90,12 @@ export default function FoodsRecipes({ match, location }) {
               type="button"
               data-testid="start-recipe-btn"
               className="star-recipe-btn"
-              onClick={ () => handleStartRecipe(pathName) }
+              onClick={ () => handleStartRecipe(
+                pathName,
+                type,
+                urlID,
+                ingredientsToNumbersArray(foodSelected[0], type, urlID),
+              ) }
             >
               Start Recipe
             </button>)}

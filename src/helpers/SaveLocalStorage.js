@@ -4,21 +4,18 @@ export function SaveLocalStorage(value) {
   localStorage.setItem('user', JSON.stringify({ email: value }));
 }
 
-export function saveRecipeInProgress(path) {
-  const type = path.split('/')[1] === 'comidas' ? 'meals' : 'cocktails';
-  const ID = path.split('/')[2];
+export function saveRecipeInProgress(type, id, ingredientsArray) { // cria e administra o local storage de receitas em progresso
   if (localStorage.getItem('inProgressRecipes') === null) {
     localStorage.setItem('inProgressRecipes', JSON.stringify({
-      chave: 'uberaba',
       [type]: {
-        [ID]: 1 },
+        [id]: ingredientsArray },
     }));
   }
   localStorage.setItem('inProgressRecipes', JSON.stringify({
     ...JSON.parse(localStorage.getItem('inProgressRecipes')),
     [type]: {
       ...JSON.parse(localStorage.getItem('inProgressRecipes'))[type],
-      [ID]: 1,
+      [id]: ingredientsArray,
     },
   }));
 }

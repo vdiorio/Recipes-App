@@ -1,5 +1,6 @@
 .all {
   padding: 5px;
+  width: 100%;
 }
 
 a {
@@ -30,7 +31,7 @@ a {
 }
 
 .video-frame {
-  width: 100%;
+  width: 95%;
 }
 
 .instructions {

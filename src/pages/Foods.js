@@ -40,6 +40,7 @@ export default function Foods() {
 
   return (
     <div>
+      {window.scroll(0, 0)}
       <Header />
       {
         categories.length > 0

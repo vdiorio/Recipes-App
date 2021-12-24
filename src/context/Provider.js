@@ -10,6 +10,14 @@ function Provider({ children }) {
   const [foods, setFoods] = useState([]);
   const [drinks, setDrinks] = useState([]);
   const history = useHistory();
+  const MIN_INGREDIENTS = 9;
+  const MAX_INGREDIENTS = 28;
+  const MIN_DRINK_INGREDIENTS = 17;
+  const MAX_DRINK_INGREDIENTS = 31;
+  const MIN_MEASURES = 29;
+  const MAX_MEASURES = 48;
+  const MIN_DRINK_MEASURES = 32;
+  const MAX_DRINK_MEASURES = 47;
 
   function requestRecipes(MAX_AMOUNT, requestLink) { // fetch para os cards de recomendacoes
     if (requestLink === 'meal') {
@@ -54,20 +62,12 @@ function Provider({ children }) {
     const fullArray = Object.values(obj);
     if (recipeType === 'meal') {
       const MAX_RANGE = 19;
-      const MIN_INGREDIENTS = 9;
-      const MAX_INGREDIENTS = 28;
-      const MIN_MEASURES = 29;
-      const MAX_MEASURES = 48;
       const ingredientsOnly = selectedRange(MIN_INGREDIENTS, MAX_INGREDIENTS, fullArray);
       const measuresOnly = selectedRange(MIN_MEASURES, MAX_MEASURES, fullArray);
       return concatIngredientsAndMeasures(ingredientsOnly, measuresOnly, MAX_RANGE);
     }
     if (recipeType === 'drink') {
       const MAX_RANGE = 14;
-      const MIN_DRINK_INGREDIENTS = 17;
-      const MAX_DRINK_INGREDIENTS = 31;
-      const MIN_DRINK_MEASURES = 32;
-      const MAX_DRINK_MEASURES = 47;
       const ingredientsOnly = selectedRange(
         MIN_DRINK_INGREDIENTS, MAX_DRINK_INGREDIENTS, fullArray,
       );
@@ -78,13 +78,35 @@ function Provider({ children }) {
     }
   }
 
+  function ingredientsToNumbersArray(obj, type, id) { // converte os ingredientes da receita em numeros
+    const fullArray = Object.values(obj);
+    const savedInStorage = localStorage.getItem('inProgressRecipes');
+    const newArray = [];
+    let ingredientNumber = 0;
+    const ingredientsOnly = type === 'meals'
+      ? selectedRange(MIN_INGREDIENTS, MAX_INGREDIENTS, fullArray)
+      : selectedRange(MIN_DRINK_INGREDIENTS, MAX_DRINK_INGREDIENTS, fullArray);
+    for (let index = 0; index < ingredientsOnly.length; index += 1) {
+      if (ingredientsOnly[index] !== '' && ingredientsOnly[index] !== null) {
+        newArray.push(ingredientNumber + 1);
+        ingredientNumber += 1;
+      }
+    }
+    if (savedInStorage === null
+      || JSON.parse(savedInStorage)[type] === undefined
+      || JSON.parse(savedInStorage)[type][id] === undefined) {
+      return newArray;
+    }
+    return JSON.parse(savedInStorage)[type][id];
+  }
+
   function linkToInProgress(newPath) { // direciona para tela de receita em progresso,
     // existe a possibilidade de flexibilizar esta funcao para atender outras paginas tambem como a pagina de login
     history.push(newPath);
   }
 
-  function handleStartRecipe(pathName) {
-    saveRecipeInProgress(pathName);
+  function handleStartRecipe(pathName, type, id, ingredientsArray) {
+    saveRecipeInProgress(type, id, ingredientsArray);
     linkToInProgress(`${pathName}/in-progress`);
   }
 
@@ -96,6 +118,7 @@ function Provider({ children }) {
     ingredientsAndMeasures,
     selectedRange,
     handleStartRecipe,
+    ingredientsToNumbersArray,
   };
   return (
     <AppContext.Provider value={ context }>

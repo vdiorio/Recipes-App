@@ -10,15 +10,33 @@ import fetchDrinkAPI from '../helpers/FetchDrinkAPI';
 import ContextAPI from '../context/ContextAPI';
 
 export default function FoodsRecipes({ match, location }) {
-  const { ingredientsAndMeasures, handleStartRecipe } = useContext(ContextAPI);
+  const {
+    ingredientsAndMeasures,
+    handleStartRecipe,
+    ingredientsToNumbersArray,
+  } = useContext(ContextAPI);
+  const [isNotDone, setIsNotDone] = useState(false);
   const [drinkSelected, setDrinkSelected] = useState();
   const urlID = match.params.id;
   const pathName = location.pathname;
+  const type = pathName.split('/')[1] === 'comidas' ? 'meals' : 'cocktails';
+
+  function isRecipeNotDone(path) { // verifica se receita foi finalizada
+    console.log('botao');
+    if (localStorage.getItem('doneRecipes') !== null) {
+      const isItDone = localStorage.getItem('doneRecipes').includes(path.split('/')[2]);
+      if (isItDone) {
+        return false;
+      }
+    }
+    return true;
+  }
 
   useEffect(() => {
     fetchDrinkAPI(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${urlID}`)
       .then((response) => setDrinkSelected(response.drinks));
-  }, [urlID]);
+    setIsNotDone(isRecipeNotDone(pathName));
+  }, [urlID, pathName]);
 
   return (
     <div className="all">
@@ -54,14 +72,20 @@ export default function FoodsRecipes({ match, location }) {
           <Carousel
             genre={ Object.keys(drinkSelected[0])[0] }
           />
-          <button
-            type="button"
-            data-testid="start-recipe-btn"
-            className="star-recipe-btn"
-            onClick={ () => handleStartRecipe(pathName) }
-          >
-            Start Recipe
-          </button>
+          { isNotDone && (
+            <button
+              type="button"
+              data-testid="start-recipe-btn"
+              className="star-recipe-btn"
+              onClick={ () => handleStartRecipe(
+                pathName,
+                type,
+                urlID,
+                ingredientsToNumbersArray(drinkSelected[0], type, urlID),
+              ) }
+            >
+              Start Recipe
+            </button>)}
         </div>
       ) : (
         <ReactLoading
