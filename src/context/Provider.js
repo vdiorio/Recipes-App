@@ -110,6 +110,15 @@ function Provider({ children }) {
     linkToInProgress(`${pathName}/in-progress`);
   }
 
+  function buttonTextHandler(type, urlID) { // muda o texto do botao de iniciar receita
+    if (localStorage.getItem('inProgressRecipes') !== null
+    && JSON.parse(localStorage.getItem('inProgressRecipes'))[type] !== undefined
+    && JSON.parse(localStorage.getItem('inProgressRecipes'))[type][urlID] !== undefined) {
+      return 'Continuar Receita';
+    }
+    return 'Iniciar Receita';
+  }
+
   const context = { foods,
     drinks,
     setFoods,
@@ -119,6 +128,7 @@ function Provider({ children }) {
     selectedRange,
     handleStartRecipe,
     ingredientsToNumbersArray,
+    buttonTextHandler,
   };
   return (
     <AppContext.Provider value={ context }>

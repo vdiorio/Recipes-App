@@ -14,6 +14,7 @@ export default function FoodsRecipes({ match, location }) {
     ingredientsAndMeasures,
     handleStartRecipe,
     ingredientsToNumbersArray,
+    buttonTextHandler,
   } = useContext(ContextAPI);
   const [isNotDone, setIsNotDone] = useState(false);
   const [drinkSelected, setDrinkSelected] = useState();
@@ -84,9 +85,7 @@ export default function FoodsRecipes({ match, location }) {
                 ingredientsToNumbersArray(drinkSelected[0], type, urlID),
               ) }
             >
-              { localStorage.getItem('inProgressRecipes') !== null
-              && JSON.parse(localStorage.getItem('inProgressRecipes'))[type][urlID]
-                ? 'Continuar Receita' : 'Iniciar Receita'}
+              { buttonTextHandler(type, urlID) }
             </button>)}
         </div>
       ) : (

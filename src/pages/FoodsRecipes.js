@@ -14,6 +14,7 @@ export default function FoodsRecipes({ match, location }) {
     ingredientsAndMeasures,
     handleStartRecipe,
     ingredientsToNumbersArray,
+    buttonTextHandler,
   } = useContext(ContextAPI);
   const [isNotDone, setIsNotDone] = useState(false);
   const [foodSelected, setFoodSelected] = useState();
@@ -97,7 +98,7 @@ export default function FoodsRecipes({ match, location }) {
                 ingredientsToNumbersArray(foodSelected[0], type, urlID),
               ) }
             >
-              Start Recipe
+              { buttonTextHandler(type, urlID) }
             </button>)}
         </div>
       ) : (
