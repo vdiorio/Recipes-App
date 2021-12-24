@@ -5,10 +5,20 @@ export function SaveLocalStorage(value) {
 }
 
 export function saveRecipeInProgress(path) {
-  const type = path.split('/')[1];
+  const type = path.split('/')[1] === 'comidas' ? 'meals' : 'cocktails';
   const ID = path.split('/')[2];
-  localStorage.setItem(`${type === 'comidas' ? 'meals' : 'cocktails'}`, JSON.stringify({
-    ...JSON.parse(localStorage.getItem(`${type === 'comidas' ? 'meals' : 'cocktails'}`)),
-    [ID]: [],
+  if (localStorage.getItem('inProgressRecipes') === null) {
+    localStorage.setItem('inProgressRecipes', JSON.stringify({
+      chave: 'uberaba',
+      [type]: {
+        [ID]: 1 },
+    }));
+  }
+  localStorage.setItem('inProgressRecipes', JSON.stringify({
+    ...JSON.parse(localStorage.getItem('inProgressRecipes')),
+    [type]: {
+      ...JSON.parse(localStorage.getItem('inProgressRecipes'))[type],
+      [ID]: 1,
+    },
   }));
 }

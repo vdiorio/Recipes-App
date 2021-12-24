@@ -7,7 +7,6 @@ export default function CategoryButtons({ handleFilterChange, categories, filter
       className="btn-group"
       role="group"
       aria-label="Basic radio toggle button group"
-      onChange={ (e) => handleFilterChange(e.target.id) }
     >
       <input
         type="checkbox"
@@ -15,6 +14,7 @@ export default function CategoryButtons({ handleFilterChange, categories, filter
         name="btnradio"
         id="All"
         autoComplete="off"
+        onChange={ (e) => handleFilterChange(e.target.id) }
         checked={ filter === 'All' }
       />
       <label
@@ -33,6 +33,7 @@ export default function CategoryButtons({ handleFilterChange, categories, filter
             name="btnradio"
             id={ strCategory }
             autoComplete="off"
+            onChange={ (e) => handleFilterChange(e.target.id) }
             checked={ filter === strCategory }
           />
           <label

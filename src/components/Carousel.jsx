@@ -59,6 +59,7 @@ export default function Carousel({ genre }) {
         <RecipeCard
           recipe={ food }
           index={ index }
+          place="carousel"
         />
       </div>
     ));
