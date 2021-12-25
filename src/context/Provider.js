@@ -6,6 +6,8 @@ import fetchFoodAPI from '../helpers/FetchFoodApi';
 import fetchDrinkAPI from '../helpers/FetchDrinkAPI';
 import { saveRecipeInProgress } from '../helpers/SaveLocalStorage';
 
+const copy = require('clipboard-copy');
+
 function Provider({ children }) {
   const [foods, setFoods] = useState([]);
   const [drinks, setDrinks] = useState([]);
@@ -18,6 +20,10 @@ function Provider({ children }) {
   const MAX_MEASURES = 48;
   const MIN_DRINK_MEASURES = 32;
   const MAX_DRINK_MEASURES = 47;
+
+  function shareRecipe() {
+    copy(window.location.href);
+  }
 
   function requestRecipes(MAX_AMOUNT, requestLink) { // fetch para os cards de recomendacoes
     if (requestLink === 'meal') {
@@ -129,6 +135,7 @@ function Provider({ children }) {
     handleStartRecipe,
     ingredientsToNumbersArray,
     buttonTextHandler,
+    shareRecipe,
   };
   return (
     <AppContext.Provider value={ context }>

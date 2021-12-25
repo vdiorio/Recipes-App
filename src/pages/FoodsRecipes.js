@@ -15,6 +15,7 @@ export default function FoodsRecipes({ match, location }) {
     handleStartRecipe,
     ingredientsToNumbersArray,
     buttonTextHandler,
+    shareRecipe,
   } = useContext(ContextAPI);
   const [isNotDone, setIsNotDone] = useState(false);
   const [foodSelected, setFoodSelected] = useState();
@@ -51,7 +52,12 @@ export default function FoodsRecipes({ match, location }) {
           />
           <div>
             <h1 data-testid="recipe-title">{foodSelected[0].strMeal}</h1>
-            <button type="button" data-testid="share-btn" className="media-btn">
+            <button
+              type="button"
+              data-testid="share-btn"
+              className="media-btn"
+              onClick={ shareRecipe }
+            >
               <img src={ shareIcon } alt="Share Icon" width="20px" />
             </button>
             <button type="button" data-testid="favorite-btn" className="media-btn">
