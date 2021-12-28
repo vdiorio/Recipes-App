@@ -11,7 +11,11 @@ const copy = require('clipboard-copy');
 function Provider({ children }) {
   const [foods, setFoods] = useState([]);
   const [drinks, setDrinks] = useState([]);
+  const [showToast, setShowToast] = useState(
+    <span className="copied-link">Link copiado!</span>,
+  );
   const history = useHistory();
+  const THREE_SECONDS = 3000;
   const MIN_INGREDIENTS = 9;
   const MAX_INGREDIENTS = 28;
   const MIN_DRINK_INGREDIENTS = 17;
@@ -23,6 +27,25 @@ function Provider({ children }) {
 
   function shareRecipe() {
     copy(window.location.href);
+    setShowToast(
+      <span className="copied-link copied-link--active">Link copiado!</span>,
+    );
+    setTimeout(() => {
+      setShowToast(
+        <span className="copied-link">Link copiado!</span>,
+      );
+    }, THREE_SECONDS);
+  }
+
+  function handleFavorite(isFavorite, favorite, favoriteChecked, setIsFavorite) {
+    if (isFavorite === favorite) {
+      setIsFavorite(favoriteChecked);
+
+    }
+
+    if (isFavorite === favoriteChecked) {
+      setIsFavorite(favorite);
+    }
   }
 
   function requestRecipes(MAX_AMOUNT, requestLink) { // fetch para os cards de recomendacoes
@@ -126,6 +149,7 @@ function Provider({ children }) {
   }
 
   const context = { foods,
+    showToast,
     drinks,
     setFoods,
     setDrinks,
@@ -136,6 +160,7 @@ function Provider({ children }) {
     ingredientsToNumbersArray,
     buttonTextHandler,
     shareRecipe,
+    handleFavorite,
   };
   return (
     <AppContext.Provider value={ context }>

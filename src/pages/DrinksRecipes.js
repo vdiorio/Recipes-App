@@ -15,6 +15,8 @@ export default function FoodsRecipes({ match, location }) {
     handleStartRecipe,
     ingredientsToNumbersArray,
     buttonTextHandler,
+    shareRecipe,
+    showToast,
   } = useContext(ContextAPI);
   const [isNotDone, setIsNotDone] = useState(false);
   const [drinkSelected, setDrinkSelected] = useState();
@@ -23,7 +25,6 @@ export default function FoodsRecipes({ match, location }) {
   const type = pathName.split('/')[1] === 'comidas' ? 'meals' : 'cocktails';
 
   function isRecipeNotDone(path) { // verifica se receita foi finalizada
-    console.log('botao');
     if (localStorage.getItem('doneRecipes') !== null) {
       const isItDone = localStorage.getItem('doneRecipes').includes(path.split('/')[2]);
       if (isItDone) {
@@ -51,7 +52,12 @@ export default function FoodsRecipes({ match, location }) {
           />
           <div>
             <h1 data-testid="recipe-title">{drinkSelected[0].strDrink}</h1>
-            <button type="button" data-testid="share-btn" className="media-btn">
+            <button
+              type="button"
+              data-testid="share-btn"
+              className="media-btn"
+              onClick={ shareRecipe }
+            >
               <img src={ shareIcon } alt="Share Icon" width="20px" />
             </button>
             <button type="button" data-testid="favorite-btn" className="media-btn">
@@ -87,6 +93,7 @@ export default function FoodsRecipes({ match, location }) {
             >
               { buttonTextHandler(type, urlID) }
             </button>)}
+          {showToast}
         </div>
       ) : (
         <ReactLoading
