@@ -3,26 +3,35 @@ import React, { useContext, useEffect, useState } from 'react';
 import ReactLoading from 'react-loading';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import shareIcon from '../images/shareIcon.svg';
-import favorite from '../images/whiteHeartIcon.svg';
 import Carousel from '../components/Carousel';
 import './FoodsRecipes.css';
 import fetchDrinkAPI from '../helpers/FetchDrinkAPI';
 import ContextAPI from '../context/ContextAPI';
+import favorite from '../images/whiteHeartIcon.svg';
+import favoriteChecked from '../images/blackHeartIcon.svg';
 
 export default function FoodsRecipes({ match, location }) {
   const {
-    ingredientsAndMeasures,
-    handleStartRecipe,
-    ingredientsToNumbersArray,
-    buttonTextHandler,
-    shareRecipe,
-    showToast,
+    ingredientsAndMeasures, handleStartRecipe, ingredientsToNumbersArray,
+    buttonTextHandler, shareRecipe, showToast, handleFavorite,
   } = useContext(ContextAPI);
   const [isNotDone, setIsNotDone] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(favorite);
   const [drinkSelected, setDrinkSelected] = useState();
   const urlID = match.params.id;
   const pathName = location.pathname;
   const type = pathName.split('/')[1] === 'comidas' ? 'meals' : 'cocktails';
+
+  function isRecipeFavorite(path) { // verifica se e favorita
+    if (localStorage.getItem('favoriteRecipes') !== null) {
+      const isItFavorite = localStorage
+        .getItem('favoriteRecipes').includes(path.split('/')[2]);
+      if (isItFavorite) {
+        return setIsFavorite(favoriteChecked);
+      }
+    }
+    return setIsFavorite(favorite);
+  }
 
   function isRecipeNotDone(path) { // verifica se receita foi finalizada
     if (localStorage.getItem('doneRecipes') !== null) {
@@ -38,6 +47,7 @@ export default function FoodsRecipes({ match, location }) {
     fetchDrinkAPI(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${urlID}`)
       .then((response) => setDrinkSelected(response.drinks));
     setIsNotDone(isRecipeNotDone(pathName));
+    isRecipeFavorite(pathName);
   }, [urlID, pathName]);
 
   return (
@@ -58,10 +68,25 @@ export default function FoodsRecipes({ match, location }) {
               className="media-btn"
               onClick={ shareRecipe }
             >
-              <img src={ shareIcon } alt="Share Icon" width="20px" />
+              <img
+                src={ shareIcon }
+                alt="Share Icon"
+                className="media-btn-img"
+              />
             </button>
-            <button type="button" data-testid="favorite-btn" className="media-btn">
-              <img src={ favorite } alt="Favorite Icon" width="20px" />
+            <button
+              type="button"
+              data-testid="favorite-btn"
+              className="media-btn"
+              onClick={ () => handleFavorite(
+                isFavorite, [favorite, favoriteChecked], setIsFavorite, drinkSelected[0],
+              ) }
+            >
+              <img
+                src={ isFavorite }
+                alt="Favorite Icon"
+                className="media-btn-img"
+              />
             </button>
           </div>
           <p data-testid="recipe-category">{drinkSelected[0].strAlcoholic}</p>

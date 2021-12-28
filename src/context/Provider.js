@@ -4,7 +4,9 @@ import { useHistory } from 'react-router-dom';
 import AppContext from './ContextAPI';
 import fetchFoodAPI from '../helpers/FetchFoodApi';
 import fetchDrinkAPI from '../helpers/FetchDrinkAPI';
-import { saveRecipeInProgress } from '../helpers/SaveLocalStorage';
+import {
+  saveRecipeInProgress,
+  saveFavoriteRecipes, removeFromFavoriteRecipes } from '../helpers/SaveLocalStorage';
 
 const copy = require('clipboard-copy');
 
@@ -37,14 +39,14 @@ function Provider({ children }) {
     }, THREE_SECONDS);
   }
 
-  function handleFavorite(isFavorite, favorite, favoriteChecked, setIsFavorite) {
-    if (isFavorite === favorite) {
-      setIsFavorite(favoriteChecked);
-
+  function handleFavorite(isFavorite, arrayOfHearts, setIsFavorite, obj) {
+    if (isFavorite === arrayOfHearts[0]) {
+      setIsFavorite(arrayOfHearts[1]);
+      saveFavoriteRecipes(obj);
     }
-
-    if (isFavorite === favoriteChecked) {
-      setIsFavorite(favorite);
+    if (isFavorite === arrayOfHearts[1]) {
+      setIsFavorite(arrayOfHearts[0]);
+      removeFromFavoriteRecipes(obj);
     }
   }
 

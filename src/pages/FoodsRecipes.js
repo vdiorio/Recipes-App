@@ -12,13 +12,8 @@ import favoriteChecked from '../images/blackHeartIcon.svg';
 
 export default function FoodsRecipes({ match, location }) {
   const {
-    ingredientsAndMeasures,
-    handleStartRecipe,
-    ingredientsToNumbersArray,
-    buttonTextHandler,
-    shareRecipe,
-    showToast,
-    handleFavorite,
+    ingredientsAndMeasures, handleStartRecipe, ingredientsToNumbersArray,
+    buttonTextHandler, shareRecipe, showToast, handleFavorite,
   } = useContext(ContextAPI);
   const [isNotDone, setIsNotDone] = useState(false);
   const [isFavorite, setIsFavorite] = useState(favorite);
@@ -53,7 +48,6 @@ export default function FoodsRecipes({ match, location }) {
       .then((response) => setFoodSelected(response.meals));
     setIsNotDone(isRecipeNotDone(pathName));
     isRecipeFavorite(pathName);
-    console.log('ola');
   }, [urlID, pathName]);
 
   return (
@@ -84,8 +78,8 @@ export default function FoodsRecipes({ match, location }) {
               type="button"
               data-testid="favorite-btn"
               className="media-btn"
-              onClick={ handleFavorite(
-                isFavorite, favorite, favoriteChecked, setIsFavorite,
+              onClick={ () => handleFavorite(
+                isFavorite, [favorite, favoriteChecked], setIsFavorite, foodSelected[0],
               ) }
             >
               <img
