@@ -69,33 +69,58 @@ function Provider({ children }) {
     ));
   }
 
-  function concatIngredientsAndMeasures(ingredientsArray, measuresArray, RANGE) { // une os ingredientes e medidas em uma string
+  function concatIngredientsAndMeasures( // une os ingredientes e medidas em uma string
+    ingredientsArray, measuresArray, RANGE, pageType,
+  ) {
     const concatenated = [];
     for (let index = 0; index <= RANGE; index += 1) {
       if (ingredientsArray[index] !== '' && ingredientsArray[index] !== null) {
         concatenated.push(
-          <p
-            key={ index }
-            data-testid={ `${index}-ingredient-name-and-measure` }
-          >
-            {`${
-              ingredientsArray[index]} - ${
-              measuresArray[index] === null ? 'to your taste' : measuresArray[index]}`}
-
-          </p>,
+          <li key={ `item${index}` }>
+            {pageType === 'detail'
+              ? (
+                <p
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                >
+                  {`${
+                    ingredientsArray[index]} - ${
+                    measuresArray[index] === null
+                      ? 'to your taste' : measuresArray[index]}`}
+                </p>
+              ) : (
+                <label htmlFor={ `${index}ingredient-step` }>
+                  {`${
+                    ingredientsArray[index]} - ${
+                    measuresArray[index] === null
+                      ? 'to your taste' : measuresArray[index]}`}
+                  <input
+                    type="checkbox"
+                    data-testid={ `${index}-ingredient-step` }
+                    className="ingredient-step"
+                    id={ `${index}ingredient-step` }
+                  />
+                </label>
+              )}
+          </li>,
         );
       }
     }
-    return concatenated;
+    return (
+      <ul>
+        {concatenated}
+      </ul>
+    );
   }
 
-  function ingredientsAndMeasures(obj, recipeType) { // responsavel pela selecao e juncao dos ingredientes e medidas
+  function ingredientsAndMeasures(obj, recipeType, pageType) { // responsavel pela selecao e juncao dos ingredientes e medidas
     const fullArray = Object.values(obj);
     if (recipeType === 'meal') {
       const MAX_RANGE = 19;
       const ingredientsOnly = selectedRange(MIN_INGREDIENTS, MAX_INGREDIENTS, fullArray);
       const measuresOnly = selectedRange(MIN_MEASURES, MAX_MEASURES, fullArray);
-      return concatIngredientsAndMeasures(ingredientsOnly, measuresOnly, MAX_RANGE);
+      return concatIngredientsAndMeasures(
+        ingredientsOnly, measuresOnly, MAX_RANGE, pageType,
+      );
     }
     if (recipeType === 'drink') {
       const MAX_RANGE = 14;
@@ -105,7 +130,9 @@ function Provider({ children }) {
       const measuresOnly = selectedRange(
         MIN_DRINK_MEASURES, MAX_DRINK_MEASURES, fullArray,
       );
-      return concatIngredientsAndMeasures(ingredientsOnly, measuresOnly, MAX_RANGE);
+      return concatIngredientsAndMeasures(
+        ingredientsOnly, measuresOnly, MAX_RANGE, pageType,
+      );
     }
   }
 

@@ -91,7 +91,7 @@ export default function FoodsRecipes({ match, location }) {
           </div>
           <p data-testid="recipe-category">{foodSelected[0].strCategory}</p>
           <h3>Ingredients</h3>
-          { ingredientsAndMeasures(foodSelected[0], 'meal') }
+          { ingredientsAndMeasures(foodSelected[0], 'meal', 'detail') }
           <h3>Instructions</h3>
           <p
             data-testid="instructions"
@@ -116,7 +116,6 @@ export default function FoodsRecipes({ match, location }) {
           <Carousel
             genre={ Object.keys(foodSelected[0])[0] }
           />
-          {}
           { isNotDone && (
             <button
               type="button"
