@@ -9,8 +9,8 @@
 .recommended.active {
   opacity: 1;
   transition-duration: 0.5s;
-  z-index: 1;
   visibility: visible;
+  z-index: 1;
 }
 
 .recommended {
