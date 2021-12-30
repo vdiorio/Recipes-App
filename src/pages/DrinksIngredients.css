@@ -6,14 +6,14 @@
 }
 
 .ingredient {
+  align-items: center;
   border: 1px #e84a5f solid;
   border-radius: 5%;
   box-shadow: 1.25px 2.5px rgb(140, 140, 140);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding-block: 5px;
   margin-block: 5px;
+  padding-block: 5px;
   width: 40%;
 }
 
@@ -28,10 +28,7 @@
 }
 
 .ingredient-img {
-  display: block;
   height: 161px;
-  margin-left: auto;
-  margin-right: auto;
-  object-fit: cover;
-  width: 50%;
+  object-fit: contain;
+  width: 140px;
 }
