@@ -20,6 +20,16 @@ export function saveRecipeInProgress(type, id, ingredientsArray) { // cria e adm
   }));
 }
 
+export function manageRecipeInProgress(newArray, type, id) {
+  localStorage.setItem('inProgressRecipes', JSON.stringify({
+    ...JSON.parse(localStorage.getItem('inProgressRecipes')),
+    [type]: {
+      ...JSON.parse(localStorage.getItem('inProgressRecipes'))[type],
+      [id]: newArray,
+    },
+  }));
+}
+
 export function saveFavoriteRecipes(obj) { // adiciona itens ao array de receitas favoritas
   const newFavorite = {
     id: Object.values(obj)[0],
@@ -37,6 +47,31 @@ export function saveFavoriteRecipes(obj) { // adiciona itens ao array de receita
   arrayOfFavorite.push(newFavorite);
   return localStorage.setItem('favoriteRecipes', JSON
     .stringify(arrayOfFavorite));
+}
+
+export function saveDoneRecipes(obj) { // adiciona itens ao array de receitas finalizadas
+  const date = new Date();
+  const newFavorite = {
+    id: Object.values(obj)[0],
+    type: Object.keys(obj)[0].includes('Meal') ? 'comida' : 'bebida',
+    area: Object.keys(obj)[0].includes('Meal') ? obj.strArea : '',
+    category: obj.strCategory,
+    alcoholicOrNot: Object.keys(obj)[0].includes('Meal') ? '' : obj.strAlcoholic,
+    name: Object.keys(obj)[0].includes('Meal') ? obj.strMeal : obj.strDrink,
+    image: Object.keys(obj)[0].includes('Meal') ? obj.strMealThumb : obj.strDrinkThumb,
+    doneDate: `${date.getDate()}/${date.getUTCMonth() + 1}/${date.getFullYear()}`,
+    tags: obj.strTags === null ? [] : obj.strTags.split(','),
+  };
+  const arrayOfDone = JSON.parse(localStorage.getItem('doneRecipes'));
+  if (localStorage.getItem('doneRecipes') === null) {
+    return localStorage.setItem('doneRecipes', JSON.stringify([newFavorite]));
+  }
+  if (localStorage.getItem('doneRecipes').includes(Object.values(obj)[0])) {
+    return localStorage.getItem('doneRecipes');
+  }
+  arrayOfDone.push(newFavorite);
+  return localStorage.setItem('doneRecipes', JSON
+    .stringify(arrayOfDone));
 }
 
 export function removeFromFavoriteRecipes(obj) {

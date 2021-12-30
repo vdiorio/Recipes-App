@@ -5,12 +5,14 @@ import AppContext from './ContextAPI';
 import fetchFoodAPI from '../helpers/FetchFoodApi';
 import fetchDrinkAPI from '../helpers/FetchDrinkAPI';
 import {
-  saveRecipeInProgress,
-  saveFavoriteRecipes, removeFromFavoriteRecipes } from '../helpers/SaveLocalStorage';
+  saveRecipeInProgress, manageRecipeInProgress,
+  saveFavoriteRecipes, removeFromFavoriteRecipes,
+  saveDoneRecipes } from '../helpers/SaveLocalStorage';
 
 const copy = require('clipboard-copy');
 
 function Provider({ children }) {
+  // const [isDisabled, setIsDisabled] = useState(true);
   const [foods, setFoods] = useState([]);
   const [drinks, setDrinks] = useState([]);
   const [showToast, setShowToast] = useState(
@@ -69,12 +71,26 @@ function Provider({ children }) {
     ));
   }
 
+  function getCurrentProgress() {
+    const ingredients = Array.from(document.getElementsByClassName('ingredient-step'));
+    const type = history.location.pathname.split('/')[1] === 'comidas'
+      ? 'meals' : 'cocktails';
+    const id = history.location.pathname.split('/')[2];
+    const newArray = [];
+    ingredients.forEach((item, index) => item.checked !== true && newArray.push(index));
+    manageRecipeInProgress(newArray, type, id);
+    ingredients.forEach((item) => (item.checked
+      ? (item.parentElement.classList.add('ingredient-step--checked')
+      ) : (
+        item.parentElement.classList.remove('ingredient-step--checked'))));
+  }
+
   function concatIngredientsAndMeasures( // une os ingredientes e medidas em uma string
-    ingredientsArray, measuresArray, RANGE, pageType,
+    arrayOfData, RANGE, pageType, // arrayOfData corresponde aos arrays de ingredientes e medidas
   ) {
     const concatenated = [];
     for (let index = 0; index <= RANGE; index += 1) {
-      if (ingredientsArray[index] !== '' && ingredientsArray[index] !== null) {
+      if (arrayOfData[0][index] !== '' && arrayOfData[0][index] !== null) {
         concatenated.push(
           <li key={ `item${index}` }>
             {pageType === 'detail'
@@ -83,22 +99,23 @@ function Provider({ children }) {
                   data-testid={ `${index}-ingredient-name-and-measure` }
                 >
                   {`${
-                    ingredientsArray[index]} - ${
-                    measuresArray[index] === null
-                      ? 'to your taste' : measuresArray[index]}`}
+                    arrayOfData[0][index]} - ${
+                    arrayOfData[1][index] === null
+                      ? 'to your taste' : arrayOfData[1][index]}`}
                 </p>
               ) : (
                 <label htmlFor={ `${index}ingredient-step` }>
-                  {`${
-                    ingredientsArray[index]} - ${
-                    measuresArray[index] === null
-                      ? 'to your taste' : measuresArray[index]}`}
                   <input
                     type="checkbox"
                     data-testid={ `${index}-ingredient-step` }
                     className="ingredient-step"
                     id={ `${index}ingredient-step` }
+                    onChange={ getCurrentProgress }
                   />
+                  {`${
+                    arrayOfData[0][index]} - ${
+                    arrayOfData[1][index] === null
+                      ? 'to your taste' : arrayOfData[1][index]} `}
                 </label>
               )}
           </li>,
@@ -114,15 +131,15 @@ function Provider({ children }) {
 
   function ingredientsAndMeasures(obj, recipeType, pageType) { // responsavel pela selecao e juncao dos ingredientes e medidas
     const fullArray = Object.values(obj);
-    if (recipeType === 'meal') {
+    if (recipeType === 'meals') {
       const MAX_RANGE = 19;
       const ingredientsOnly = selectedRange(MIN_INGREDIENTS, MAX_INGREDIENTS, fullArray);
       const measuresOnly = selectedRange(MIN_MEASURES, MAX_MEASURES, fullArray);
       return concatIngredientsAndMeasures(
-        ingredientsOnly, measuresOnly, MAX_RANGE, pageType,
+        [ingredientsOnly, measuresOnly], MAX_RANGE, pageType,
       );
     }
-    if (recipeType === 'drink') {
+    if (recipeType === 'cocktails') {
       const MAX_RANGE = 14;
       const ingredientsOnly = selectedRange(
         MIN_DRINK_INGREDIENTS, MAX_DRINK_INGREDIENTS, fullArray,
@@ -131,7 +148,7 @@ function Provider({ children }) {
         MIN_DRINK_MEASURES, MAX_DRINK_MEASURES, fullArray,
       );
       return concatIngredientsAndMeasures(
-        ingredientsOnly, measuresOnly, MAX_RANGE, pageType,
+        [ingredientsOnly, measuresOnly], MAX_RANGE, pageType,
       );
     }
   }
@@ -146,7 +163,7 @@ function Provider({ children }) {
       : selectedRange(MIN_DRINK_INGREDIENTS, MAX_DRINK_INGREDIENTS, fullArray);
     for (let index = 0; index < ingredientsOnly.length; index += 1) {
       if (ingredientsOnly[index] !== '' && ingredientsOnly[index] !== null) {
-        newArray.push(ingredientNumber + 1);
+        newArray.push(ingredientNumber);
         ingredientNumber += 1;
       }
     }
@@ -166,6 +183,11 @@ function Provider({ children }) {
   function handleStartRecipe(pathName, type, id, ingredientsArray) {
     saveRecipeInProgress(type, id, ingredientsArray);
     linkToInProgress(`${pathName}/in-progress`);
+  }
+
+  function handleFinish(obj) {
+    saveDoneRecipes(obj);
+    linkToInProgress('/receitas-feitas');
   }
 
   function buttonTextHandler(type, urlID) { // muda o texto do botao de iniciar receita
@@ -190,6 +212,8 @@ function Provider({ children }) {
     buttonTextHandler,
     shareRecipe,
     handleFavorite,
+    handleFinish,
+    linkToInProgress,
   };
   return (
     <AppContext.Provider value={ context }>

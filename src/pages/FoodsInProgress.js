@@ -3,19 +3,20 @@ import React, { useContext, useEffect, useState } from 'react';
 import ReactLoading from 'react-loading';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import shareIcon from '../images/shareIcon.svg';
-import './FoodsRecipes.css';
+import './FoodsInProgress.css';
 import fetchFoodAPI from '../helpers/FetchFoodApi';
 import ContextAPI from '../context/ContextAPI';
 import favorite from '../images/whiteHeartIcon.svg';
 import favoriteChecked from '../images/blackHeartIcon.svg';
+import IngredientsCheckList from '../components/IngredientsCheckList';
 
 export default function FoodsInProgress({ match, location }) {
   const {
-    ingredientsAndMeasures, handleStartRecipe, ingredientsToNumbersArray,
-    buttonTextHandler, shareRecipe, showToast, handleFavorite,
+    shareRecipe, showToast, handleFavorite, handleFinish,
   } = useContext(ContextAPI);
   const [isFavorite, setIsFavorite] = useState(favorite);
   const [foodSelected, setFoodSelected] = useState();
+  const [isDisabled, setIsDisabled] = useState(true);
   const urlID = match.params.id;
   const pathName = location.pathname;
   const type = pathName.split('/')[1] === 'comidas' ? 'meals' : 'cocktails';
@@ -24,17 +25,29 @@ export default function FoodsInProgress({ match, location }) {
     if (localStorage.getItem('favoriteRecipes') !== null) {
       const isItFavorite = localStorage
         .getItem('favoriteRecipes').includes(path.split('/')[2]);
-      if (isItFavorite) {
-        return setIsFavorite(favoriteChecked);
-      }
+      if (isItFavorite) { return setIsFavorite(favoriteChecked); }
     }
     return setIsFavorite(favorite);
   }
 
+  function checkDisabled() { // verifica se deve estar desabilitado
+    const arrayOfIngredientsChecked = Array
+      .from(document.getElementsByClassName('ingredient-step--checked'));
+    const arrayOfIngredients = Array
+      .from(document.getElementsByClassName('ingredient-step'));
+    if (arrayOfIngredients.length === arrayOfIngredientsChecked.length
+      && arrayOfIngredientsChecked.length > 0) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }
+
   useEffect(() => {
-    fetchFoodAPI(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${urlID}`)
-      .then((response) => setFoodSelected(response.meals));
-    isRecipeFavorite(pathName);
+    fetchFoodAPI(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${urlID}`) // executado com 3 then por problemas de sincronia
+      .then((response) => setFoodSelected(response.meals))
+      .then(() => isRecipeFavorite(pathName))
+      .then(checkDisabled);
   }, [urlID, pathName]);
 
   return (
@@ -47,7 +60,7 @@ export default function FoodsInProgress({ match, location }) {
             data-testid="recipe-photo"
             className="recipe-photo"
           />
-          <div>
+          <div className="title-share-favorite">
             <h1 data-testid="recipe-title">{foodSelected[0].strMeal}</h1>
             <button
               type="button"
@@ -77,12 +90,16 @@ export default function FoodsInProgress({ match, location }) {
             </button>
           </div>
           <p data-testid="recipe-category">{foodSelected[0].strCategory}</p>
-          <h3>Ingredients</h3>
-          { ingredientsAndMeasures(foodSelected[0], 'meal') }
+          <IngredientsCheckList
+            recipeData={ foodSelected[0] }
+            type={ type }
+            urlID={ urlID }
+            onChange={ () => checkDisabled() }
+          />
           <h3>Instructions</h3>
           <p
             data-testid="instructions"
-            className="instructions"
+            className="instructions-in-progress"
           >
             {foodSelected[0].strInstructions}
 
@@ -90,8 +107,9 @@ export default function FoodsInProgress({ match, location }) {
           <button
             type="button"
             data-testid="finish-recipe-btn"
-            className="star-recipe-btn"
-            // onClick deve ser implementada aqui possivelmente
+            className="finish-recipe-btn"
+            disabled={ isDisabled }
+            onClick={ () => handleFinish(foodSelected[0]) }
           >
             Finalizar Receita
           </button>

@@ -91,7 +91,7 @@ export default function FoodsRecipes({ match, location }) {
           </div>
           <p data-testid="recipe-category">{drinkSelected[0].strAlcoholic}</p>
           <h3>Ingredients</h3>
-          { ingredientsAndMeasures(drinkSelected[0], 'drink') }
+          { ingredientsAndMeasures(drinkSelected[0], type, 'detail') }
           <h3>Instructions</h3>
           <p
             data-testid="instructions"

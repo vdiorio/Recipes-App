@@ -60,7 +60,7 @@ export default function FoodsRecipes({ match, location }) {
             data-testid="recipe-photo"
             className="recipe-photo"
           />
-          <div>
+          <div className="title-share-favorite">
             <h1 data-testid="recipe-title">{foodSelected[0].strMeal}</h1>
             <button
               type="button"
@@ -91,7 +91,7 @@ export default function FoodsRecipes({ match, location }) {
           </div>
           <p data-testid="recipe-category">{foodSelected[0].strCategory}</p>
           <h3>Ingredients</h3>
-          { ingredientsAndMeasures(foodSelected[0], 'meal', 'detail') }
+          { ingredientsAndMeasures(foodSelected[0], type, 'detail') }
           <h3>Instructions</h3>
           <p
             data-testid="instructions"
