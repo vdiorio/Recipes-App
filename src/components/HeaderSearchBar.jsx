@@ -1,45 +1,23 @@
 import React, { useState } from 'react';
-import ingredientFetch, { INGREDIENT } from '../helpers/IngredientFetch';
-import nameFecth, { NAME } from '../helpers/nameFetch';
-import firstLetterFetch, { FIRST_LETTER } from '../helpers/firstLetterFetch';
+import { useLocation } from 'react-router-dom';
+import foodRadio from '../helpers/foodRadio';
+import drinkRadio from '../helpers/drinkRadio';
 
 export default function HeaderSearchBar() {
   const [input, setInput] = useState('');
   const [radioInput, setRadioInput] = useState('');
+  const location = useLocation();
 
   const handleChange = ({ value }) => {
     setRadioInput(value);
   };
 
-  const ingredientResponse = async () => {
-    let ingredientResult;
-    let nameResult;
-    let firstLetterResult;
-    switch (radioInput) {
-    case INGREDIENT:
-      ingredientResult = await ingredientFetch(input);
-      console.log(ingredientResult);
-      break;
-    case NAME:
-      nameResult = await nameFecth(input);
-      console.log(nameResult);
-      break;
-    case FIRST_LETTER:
-      if (input.length > 1) {
-        global.alert('Sua busca deve conter somente 1 (um) caracter');
-        break;
-      }
-
-      firstLetterResult = await firstLetterFetch(input);
-      console.log(firstLetterResult);
-      break;
-    case '':
-      global.alert('digite algo para poder pesquisar');
-      break;
-    default:
-      break;
-    }
+  const ingredientResponse = (inputText, radioInputText) => {
+    const { pathname } = location;
+    if (pathname === '/comidas') foodRadio(inputText, radioInputText);
+    if (pathname === '/bebidas') drinkRadio(inputText, radioInputText);
   };
+
   return (
     <div>
       <div>
@@ -89,7 +67,7 @@ export default function HeaderSearchBar() {
         <button
           type="button"
           data-testid="exec-search-btn"
-          onClick={ () => ingredientResponse() }
+          onClick={ () => ingredientResponse(input, radioInput) }
         >
           Buscar
         </button>
