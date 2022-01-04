@@ -1,7 +1,8 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
+import renderWithRouter from '../helpers/renderWithRouter';
 
 const TESTID_EMAIL = 'email-input';
 const TESTID_PASSWORD = 'password-input';
@@ -10,13 +11,13 @@ const INPUT_EMAIL = 'test@test.com';
 
 describe('Teste requisito 1 ao 6', () => {
   test('Farewell, front-end', () => {
-    const { getByText } = render(<App />);
-    const linkElement = getByText(/TRYBE/i);
+    renderWithRouter(<App />);
+    const linkElement = screen.getByText(/TRYBE/i);
     expect(linkElement).toBeInTheDocument();
   });
 
   test('data-testid requisito 1', () => {
-    render(<App />);
+    renderWithRouter(<App />);
 
     expect(screen.getByTestId(TESTID_EMAIL)).toBeInTheDocument();
     expect(screen.getByTestId(TESTID_PASSWORD)).toBeInTheDocument();
@@ -24,7 +25,7 @@ describe('Teste requisito 1 ao 6', () => {
   });
 
   test('verificação valores input', () => {
-    render(<App />);
+    renderWithRouter(<App />);
 
     const inputEmail = screen.getByRole('textbox', { name: /e-mail/i });
     const inputPassword = screen.getByLabelText(/password/i);
@@ -37,7 +38,7 @@ describe('Teste requisito 1 ao 6', () => {
   });
 
   test('verificação de botão', () => {
-    render(<App />);
+    renderWithRouter(<App />);
 
     const inputEmail = screen.getByRole('textbox', { name: /e-mail/i });
     const inputPassword = screen.getByLabelText(/password/i);

@@ -1,0 +1,73 @@
+.all {
+  padding: 5px;
+  width: 100%;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+
+ul {
+  text-decoration: none;
+}
+
+.title-share-favorite {
+  display: flex;
+}
+
+.ingredient-step--checked {
+  text-decoration: line-through;
+}
+
+.finish-recipe-btn {
+  background: #fecea8;
+  bottom: 0;
+  left: 50%;
+  position: fixed;
+  text-align: center;
+  transform: translateX(-50%);
+  width: 200px;
+  z-index: 3;
+}
+
+.media-btn {
+  background: transparent;
+  border: 0;
+}
+
+.recipe-photo {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.video-frame {
+  width: 95%;
+}
+
+.instructions-in-progress {
+  padding-bottom: 30px;
+  padding-left: 5px;
+  padding-right: 10px;
+}
+
+.copied-link {
+  background: #ff847c;
+  border-radius: 5%;
+  bottom: 25%;
+  box-shadow: 3px 5px #888;
+  left: 0;
+  opacity: 0;
+  padding: 5px;
+  position: fixed;
+  transition: 1s;
+  visibility: hidden;
+}
+
+.copied-link.copied-link--active {
+  bottom: 40%;
+  opacity: 1;
+  transition: 1s;
+  visibility: visible;
+}
