@@ -48,6 +48,7 @@ export default function FoodsInProgress({ match, location }) {
       .then((response) => setFoodSelected(response.meals))
       .then(() => isRecipeFavorite(pathName))
       .then(checkDisabled);
+    console.log('effect2');
   }, [urlID, pathName]);
 
   return (

@@ -45,9 +45,10 @@ export default function FoodsRecipes({ match, location }) {
 
   useEffect(() => {
     fetchFoodAPI(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${urlID}`)
-      .then((response) => setFoodSelected(response.meals));
-    setIsNotDone(isRecipeNotDone(pathName));
-    isRecipeFavorite(pathName);
+      .then((response) => setFoodSelected(response.meals))
+      .then(setIsNotDone(isRecipeNotDone(pathName)))
+      .then(isRecipeFavorite(pathName));
+    console.log('effect');
   }, [urlID, pathName]);
 
   return (
