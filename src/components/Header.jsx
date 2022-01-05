@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 // import './Header.css';
+import AppContext from '../context/ContextAPI';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import HeaderSearchBar from './HeaderSearchBar';
 
 export default function Header({ text }) {
-  const [showComponent, setShowComponent] = useState(false);
+  const { showComponent, setShowComponent } = useContext(AppContext);
   return (
     <div>
       <header>

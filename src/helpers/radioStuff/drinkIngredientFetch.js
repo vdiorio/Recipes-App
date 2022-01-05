@@ -1,11 +1,15 @@
-const URL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?i=';
+const URL = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=';
 
 export const INGREDIENT = 'ingrediente';
 
 const drinkIngredientFetch = async (ingredient) => {
-  const request = await fetch(`${URL}${ingredient}`);
-  const response = await request.json();
-  return response;
+  try {
+    const request = await fetch(`${URL}${ingredient}`);
+    const { drinks } = await request.json();
+    return drinks;
+  } catch (error) {
+    console.log(error.message);
+  }
 };
 
 export default drinkIngredientFetch;

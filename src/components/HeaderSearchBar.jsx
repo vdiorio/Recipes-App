@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
+import AppContext from '../context/ContextAPI';
 import foodRadio from '../helpers/foodRadio';
 import drinkRadio from '../helpers/drinkRadio';
 
 export default function HeaderSearchBar() {
+  const { setFoods, setShowComponent, setDrinks } = useContext(AppContext);
   const [input, setInput] = useState('');
   const [radioInput, setRadioInput] = useState('');
   const location = useLocation();
@@ -12,10 +14,22 @@ export default function HeaderSearchBar() {
     setRadioInput(value);
   };
 
-  const ingredientResponse = (inputText, radioInputText) => {
+  const ingredientResponse = async (inputText, radioInputText) => {
     const { pathname } = location;
-    if (pathname === '/comidas') foodRadio(inputText, radioInputText);
-    if (pathname === '/bebidas') drinkRadio(inputText, radioInputText);
+    if (pathname === '/comidas') {
+      const foodReturn = await foodRadio(inputText, radioInputText);
+      if (foodReturn) {
+        setShowComponent(false);
+        setFoods(foodReturn);
+      }
+    }
+    if (pathname === '/bebidas') {
+      const drinkReturn = await drinkRadio(inputText, radioInputText);
+      if (drinkReturn) {
+        setShowComponent(false);
+        setDrinks(drinkReturn);
+      }
+    }
   };
 
   return (

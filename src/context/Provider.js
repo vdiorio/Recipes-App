@@ -5,9 +5,19 @@ import AppContext from './ContextAPI';
 function Provider({ children }) {
   const [foods, setFoods] = useState([]);
   const [drinks, setDrinks] = useState([]);
+  const [showComponent, setShowComponent] = useState(false);
+
+  const INITIAL_STATE = {
+    foods,
+    drinks,
+    setFoods,
+    setDrinks,
+    showComponent,
+    setShowComponent,
+  };
 
   return (
-    <AppContext.Provider value={ { foods, drinks, setFoods, setDrinks } }>
+    <AppContext.Provider value={ INITIAL_STATE }>
       { children }
     </AppContext.Provider>
   );

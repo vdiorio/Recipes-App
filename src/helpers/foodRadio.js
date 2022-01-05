@@ -3,27 +3,38 @@ import foodNameFecth, { NAME } from './radioStuff/foodNameFetch';
 import foodFirstLetterFetch, { FIRST_LETTER } from './radioStuff/foodFirstLetterFetch';
 
 export default async function foodRadio(input, radioInput) {
-  let ingredientResult;
-  let nameResult;
-  let firstLetterResult;
+  if (input === '') {
+    global.alert('Campo de pesquisa não preenchido');
+    return;
+  }
+  const ALERT = 'Sinto muito, não encontramos nenhuma receita para esses filtros.';
+  let result = [];
   switch (radioInput) {
   case INGREDIENT:
-    ingredientResult = await foodIngredientFetch(input);
-    console.log(ingredientResult);
-    break;
+    result = await foodIngredientFetch(input);
+    if (!result) {
+      global.alert(ALERT);
+      return;
+    }
+    return result;
   case NAME:
-    nameResult = await foodNameFecth(input);
-    console.log(nameResult);
-    break;
+    result = await foodNameFecth(input);
+    if (!result) {
+      global.alert(ALERT);
+      return;
+    }
+    return result;
   case FIRST_LETTER:
     if (input.length > 1) {
       global.alert('Sua busca deve conter somente 1 (um) caracter');
       break;
     }
-
-    firstLetterResult = await foodFirstLetterFetch(input);
-    console.log(firstLetterResult);
-    break;
+    result = await foodFirstLetterFetch(input);
+    if (!result) {
+      global.alert(ALERT);
+      return;
+    }
+    return result;
   case '':
     global.alert('Selecione uma categoria para poder pesquisar');
     break;
