@@ -1,6 +1,4 @@
-import drinkIngredientFetch, { INGREDIENT } from './radioStuff/drinkIngredientFetch';
-import drinkFirsLetterFetch, { FIRST_LETTER } from './radioStuff/drinkFirstLetterFetch';
-import drinkNameFetch, { NAME } from './radioStuff/drinkNameFetch';
+import requests, { NAME, INGREDIENT, FIRST_LETTER } from './radioStuff/requests';
 
 export default async function drinkRadio(input, radioInput) {
   if (input === '') {
@@ -11,14 +9,14 @@ export default async function drinkRadio(input, radioInput) {
   let result = [];
   switch (radioInput) {
   case INGREDIENT:
-    result = await drinkIngredientFetch(input);
+    result = await requests.drinkIngredient(input);
     if (!result) {
       global.alert(ALERT);
       return;
     }
     return result;
   case NAME:
-    result = await drinkNameFetch(input);
+    result = await requests.drinkName(input);
     if (!result) {
       global.alert(ALERT);
       return;
@@ -30,7 +28,7 @@ export default async function drinkRadio(input, radioInput) {
       break;
     }
 
-    result = await drinkFirsLetterFetch(input);
+    result = await requests.drinkFirstLetter(input);
     if (!result) {
       global.alert(ALERT);
       return;

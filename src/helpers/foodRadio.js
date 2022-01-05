@@ -1,6 +1,6 @@
-import foodIngredientFetch, { INGREDIENT } from './radioStuff/foodIngredientFetch';
-import foodNameFecth, { NAME } from './radioStuff/foodNameFetch';
-import foodFirstLetterFetch, { FIRST_LETTER } from './radioStuff/foodFirstLetterFetch';
+import requests, { NAME, INGREDIENT, FIRST_LETTER } from './radioStuff/requests';
+
+// const MAX_CARDS = 12;
 
 export default async function foodRadio(input, radioInput) {
   if (input === '') {
@@ -11,14 +11,14 @@ export default async function foodRadio(input, radioInput) {
   let result = [];
   switch (radioInput) {
   case INGREDIENT:
-    result = await foodIngredientFetch(input);
+    result = await requests.foodIngredient(input);
     if (!result) {
       global.alert(ALERT);
       return;
     }
     return result;
   case NAME:
-    result = await foodNameFecth(input);
+    result = await requests.foodName(input);
     if (!result) {
       global.alert(ALERT);
       return;
@@ -29,7 +29,7 @@ export default async function foodRadio(input, radioInput) {
       global.alert('Sua busca deve conter somente 1 (um) caracter');
       break;
     }
-    result = await foodFirstLetterFetch(input);
+    result = await requests.foodFirstLetter(input);
     if (!result) {
       global.alert(ALERT);
       return;

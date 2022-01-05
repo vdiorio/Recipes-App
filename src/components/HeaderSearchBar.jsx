@@ -10,9 +10,14 @@ export default function HeaderSearchBar() {
   const [radioInput, setRadioInput] = useState('');
   const location = useLocation();
 
+  const MAX_CARDS = 12;
+
   const handleChange = ({ value }) => {
     setRadioInput(value);
   };
+
+  const handleMaxCards = (recipes) => recipes
+    .filter((_recipe, index) => index < MAX_CARDS);
 
   const ingredientResponse = async (inputText, radioInputText) => {
     const { pathname } = location;
@@ -20,14 +25,18 @@ export default function HeaderSearchBar() {
       const foodReturn = await foodRadio(inputText, radioInputText);
       if (foodReturn) {
         setShowComponent(false);
-        setFoods(foodReturn);
+        const recipes = foodReturn.length > MAX_CARDS
+          ? handleMaxCards(foodReturn) : foodReturn;
+        setFoods(recipes);
       }
     }
     if (pathname === '/bebidas') {
       const drinkReturn = await drinkRadio(inputText, radioInputText);
       if (drinkReturn) {
         setShowComponent(false);
-        setDrinks(drinkReturn);
+        const recipes = drinkReturn.lenght > MAX_CARDS
+          ? handleMaxCards(drinkReturn) : drinkReturn;
+        setDrinks(recipes);
       }
     }
   };
