@@ -8,11 +8,9 @@ describe('Testes requisitos 70 ao 74 tela "Explorar Bebidas"', () => {
   it('Renderização dos botões da tela "Explorar Bebidas"', () => {
     renderWithRouter(<ExploreDrinks />);
     const dataIdExploreIngredients = screen.getByTestId('explore-by-ingredient');
-    const dataIdExploreArea = screen.getByTestId('explore-by-area');
     const dataIdSurpriseMe = screen.getByTestId('explore-surprise');
 
     expect(dataIdExploreIngredients).toBeInTheDocument();
-    expect(dataIdExploreArea).toBeInTheDocument();
     expect(dataIdSurpriseMe).toBeInTheDocument();
   });
 
@@ -42,6 +40,6 @@ describe('Testes requisitos 70 ao 74 tela "Explorar Bebidas"', () => {
       userEvent.click(buttonBySurprise);
 
       const { pathname } = history.location;
-      expect(pathname).toBe('/bebidas/area');
+      expect(pathname).toBe('/bebidas/?');
     });
 });
