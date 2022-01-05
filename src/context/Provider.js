@@ -2,8 +2,6 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import AppContext from './ContextAPI';
-import fetchFoodAPI from '../helpers/FetchFoodApi';
-import fetchDrinkAPI from '../helpers/FetchDrinkAPI';
 import {
   saveRecipeInProgress, manageRecipeInProgress,
   saveFavoriteRecipes, removeFromFavoriteRecipes,
@@ -15,6 +13,7 @@ function Provider({ children }) {
   // const [isDisabled, setIsDisabled] = useState(true);
   const [foods, setFoods] = useState([]);
   const [drinks, setDrinks] = useState([]);
+  const [check, setCheck] = useState(true);
   const [showToast, setShowToast] = useState(
     <span className="copied-link">Link copiado!</span>,
   );
@@ -44,19 +43,6 @@ function Provider({ children }) {
     if (isFavorite === arrayOfHearts[1]) {
       setIsFavorite(arrayOfHearts[0]);
       removeFromFavoriteRecipes(obj);
-    }
-  }
-
-  function requestRecipes(MAX_AMOUNT, requestLink) { // fetch para os cards de recomendacoes
-    if (requestLink === 'meal') {
-      fetchFoodAPI().then((response) => {
-        setFoods(response.meals.filter((_item, i) => i < MAX_AMOUNT));
-      });
-    }
-    if (requestLink === 'drink') {
-      fetchDrinkAPI().then((response) => {
-        setDrinks(response.drinks.filter((_item, i) => i < MAX_AMOUNT));
-      });
     }
   }
 
@@ -104,18 +90,20 @@ function Provider({ children }) {
               ) : (
                 <label
                   htmlFor={ `${index}ingredient-step` }
+                  data-testid={ `${index}-ingredient-step` }
                 >
                   <input
                     type="checkbox"
-                    data-testid={ `${index}ingredient-step` }
                     className="ingredient-step"
                     id={ `${index}ingredient-step` }
                     onChange={ getCurrentProgress }
+                    checked={ check }
                   />
-                  {`${
+                  {` ${
                     arrayOfData[0][index]} - ${
                     arrayOfData[1][index] === null
                       ? 'to your taste' : arrayOfData[1][index]} `}
+
                 </label>
               )}
           </li>,
@@ -198,9 +186,9 @@ function Provider({ children }) {
   const context = { foods,
     showToast,
     drinks,
+    setCheck,
     setFoods,
     setDrinks,
-    requestRecipes,
     ingredientsAndMeasures,
     handleStartRecipe,
     ingredientsToNumbersArray,

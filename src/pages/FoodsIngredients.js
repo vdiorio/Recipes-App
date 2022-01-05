@@ -28,7 +28,7 @@ export default function FoodsIngredients() {
               >
                 <img
                   className="ingredient-img"
-                  src={ `https://www.themealdb.com/images/ingredients/${ingredient.strIngredient}.png` }
+                  src={ `https://www.themealdb.com/images/ingredients/${ingredient.strIngredient}-Small.png` }
                   alt={ ingredient.strIngredient }
                   data-testid={ `${index}-card-img` }
                 />

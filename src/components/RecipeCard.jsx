@@ -22,7 +22,9 @@ export default function RecipeCard({ recipe, index, place }) {
       />
       <h5
         className="card-title"
-        data-testid={ `${index}-card-name` }
+        data-testid={
+          place === 'main' ? `${index}-card-name` : `${index}-recomendation-title`
+        }
       >
         {name}
       </h5>

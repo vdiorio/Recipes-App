@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import placeHolder from '../tests/placeHolder';
+import ReactLoading from 'react-loading';
+// import placeHolder from '../tests/placeHolder';
 import shareIcon from '../images/shareIcon.svg';
 import Carousel from '../components/Carousel';
 import './FoodsRecipes.css';
@@ -17,7 +18,7 @@ export default function FoodsRecipes({ match, location }) {
   } = useContext(ContextAPI);
   const [isNotDone, setIsNotDone] = useState(false);
   const [isFavorite, setIsFavorite] = useState(favorite);
-  const [drinkSelected, setDrinkSelected] = useState([placeHolder]);
+  const [drinkSelected, setDrinkSelected] = useState();
   const urlID = match.params.id;
   const pathName = location.pathname;
   const type = pathName.split('/')[1] === 'comidas' ? 'meals' : 'cocktails';
@@ -52,73 +53,82 @@ export default function FoodsRecipes({ match, location }) {
 
   return (
     <div className="all">
-      <div>
-        <img
-          src={ drinkSelected[0].strDrinkThumb }
-          alt={ drinkSelected[0].strDrink }
-          data-testid="recipe-photo"
-          className="recipe-photo"
-        />
+      { drinkSelected ? (
         <div>
-          <h1 data-testid="recipe-title">{drinkSelected[0].strDrink}</h1>
-          <button
-            type="button"
-            data-testid="share-btn"
-            className="media-btn"
-            onClick={ shareRecipe }
+          <img
+            src={ drinkSelected[0].strDrinkThumb }
+            alt={ drinkSelected[0].strDrink }
+            data-testid="recipe-photo"
+            className="recipe-photo"
+          />
+          <div>
+            <h1 data-testid="recipe-title">{drinkSelected[0].strDrink}</h1>
+            <button
+              type="button"
+              data-testid="share-btn"
+              className="media-btn"
+              onClick={ shareRecipe }
+            >
+              <img
+                src={ shareIcon }
+                alt="Share Icon"
+                className="media-btn-img"
+              />
+            </button>
+            <button
+              type="button"
+              className="media-btn"
+              onClick={ () => handleFavorite(
+                isFavorite, [favorite, favoriteChecked], setIsFavorite, drinkSelected[0],
+              ) }
+            >
+              <img
+                data-testid="favorite-btn"
+                src={ isFavorite }
+                alt="Favorite Icon"
+                className="media-btn-img"
+              />
+            </button>
+          </div>
+          <p data-testid="recipe-category">{drinkSelected[0].strAlcoholic}</p>
+          <h3>Ingredients</h3>
+          { ingredientsAndMeasures(drinkSelected[0], type, 'detail') }
+          <h3>Instructions</h3>
+          <p
+            data-testid="instructions"
+            className="instructions"
           >
-            <img
-              src={ shareIcon }
-              alt="Share Icon"
-              className="media-btn-img"
-            />
-          </button>
-          <button
-            type="button"
-            data-testid="favorite-btn"
-            className="media-btn"
-            onClick={ () => handleFavorite(
-              isFavorite, [favorite, favoriteChecked], setIsFavorite, drinkSelected[0],
-            ) }
-          >
-            <img
-              src={ isFavorite }
-              alt="Favorite Icon"
-              className="media-btn-img"
-            />
-          </button>
-        </div>
-        <p data-testid="recipe-category">{drinkSelected[0].strAlcoholic}</p>
-        <h3>Ingredients</h3>
-        { ingredientsAndMeasures(drinkSelected[0], type, 'detail') }
-        <h3>Instructions</h3>
-        <p
-          data-testid="instructions"
-          className="instructions"
-        >
-          {drinkSelected[0].strInstructions}
+            {drinkSelected[0].strInstructions}
 
-        </p>
-        <h3>Recomendadas</h3>
-        <Carousel
-          genre={ Object.keys(drinkSelected[0])[0] }
+          </p>
+          <h3>Recomendadas</h3>
+          <Carousel
+            genre="Drink"
+          />
+          { isNotDone && (
+            <button
+              type="button"
+              data-testid="start-recipe-btn"
+              className="star-recipe-btn"
+              onClick={ () => handleStartRecipe(
+                pathName,
+                type,
+                urlID,
+                ingredientsToNumbersArray(drinkSelected[0], type, urlID),
+              ) }
+            >
+              { buttonTextHandler(type, urlID) }
+            </button>)}
+          {showToast}
+        </div>
+      ) : (
+        <ReactLoading
+          type="spinningBubbles"
+          color="cyan"
+          height={ 30 }
+          width={ 30 }
         />
-        { isNotDone && (
-          <button
-            type="button"
-            data-testid="start-recipe-btn"
-            className="star-recipe-btn"
-            onClick={ () => handleStartRecipe(
-              pathName,
-              type,
-              urlID,
-              ingredientsToNumbersArray(drinkSelected[0], type, urlID),
-            ) }
-          >
-            { buttonTextHandler(type, urlID) }
-          </button>)}
-        {showToast}
-      </div>
+      )}
     </div>
   );
 }

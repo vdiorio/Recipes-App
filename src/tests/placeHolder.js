@@ -1,3 +1,4 @@
+// possivel mock?
 const placeHolder = {
   idMeal: '52948',
   strMeal: 'Food',
