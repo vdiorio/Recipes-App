@@ -44,10 +44,11 @@ export default function FoodsInProgress({ match, location }) {
   }
 
   useEffect(() => {
-    fetchFoodAPI(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${urlID}`) // executado com 3 then por problemas de sincronia
-      .then((response) => setFoodSelected(response.meals))
-      .then(() => isRecipeFavorite(pathName))
-      .then(checkDisabled);
+    const DELAY = 300;
+    fetchFoodAPI(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${urlID}`)
+      .then((response) => setFoodSelected(response.meals));
+    isRecipeFavorite(pathName);
+    setTimeout(() => checkDisabled(), DELAY);
   }, [urlID, pathName]);
 
   return (
@@ -76,7 +77,6 @@ export default function FoodsInProgress({ match, location }) {
             </button>
             <button
               type="button"
-              data-testid="favorite-btn"
               className="media-btn"
               onClick={ () => handleFavorite(
                 isFavorite, [favorite, favoriteChecked], setIsFavorite, foodSelected[0],
@@ -84,6 +84,7 @@ export default function FoodsInProgress({ match, location }) {
             >
               <img
                 src={ isFavorite }
+                data-testid="favorite-btn"
                 alt="Favorite Icon"
                 className="media-btn-img"
               />

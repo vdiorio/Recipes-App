@@ -1,15 +1,33 @@
 import PropTypes from 'prop-types';
-import React, { useContext, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import RecipeCard from './RecipeCard';
-import ContextAPI from '../context/ContextAPI';
+// import ContextAPI from '../context/ContextAPI';
 import './Carousel.css';
 import leftArrow from '../images/leftArrow.svg';
 import rightArrow from '../images/rightArrow.svg';
+import fetchFoodAPI from '../helpers/FetchFoodApi';
+import fetchDrinkAPI from '../helpers/FetchDrinkAPI';
 
 export default function Carousel({ genre }) {
-  const { requestRecipes, foods, drinks } = useContext(ContextAPI);
+  const [recommended, setRecommended] = useState([]);
   const [current, setCurrent] = useState(0);
   const MAX_CARDS = 6;
+
+  useEffect(() => {
+    function requestRecipes(MAX_AMOUNT, requestLink) { // fetch para os cards de recomendacoes
+      if (requestLink === 'Meal') {
+        fetchFoodAPI().then((response) => {
+          setRecommended(response.meals.filter((_item, i) => i < MAX_AMOUNT));
+        });
+      }
+      if (requestLink === 'Drink') {
+        fetchDrinkAPI().then((response) => {
+          setRecommended(response.drinks.filter((_item, i) => i < MAX_AMOUNT));
+        });
+      }
+    }
+    requestRecipes(MAX_CARDS, genre === 'Meal' ? 'Drink' : 'Meal');
+  }, [genre]);
 
   function previousSlides() {
     const INDEX_LIMIT = 4;
@@ -22,8 +40,7 @@ export default function Carousel({ genre }) {
   }
 
   function drinksRecommendation() {
-    requestRecipes(MAX_CARDS, 'drink');
-    return drinks.map((drink, index) => (
+    return recommended.map((drink, index) => (
       <div
         key={ drink.idDrink }
         data-testid={ `${index}-recomendation-card` }
@@ -44,8 +61,7 @@ export default function Carousel({ genre }) {
   }
 
   function foodsRecommendation() {
-    requestRecipes(MAX_CARDS, 'meal');
-    return foods.map((food, index) => (
+    return recommended.map((food, index) => (
       <div
         key={ food.idMeal }
         data-testid={ `${index}-recomendation-card` }

@@ -10,9 +10,9 @@ export default function ExploreDrinks() {
     history.push(`/${page}`);
   };
   const getRandomDrinkId = async () => {
-    await fetch('https://www.themealdb.com/api/json/v1/1/random.php')
+    await fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php')
       .then((data) => data.json())
-      .then((response) => setIdDrinksRandom(response.meals[0].idMeal));
+      .then((response) => setIdDrinksRandom(response.drinks[0].idDrink));
   };
 
   useEffect(() => {

@@ -6,10 +6,13 @@ export default function IngredientsCheckList({ recipeData, type, urlID, onChange
   const { ingredientsAndMeasures } = useContext(AppContext);
   useEffect(() => {
     function isItChecked() { // verifica quais itens ja foram marcados e os marca novamente ao acessar a pagina
-      const objInLocal = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      const objInLocal = localStorage.getItem('inProgressRecipes');
+      const objInLocalConverted = objInLocal !== null ? JSON.parse(objInLocal) : {};
       const ingredients = Array.from(document.getElementsByClassName('ingredient-step'));
       for (let index = 0; index < ingredients.length; index += 1) {
-        if (objInLocal[type][urlID].includes(index)) {
+        if (objInLocalConverted[type] !== undefined
+          && objInLocalConverted[type][urlID] !== undefined
+          && objInLocalConverted[type][urlID].includes(index)) {
           ingredients[index].checked = false;
         } else { ingredients[index].checked = true; }
         if (ingredients[index].checked) {

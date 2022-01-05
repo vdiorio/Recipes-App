@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useState } from 'react';
-import ReactLoading from 'react-loading';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ReactLoading from 'react-loading';
+// import placeHolder from '../tests/placeHolder';
 import shareIcon from '../images/shareIcon.svg';
 import Carousel from '../components/Carousel';
 import './FoodsRecipes.css';
@@ -52,7 +53,7 @@ export default function FoodsRecipes({ match, location }) {
 
   return (
     <div className="all">
-      {drinkSelected ? (
+      { drinkSelected ? (
         <div>
           <img
             src={ drinkSelected[0].strDrinkThumb }
@@ -76,13 +77,13 @@ export default function FoodsRecipes({ match, location }) {
             </button>
             <button
               type="button"
-              data-testid="favorite-btn"
               className="media-btn"
               onClick={ () => handleFavorite(
                 isFavorite, [favorite, favoriteChecked], setIsFavorite, drinkSelected[0],
               ) }
             >
               <img
+                data-testid="favorite-btn"
                 src={ isFavorite }
                 alt="Favorite Icon"
                 className="media-btn-img"
@@ -102,7 +103,7 @@ export default function FoodsRecipes({ match, location }) {
           </p>
           <h3>Recomendadas</h3>
           <Carousel
-            genre={ Object.keys(drinkSelected[0])[0] }
+            genre="Drink"
           />
           { isNotDone && (
             <button
