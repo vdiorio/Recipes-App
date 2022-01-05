@@ -7,7 +7,6 @@ export default function CategoryButtons({ handleFilterChange, categories, filter
       className="btn-group"
       role="group"
       aria-label="Basic radio toggle button group"
-      onChange={ (e) => handleFilterChange(e.target.id) }
     >
       <input
         type="checkbox"
@@ -15,6 +14,7 @@ export default function CategoryButtons({ handleFilterChange, categories, filter
         name="btnradio"
         id="All"
         autoComplete="off"
+        onChange={ (e) => handleFilterChange(e.target.id) }
         checked={ filter === 'All' }
       />
       <label
@@ -25,14 +25,15 @@ export default function CategoryButtons({ handleFilterChange, categories, filter
         All
         <input className="btn-check" type="radio" />
       </label>
-      { categories.map(({ strCategory }) => ( // Mapeando os botões de categoria
-        <>
+      { categories.map(({ strCategory }, index) => ( // Mapeando os botões de categoria
+        <div key={ `${strCategory}${index}` }>
           <input
             type="checkbox"
             className="btn-check"
             name="btnradio"
             id={ strCategory }
             autoComplete="off"
+            onChange={ (e) => handleFilterChange(e.target.id) }
             checked={ filter === strCategory }
           />
           <label
@@ -43,16 +44,16 @@ export default function CategoryButtons({ handleFilterChange, categories, filter
             { strCategory }
             <input className="btn-check" type="radio" />
           </label>
-        </>
+        </div>
       )) }
     </div>
   );
 }
 
 CategoryButtons.propTypes = {
-  categories: PropTypes.shape({
+  categories: PropTypes.arrayOf(PropTypes.shape({
     map: PropTypes.func,
-  }).isRequired,
+  })).isRequired,
   filter: PropTypes.string.isRequired,
   handleFilterChange: PropTypes.func.isRequired,
 };

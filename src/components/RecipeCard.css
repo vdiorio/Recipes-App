@@ -5,7 +5,9 @@
 
 a {
   color: black;
+  margin-bottom: 10px;
   text-decoration: none;
+  width: 45%;
 }
 
 .btn-group {
