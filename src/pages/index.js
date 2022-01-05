@@ -49,8 +49,7 @@ function Routes() {
       <Route
         exact
         path="/explorar/comidas/area"
-        c
-        omponent={ ExploreFoodArea }
+        component={ ExploreFoodArea }
       />
       <Route exact path="/perfil" component={ Profile } />
       <Route exact path="/receitas-feitas" component={ EndedRecipes } />
