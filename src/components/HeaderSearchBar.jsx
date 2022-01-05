@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import AppContext from '../context/ContextAPI';
 import foodRadio from '../helpers/foodRadio';
 import drinkRadio from '../helpers/drinkRadio';
@@ -9,6 +9,7 @@ export default function HeaderSearchBar() {
   const [input, setInput] = useState('');
   const [radioInput, setRadioInput] = useState('');
   const location = useLocation();
+  const history = useHistory();
 
   const MAX_CARDS = 12;
 
@@ -19,25 +20,55 @@ export default function HeaderSearchBar() {
   const handleMaxCards = (recipes) => recipes
     .filter((_recipe, index) => index < MAX_CARDS);
 
+  const foodRedirect = (load) => {
+    setShowComponent(false);
+    setFoods(load);
+    const id = load[0].idMeal;
+    history.push(`/comidas/${id}`);
+  };
+
+  const drinkRedirect = (load) => {
+    setShowComponent(false);
+    setDrinks(load);
+    const id = load[0].idDrink;
+    history.push(`/bebidas/${id}`);
+  };
+
+  const foodResponse = async (search, category) => {
+    const foodReturn = await foodRadio(search, category);
+    if (foodReturn) {
+      if (foodReturn.length === 1) {
+        foodRedirect(foodReturn);
+        return;
+      }
+      setShowComponent(false);
+      const recipes = foodReturn.length > MAX_CARDS
+        ? handleMaxCards(foodReturn) : foodReturn;
+      setFoods(recipes);
+    }
+  };
+
+  const drinkresponse = async (search, category) => {
+    const drinkReturn = await drinkRadio(search, category);
+    if (drinkReturn) {
+      if (drinkReturn.length === 1) {
+        drinkRedirect(drinkReturn);
+        return;
+      }
+      setShowComponent(false);
+      const recipes = drinkReturn.length > MAX_CARDS
+        ? handleMaxCards(drinkReturn) : drinkReturn;
+      setDrinks(recipes);
+    }
+  };
+
   const ingredientResponse = async (inputText, radioInputText) => {
     const { pathname } = location;
     if (pathname === '/comidas') {
-      const foodReturn = await foodRadio(inputText, radioInputText);
-      if (foodReturn) {
-        setShowComponent(false);
-        const recipes = foodReturn.length > MAX_CARDS
-          ? handleMaxCards(foodReturn) : foodReturn;
-        setFoods(recipes);
-      }
+      await foodResponse(inputText, radioInputText);
     }
     if (pathname === '/bebidas') {
-      const drinkReturn = await drinkRadio(inputText, radioInputText);
-      if (drinkReturn) {
-        setShowComponent(false);
-        const recipes = drinkReturn.lenght > MAX_CARDS
-          ? handleMaxCards(drinkReturn) : drinkReturn;
-        setDrinks(recipes);
-      }
+      await drinkresponse(inputText, radioInputText);
     }
   };
 
