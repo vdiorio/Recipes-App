@@ -10,9 +10,9 @@ import {
 const copy = require('clipboard-copy');
 
 function Provider({ children }) {
-  // const [isDisabled, setIsDisabled] = useState(true);
   const [foods, setFoods] = useState([]);
   const [drinks, setDrinks] = useState([]);
+  const [showComponent, setShowComponent] = useState(false);
   const [check, setCheck] = useState(true);
   const [showToast, setShowToast] = useState(
     <span className="copied-link">Link copiado!</span>,
@@ -197,6 +197,8 @@ function Provider({ children }) {
     handleFavorite,
     handleFinish,
     linkToInProgress,
+    showComponent,
+    setShowComponent,
   };
   return (
     <AppContext.Provider value={ context }>

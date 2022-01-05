@@ -8,6 +8,7 @@ import CategoryButtons from '../components/CategoryButtons';
 import '../components/RecipeCard.css';
 
 export default function Drinks() {
+  const text = 'Bebidas';
   const { setDrinks, drinks } = useContext(ContextAPI);
   const [categories, setCategories] = useState([]);
   const [categoryFilter, setFilter] = useState('All');
@@ -40,7 +41,7 @@ export default function Drinks() {
 
   return (
     <div>
-      <Header />
+      <Header text={ text } />
       {
         categories.length > 0
           ? ( // Cira um container para os botões de categoria, o botão "TODOS" e mapeia as categorias de acordo com o retorno da API

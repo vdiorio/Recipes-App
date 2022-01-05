@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../components/Header';
+import GenericHeader from '../components/GenericHeader';
 
 export default function Profile() {
+  const value = 'Perfil';
   return (
     <div>
-      <Header />
+      <GenericHeader value={ value } />
       <label htmlFor="email-profile">
         Puxar email do login/localStorage
         <input
