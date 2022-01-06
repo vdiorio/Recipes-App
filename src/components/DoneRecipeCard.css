@@ -1,0 +1,46 @@
+.done-card {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 130px;
+  border-radius: 10px;
+  background-color: white;
+  border: 1px solid rgba(199, 95, 10, 0.685);
+  box-shadow: 2px 2px 1px rgba(253, 142, 50, 0.2);
+  margin: 10px;
+  align-content: flex-start;
+  flex-grow: 1;
+  font-size: 0.8em ;
+}
+
+.done-card:hover {
+  transform: translateY(-10px);
+  transition-duration: 1s;
+}
+
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.recipe-type {
+  color: rgb(169, 175, 175);
+  text-transform: capitalize;
+}
+
+.card-image {
+  margin-right: 10px;
+}
+
+.badge {
+  background-color: rgb(236, 174, 149);
+  color: black;
+}
+
+.copied-link {
+  position: relative;
+}
+
+span {
+  min-width: 0;
+}

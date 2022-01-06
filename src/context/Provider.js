@@ -20,11 +20,13 @@ function Provider({ children }) {
   const history = useHistory();
   const THREE_SECONDS = 3000;
 
-  function shareRecipe() {
+  function shareRecipe(recipeLink = '') {
+    console.log(recipeLink);
     const splitted = window.location.href.split('/');
-    const link = `${splitted[0]}/${splitted[1]}/${splitted[2]}/${
-      splitted[3]}/${splitted[4]}`;
+    const link = recipeLink.length < 1 ? `${splitted[0]}/${splitted[1]}/${splitted[2]}/${
+      splitted[3]}/${splitted[4]}` : recipeLink;
     copy(link);
+    console.log(link);
     setShowToast(
       <span className="copied-link copied-link--active">Link copiado!</span>,
     );
