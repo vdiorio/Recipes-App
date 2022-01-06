@@ -1,19 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../components/Header';
+import GenericHeader from '../components/GenericHeader';
 
 export default function Profile() {
+  const value = 'Perfil';
+  const { email } = JSON.parse(localStorage.getItem('user'));
+
   return (
     <div>
-      <Header />
-      <label htmlFor="email-profile">
-        Puxar email do login/localStorage
-        <input
-          data-testid="profile-email"
-          id="email-profile"
-          name="email-profile"
-        />
-      </label>
+      <GenericHeader value={ value } />
+      <h2 data-testid="profile-email">
+        { email }
+      </h2>
       <Link to="/receitas-feitas">
         <button
           data-testid="profile-done-btn"
@@ -30,12 +28,15 @@ export default function Profile() {
           Receitas Favoritas
         </button>
       </Link>
-      <button
-        data-testid="profile-logout-btn"
-        type="button"
-      >
-        Sair
-      </button>
+      <Link to="/">
+        <button
+          data-testid="profile-logout-btn"
+          type="button"
+          onClick={ () => localStorage.clear() }
+        >
+          Sair
+        </button>
+      </Link>
     </div>
   );
 }
