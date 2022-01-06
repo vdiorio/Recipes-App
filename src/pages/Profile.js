@@ -16,7 +16,6 @@ export default function Profile() {
         <button
           data-testid="profile-done-btn"
           type="button"
-          name="receitas"
         >
           Receitas Feitas
         </button>
