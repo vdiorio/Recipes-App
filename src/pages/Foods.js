@@ -8,7 +8,8 @@ import CategoryButtons from '../components/CategoryButtons';
 import '../components/RecipeCard.css';
 
 export default function Foods() {
-  const { setFoods, foods } = useContext(ContextAPI);
+  const { setFoods, foods, exploreFoods,
+    historyString, setHistoryString } = useContext(ContextAPI);
   const [categories, setCategories] = useState([]);
   const [categoryFilter, setFilter] = useState('All');
   const MAX_CARDS = 12;
@@ -23,6 +24,7 @@ export default function Foods() {
   }, [setFoods]);
 
   const handleFilterChange = (filter) => {
+    setHistoryString('');
     if (filter !== categoryFilter && filter !== 'All') {
       setFoods([]);
       const URI = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${filter}`;
@@ -38,13 +40,34 @@ export default function Foods() {
     }
   };
 
+  function whatToRender() {
+    console.log(document.referrer);
+    return historyString.includes('/explorar/comidas/ingredientes')
+      ? exploreFoods.map((food, index) => (
+        <RecipeCard
+          recipe={ food }
+          key={ `${food.idMeal}${index}` }
+          index={ index }
+          place="main"
+        />))
+      : (
+        foods.map((food, index) => (
+          <RecipeCard
+            recipe={ food }
+            key={ food.idMeal }
+            index={ index }
+            place="main"
+          />))
+      );
+  }
+
   return (
     <div>
       {window.scroll(0, 0)}
       <Header />
       {
         categories.length > 0
-          ? ( // Cira um container para os botões de categoria, o botão "TODOS" e mapeia as categorias de acordo com o retorno da API
+          ? ( // Cria um container para os botões de categoria, o botão "TODOS" e mapeia as categorias de acordo com o retorno da API
             <CategoryButtons
               handleFilterChange={ handleFilterChange }
               categories={ categories }
@@ -66,14 +89,7 @@ export default function Foods() {
       >
         {
           foods.length > 0
-            ? foods.map((food, index) => (
-              <RecipeCard
-                recipe={ food }
-                key={ food.idMeal }
-                index={ index }
-                place="main"
-              />))
-            : (
+            ? whatToRender() : (
               <ReactLoading
                 type="spinningBubbles"
                 color="cyan"
@@ -81,6 +97,7 @@ export default function Foods() {
                 width={ 30 }
               />)
         }
+
       </div>
     </div>
   );
