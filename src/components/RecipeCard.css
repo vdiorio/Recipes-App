@@ -1,0 +1,16 @@
+.card:hover {
+  transform: translateY(-10px);
+  transition-duration: 1s;
+}
+
+a {
+  color: black;
+  margin-bottom: 10px;
+  text-decoration: none;
+  width: 45%;
+}
+
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+}
