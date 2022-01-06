@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import GenericHeader from '../components/GenericHeader';
+import Footer from '../components/Footer';
 import './Explore.css';
 
 export default function Explore() {
@@ -31,6 +32,7 @@ export default function Explore() {
           Explorar Bebidas
         </button>
       </div>
+      <Footer />
     </div>
   );
 }

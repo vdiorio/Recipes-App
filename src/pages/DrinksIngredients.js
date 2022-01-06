@@ -3,6 +3,7 @@ import ReactLoading from 'react-loading';
 import fetchDrinkAPI from '../helpers/FetchDrinkAPI';
 import './DrinksIngredients.css';
 import GenericHeader from '../components/GenericHeader';
+import Footer from '../components/Footer';
 
 export default function DrinksIngredients() {
   const [ingredientsList, setIngredientsList] = useState([]);
@@ -48,6 +49,7 @@ export default function DrinksIngredients() {
               width={ 30 }
             />)}
       </div>
+      <Footer />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
-// import { useHistory } from 'react-router-dom';
 import ReactLoading from 'react-loading';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 import './Explore.css';
 import RecipeCard from '../components/RecipeCard';
@@ -13,11 +13,6 @@ export default function ExploreFoodArea() {
   const [selectedArea, setSelectedArea] = useState('All');
   const { setFoods, foods } = useContext(ContextAPI);
   const MAX_CARDS = 12;
-
-  // const history = useHistory();
-  // const handleClick = (page) => {
-  //   history.push(`/${page}`);
-  // };
 
   useEffect(() => { // Setando os estados do context ao montar o componente
     if (selectedArea === 'All') {
@@ -101,6 +96,7 @@ export default function ExploreFoodArea() {
           }
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
