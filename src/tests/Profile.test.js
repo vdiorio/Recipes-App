@@ -9,7 +9,9 @@ discribe('Testes dos requisitos 82 a 87, "Profile"', () => {
     const buttonReceitasFeitas = screen.getByRole('button', { name: /receitas feitas/i });
     const buttonReceitasFavoritas = screen
       .getByRole('button', { name: /receitas favoritas/i });
+    const buttonSair = screen.getByRole('button', { name: /sair/i });
     expect(buttonReceitasFeitas).toBeInTheDocument();
     expect(buttonReceitasFavoritas).toBeInTheDocument();
+    expect(buttonSair).toBeInTheDocument();
   });
 });
