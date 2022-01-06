@@ -3,6 +3,7 @@ import ReactLoading from 'react-loading';
 import fetchFoodAPI from '../helpers/FetchFoodApi';
 import './DrinksIngredients.css';
 import GenericHeader from '../components/GenericHeader';
+import Footer from '../components/Footer';
 
 export default function FoodsIngredients() {
   const [ingredientsList, setIngredientsList] = useState([]);
@@ -56,6 +57,7 @@ export default function FoodsIngredients() {
           }
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

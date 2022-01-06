@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import ReactLoading from 'react-loading';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import FetchDrinkAPI from '../helpers/FetchDrinkAPI';
 import ContextAPI from '../context/ContextAPI';
 import RecipeCard from '../components/RecipeCard';
@@ -83,6 +84,7 @@ export default function Drinks() {
               />)
         }
       </div>
+      <Footer />
     </div>
   );
 }
