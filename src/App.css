@@ -37,6 +37,12 @@
   font-weight: 900;
 }
 
+.cardContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
 @keyframes shake {
 
   0% {

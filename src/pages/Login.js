@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import SaveLocalStorage from '../helpers/SaveLocalStorage';
+import { SaveLocalStorage } from '../helpers/SaveLocalStorage';
 import rockGlass from '../images/rockGlass.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -39,21 +39,21 @@ function Login() {
   };
 
   return (
-    <div>
-      <div className="meals">
-        <span className="logo">TRYBE</span>
-        <object
-          className="rocksGlass"
-          type="image/svg+xml"
-          data={ rockGlass }
-        >
-          Glass
-        </object>
-      </div>
-      <form>
+
+    <div className="meals">
+      <span className="logo">TRYBE</span>
+      <object
+        className="rocksGlass"
+        type="image/svg+xml"
+        data={ rockGlass }
+      >
+        Glass
+      </object>
+      <form className="d-flex flex-column">
         <label htmlFor="email">
-          E-mail
+          E-mail&nbsp;
           <input
+            className="form-control"
             type="email"
             id="email"
             name="email"
@@ -63,8 +63,9 @@ function Login() {
           />
         </label>
         <label htmlFor="password">
-          Password
+          Password &nbsp;
           <input
+            className="form-control"
             type="password"
             id="password"
             name="password"
@@ -73,7 +74,9 @@ function Login() {
             onChange={ handleChangePassword }
           />
         </label>
+        &nbsp;
         <button
+          className="btn btn-primary"
           type="button"
           data-testid="login-submit-btn"
           disabled={ isButtonDisable }
