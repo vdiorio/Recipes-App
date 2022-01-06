@@ -1,9 +1,11 @@
 import React from 'react';
+import GenericHeader from '../components/GenericHeader';
 
 export default function EndedRecipes() {
+  const value = 'Receitas Feitas';
   return (
     <div>
-      EndedRecipes
+      <GenericHeader value={ value } />
     </div>
   );
 }

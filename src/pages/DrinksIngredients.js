@@ -3,6 +3,8 @@ import ReactLoading from 'react-loading';
 import { useLocation, Link } from 'react-router-dom';
 import fetchDrinkAPI from '../helpers/FetchDrinkAPI';
 import './DrinksIngredients.css';
+import GenericHeader from '../components/GenericHeader';
+import Footer from '../components/Footer';
 import contextAPI from '../context/ContextAPI';
 
 export default function DrinksIngredients() {
@@ -10,6 +12,7 @@ export default function DrinksIngredients() {
   const { setExploreDrinks, setHistoryString } = useContext(contextAPI);
   const location = useLocation();
   const CARDS_LIMIT = 12;
+  const value = 'Explorar Ingredientes';
 
   function setByIngredient(ingredientName) {
     setHistoryString(location.pathname);
@@ -26,10 +29,8 @@ export default function DrinksIngredients() {
 
   return (
     <div>
+      <GenericHeader value={ value } />
       <div className="ingredients-list">
-        <h1>
-          ExploreIngredients
-        </h1>
         {
           ingredientsList
             ? ingredientsList.map((ingredient, index) => (
@@ -63,6 +64,7 @@ export default function DrinksIngredients() {
               />)
         }
       </div>
+      <Footer />
     </div>
   );
 }

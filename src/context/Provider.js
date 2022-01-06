@@ -16,6 +16,7 @@ function Provider({ children }) {
   const [exploreFoods, setExploreFoods] = useState([]);
   const [drinks, setDrinks] = useState([]);
   const [exploreDrinks, setExploreDrinks] = useState([]);
+  const [showComponent, setShowComponent] = useState(false);
   const [showToast, setShowToast] = useState(
     <span className="copied-link">Link copiado!</span>,
   );
@@ -176,6 +177,8 @@ function Provider({ children }) {
     return 'Iniciar Receita';
   }
 
+  const goesTo = (path = '') => history.push(`/${path}`);
+
   const context = { foods,
     showToast,
     drinks,
@@ -196,6 +199,9 @@ function Provider({ children }) {
     handleFavorite,
     handleFinish,
     linkToInProgress,
+    showComponent,
+    setShowComponent,
+    goesTo,
   };
   return (
     <AppContext.Provider value={ context }>

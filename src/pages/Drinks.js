@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import ReactLoading from 'react-loading';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import FetchDrinkAPI from '../helpers/FetchDrinkAPI';
 import ContextAPI from '../context/ContextAPI';
 import RecipeCard from '../components/RecipeCard';
@@ -10,6 +11,7 @@ import '../components/RecipeCard.css';
 export default function Drinks() {
   const { setDrinks, drinks, exploreDrinks,
     historyString, setHistoryString } = useContext(ContextAPI);
+  const text = 'Bebidas';
   const [categories, setCategories] = useState([]);
   const [categoryFilter, setFilter] = useState('All');
   const MAX_CARDS = 12;
@@ -64,7 +66,7 @@ export default function Drinks() {
   return (
     <div>
       {window.scroll(0, 0)}
-      <Header />
+      <Header text={ text } />
       {
         categories.length > 0
           ? ( // Cria um container para os botões de categoria, o botão "TODOS" e mapeia as categorias de acordo com o retorno da API
@@ -98,6 +100,7 @@ export default function Drinks() {
               />)
         }
       </div>
+      <Footer />
     </div>
   );
 }

@@ -4,12 +4,15 @@ import { useLocation, Link } from 'react-router-dom';
 import fetchFoodAPI from '../helpers/FetchFoodApi';
 import contextAPI from '../context/ContextAPI';
 import './DrinksIngredients.css';
+import GenericHeader from '../components/GenericHeader';
+import Footer from '../components/Footer';
 
 export default function FoodsIngredients() {
   const [ingredientsList, setIngredientsList] = useState([]);
   const { setExploreFoods, setHistoryString } = useContext(contextAPI);
   const location = useLocation();
   const CARDS_LIMIT = 12;
+  const value = 'Explorar Ingredientes';
 
   function setByIngredient(ingredientName) {
     setHistoryString(location.pathname);
@@ -25,6 +28,7 @@ export default function FoodsIngredients() {
 
   return (
     <div>
+      <GenericHeader value={ value } />
       <div className="ingredients-list">
         <h1>
           ExploreIngredients
@@ -62,6 +66,7 @@ export default function FoodsIngredients() {
               />)
         }
       </div>
+      <Footer />
     </div>
   );
 }

@@ -1,16 +1,38 @@
-import React from 'react';
-import './Header.css';
+import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
+// import './Header.css';
+import AppContext from '../context/ContextAPI';
+import profileIcon from '../images/profileIcon.svg';
+import searchIcon from '../images/searchIcon.svg';
+import HeaderSearchBar from './HeaderSearchBar';
 
-export default function Header() {
+export default function Header({ text }) {
+  const { showComponent, setShowComponent, goesTo } = useContext(AppContext);
   return (
     <div>
-      <button
-        type="button"
-        data-testid="profile-top-btn"
-        className="profile-button"
-      >
-        <i className="bi bi-person-circle" />
-      </button>
+      <header>
+        <button type="button" onClick={ () => goesTo('perfil') }>
+          <img
+            src={ profileIcon }
+            alt="profile-icon"
+            data-testid="profile-top-btn"
+            className="profile-button"
+          />
+        </button>
+        <h1 data-testid="page-title">
+          { text }
+        </h1>
+        <button type="button" onClick={ () => setShowComponent(!showComponent) }>
+          <img src={ searchIcon } alt="search-icon" data-testid="search-top-btn" />
+        </button>
+      </header>
+      {
+        showComponent ? (<HeaderSearchBar />) : null
+      }
     </div>
   );
 }
+
+Header.propTypes = {
+  text: PropTypes.node.isRequired,
+};
