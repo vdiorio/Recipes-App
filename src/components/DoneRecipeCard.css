@@ -1,16 +1,15 @@
 .done-card {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  height: 130px;
-  border-radius: 10px;
+  align-content: flex-start;
   background-color: white;
   border: 1px solid rgba(199, 95, 10, 0.685);
+  border-radius: 10px;
   box-shadow: 2px 2px 1px rgba(253, 142, 50, 0.2);
-  margin: 10px;
-  align-content: flex-start;
+  display: flex;
+  flex-flow: column row;
   flex-grow: 1;
-  font-size: 0.8em ;
+  font-size: 0.8em;
+  height: 130px;
+  margin: 10px;
 }
 
 .done-card:hover {
