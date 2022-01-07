@@ -1,20 +1,27 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
+import AppContext from '../context/ContextAPI';
+import './Header.css';
 
 export default function GenericHeader({ value }) {
+  const { goesTo } = useContext(AppContext);
+
   return (
     <div>
       <header>
-        <Link to="/perfil">
+        <button
+          type="button"
+          onClick={ () => goesTo('perfil') }
+          className="profile-btn"
+        >
           <img
             src={ profileIcon }
             alt="profile-icon"
             data-testid="profile-top-btn"
             className="profile-button"
           />
-        </Link>
+        </button>
         <h1 data-testid="page-title">
           { value }
         </h1>
