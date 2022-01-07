@@ -9,8 +9,9 @@ import CategoryButtons from '../components/CategoryButtons';
 import '../components/RecipeCard.css';
 
 export default function Drinks() {
+  const { setDrinks, drinks, exploreDrinks,
+    historyString, setHistoryString } = useContext(ContextAPI);
   const text = 'Bebidas';
-  const { setDrinks, drinks } = useContext(ContextAPI);
   const [categories, setCategories] = useState([]);
   const [categoryFilter, setFilter] = useState('All');
   const MAX_CARDS = 12;
@@ -25,6 +26,7 @@ export default function Drinks() {
   }, [setDrinks]);
 
   const handleFilterChange = (filter) => {
+    setHistoryString('');
     if (filter !== categoryFilter && filter !== 'All') {
       setDrinks([]);
       const URI = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${filter}`;
@@ -40,12 +42,34 @@ export default function Drinks() {
     }
   };
 
+  function whatToRender() {
+    console.log(document.referrer);
+    return historyString.includes('/explorar/bebidas/ingredientes')
+      ? exploreDrinks.map((drink, index) => (
+        <RecipeCard
+          recipe={ drink }
+          key={ `${drink.idDrink}${index}` }
+          index={ index }
+          place="main"
+        />))
+      : (
+        drinks.map((drink, index) => (
+          <RecipeCard
+            recipe={ drink }
+            key={ drink.idDrink }
+            index={ index }
+            place="main"
+          />))
+      );
+  }
+
   return (
     <div>
+      {window.scroll(0, 0)}
       <Header text={ text } />
       {
         categories.length > 0
-          ? ( // Cira um container para os botões de categoria, o botão "TODOS" e mapeia as categorias de acordo com o retorno da API
+          ? ( // Cria um container para os botões de categoria, o botão "TODOS" e mapeia as categorias de acordo com o retorno da API
             <CategoryButtons
               handleFilterChange={ handleFilterChange }
               categories={ categories }
@@ -67,15 +91,7 @@ export default function Drinks() {
       >
         {
           drinks.length > 0
-            ? drinks.map((drink, index) => (
-              <RecipeCard
-                recipe={ drink }
-                key={ drink.idDrink }
-                index={ index }
-                place="main"
-              />
-            ))
-            : (
+            ? whatToRender() : (
               <ReactLoading
                 type="spinningBubbles"
                 color="cyan"

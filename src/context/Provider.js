@@ -6,19 +6,23 @@ import {
   saveRecipeInProgress, manageRecipeInProgress,
   saveFavoriteRecipes, removeFromFavoriteRecipes,
   saveDoneRecipes } from '../helpers/SaveLocalStorage';
+import Checkbox from '../components/Checkbox';
 
 const copy = require('clipboard-copy');
 
 function Provider({ children }) {
+  const [historyString, setHistoryString] = useState('');
   const [foods, setFoods] = useState([]);
+  const [exploreFoods, setExploreFoods] = useState([]);
   const [drinks, setDrinks] = useState([]);
+  const [exploreDrinks, setExploreDrinks] = useState([]);
   const [showComponent, setShowComponent] = useState(false);
-  const [check, setCheck] = useState(true);
   const [showToast, setShowToast] = useState(
     <span className="copied-link">Link copiado!</span>,
   );
   const history = useHistory();
   const THREE_SECONDS = 3000;
+  const STEP_CHECKED = 'ingredient-step--checked';
 
   function shareRecipe() {
     const splitted = window.location.href.split('/');
@@ -64,13 +68,13 @@ function Provider({ children }) {
     ingredients.forEach((item, index) => item.checked !== true && newArray.push(index));
     manageRecipeInProgress(newArray, type, id);
     ingredients.forEach((item) => (item.checked
-      ? (item.parentElement.classList.add('ingredient-step--checked')
+      ? (item.parentElement.classList.add(STEP_CHECKED)
       ) : (
-        item.parentElement.classList.remove('ingredient-step--checked'))));
+        item.parentElement.classList.remove(STEP_CHECKED))));
   }
 
   function concatIngredientsAndMeasures( // une os ingredientes e medidas em uma string
-    arrayOfData, RANGE, pageType, // arrayOfData corresponde aos arrays de ingredientes e medidas
+    arrayOfData, RANGE, pageType, arrayWithPath, // arrayOfData corresponde aos arrays de ingredientes e medidas
   ) {
     const concatenated = [];
     for (let index = 0; index <= RANGE; index += 1) {
@@ -88,23 +92,13 @@ function Provider({ children }) {
                       ? 'to your taste' : arrayOfData[1][index]}`}
                 </p>
               ) : (
-                <label
-                  htmlFor={ `${index}ingredient-step` }
-                  data-testid={ `${index}-ingredient-step` }
-                >
-                  <input
-                    type="checkbox"
-                    className="ingredient-step"
-                    id={ `${index}ingredient-step` }
-                    onChange={ getCurrentProgress }
-                    checked={ check }
-                  />
-                  {` ${
-                    arrayOfData[0][index]} - ${
-                    arrayOfData[1][index] === null
-                      ? 'to your taste' : arrayOfData[1][index]} `}
 
-                </label>
+                <Checkbox
+                  ingNumber={ index }
+                  arrayOfData={ arrayOfData }
+                  arrayWithPath={ arrayWithPath }
+                />
+
               )}
           </li>,
         );
@@ -117,7 +111,7 @@ function Provider({ children }) {
     );
   }
 
-  function ingredientsAndMeasures(obj, recipeType, pageType) { // responsavel pela selecao e juncao dos ingredientes e medidas
+  function ingredientsAndMeasures(obj, recipeType, pageType, arrayWithPath) { // responsavel pela selecao e juncao dos ingredientes e medidas
     const fullArray = Object.values(obj);
     const fullArrayKeys = Object.keys(obj);
     if (recipeType === 'meals') {
@@ -125,7 +119,7 @@ function Provider({ children }) {
       const ingredientsOnly = selectedRange(fullArrayKeys, fullArray, 'Ingredient');
       const measuresOnly = selectedRange(fullArrayKeys, fullArray, 'Measure');
       return concatIngredientsAndMeasures(
-        [ingredientsOnly, measuresOnly], MAX_RANGE, pageType,
+        [ingredientsOnly, measuresOnly], MAX_RANGE, pageType, arrayWithPath,
       );
     }
     if (recipeType === 'cocktails') {
@@ -133,7 +127,7 @@ function Provider({ children }) {
       const ingredientsOnly = selectedRange(fullArrayKeys, fullArray, 'Ingredient');
       const measuresOnly = selectedRange(fullArrayKeys, fullArray, 'Measure');
       return concatIngredientsAndMeasures(
-        [ingredientsOnly, measuresOnly], MAX_RANGE, pageType,
+        [ingredientsOnly, measuresOnly], MAX_RANGE, pageType, arrayWithPath,
       );
     }
   }
@@ -188,9 +182,15 @@ function Provider({ children }) {
   const context = { foods,
     showToast,
     drinks,
-    setCheck,
+    exploreDrinks,
+    exploreFoods,
+    historyString,
+    setExploreDrinks,
+    setExploreFoods,
     setFoods,
     setDrinks,
+    setHistoryString,
+    getCurrentProgress,
     ingredientsAndMeasures,
     handleStartRecipe,
     ingredientsToNumbersArray,
