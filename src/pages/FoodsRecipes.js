@@ -22,6 +22,7 @@ export default function FoodsRecipes({ match, location }) {
   const urlID = match.params.id;
   const pathName = location.pathname;
   const type = pathName.split('/')[1] === 'comidas' ? 'meals' : 'cocktails';
+  const buttonVisible = { opacity: isNotDone ? 1 : 0 };
 
   function isRecipeFavorite(path) { // verifica se e favorita
     if (localStorage.getItem('favoriteRecipes') !== null) {
@@ -119,20 +120,20 @@ export default function FoodsRecipes({ match, location }) {
           <Carousel
             genre="Meal"
           />
-          { isNotDone && (
-            <button
-              type="button"
-              data-testid="start-recipe-btn"
-              className="star-recipe-btn"
-              onClick={ () => handleStartRecipe(
-                pathName,
-                type,
-                urlID,
-                ingredientsToNumbersArray(foodSelected[0], type, urlID),
-              ) }
-            >
-              { buttonTextHandler(type, urlID) }
-            </button>)}
+          <button
+            type="button"
+            data-testid="start-recipe-btn"
+            className="star-recipe-btn"
+            style={ buttonVisible }
+            onClick={ () => handleStartRecipe(
+              pathName,
+              type,
+              urlID,
+              ingredientsToNumbersArray(foodSelected[0], type, urlID),
+            ) }
+          >
+            { buttonTextHandler(type, urlID) }
+          </button>
           {showToast}
         </div>
       ) : (
