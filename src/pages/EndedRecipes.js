@@ -48,7 +48,7 @@ export default function EndedRecipes() {
           );
         }) }
       </div>
-      { Array.isArray(recipesDone) && recipesDone // Sem checar se recipes done é um array a pagina falhava em alguns testes
+      { Array.isArray(doneRecipes) && doneRecipes // Sem checar se recipes done é um array a pagina falhava em alguns testes
         .filter((rec) => filter === 'all' || rec.type === filter)
         .map((rec, i) => (
           <DoneRecipeCard key={ i } recipe={ rec } index={ i } />

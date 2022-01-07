@@ -24,13 +24,11 @@ function Provider({ children }) {
   const THREE_SECONDS = 3000;
   const STEP_CHECKED = 'ingredient-step--checked';
 
-  function shareRecipe(recipeLink = '') {
-    console.log(recipeLink);
+  function shareRecipe() {
     const splitted = window.location.href.split('/');
-    const link = recipeLink.length < 1 ? `${splitted[0]}/${splitted[1]}/${splitted[2]}/${
-      splitted[3]}/${splitted[4]}` : recipeLink;
+    const link = `${splitted[0]}/${splitted[1]}/${splitted[2]}/${
+      splitted[3]}/${splitted[4]}`;
     copy(link);
-    console.log(link);
     setShowToast(
       <span className="copied-link copied-link--active">Link copiado!</span>,
     );
