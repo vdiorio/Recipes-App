@@ -100,7 +100,7 @@ export default function DoneRecipeCard({ recipe, index }) {
 }
 
 DoneRecipeCard.propTypes = {
-  index: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
   recipe: PropTypes.shape({
     alcoholicOrNot: PropTypes.string.isRequired,
     area: PropTypes.string.isRequired,
@@ -109,7 +109,7 @@ DoneRecipeCard.propTypes = {
     id: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    tags: PropTypes.string.isRequired,
+    tags: PropTypes.arrayOf(PropTypes.string).isRequired,
     type: PropTypes.string.isRequired,
   }).isRequired,
 };

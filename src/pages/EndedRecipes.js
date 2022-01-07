@@ -22,11 +22,11 @@ export default function EndedRecipes() {
         role="group"
         aria-label="Basic radio toggle button group"
       >
-        { categorias.map((cat) => {
+        { categorias.map((cat, i) => {
           let filterName = cat === 'food' ? 'comida' : 'bebida'; // o filtro está sendo salvo no localStorage com os nomes em portugues
           if (cat === 'all') filterName = cat; // para poder filtrar corretamente criei essa lógica para simplificar o estado do filtro
           return (
-            <>
+            <div key={ i }>
               <input
                 type="checkbox"
                 className="btn-check"
@@ -44,11 +44,12 @@ export default function EndedRecipes() {
                 { cat }
                 <input className="btn-check" type="radio" />
               </label>
-            </>
+            </div>
           );
         }) }
       </div>
-      { doneRecipes.filter((rec) => filter === 'all' || rec.type === filter)
+      { Array.isArray(recipesDone) && recipesDone // Sem checar se recipes done é um array a pagina falhava em alguns testes
+        .filter((rec) => filter === 'all' || rec.type === filter)
         .map((rec, i) => (
           <DoneRecipeCard key={ i } recipe={ rec } index={ i } />
         )) }
