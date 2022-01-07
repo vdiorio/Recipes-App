@@ -21,6 +21,9 @@ export function saveRecipeInProgress(type, id, ingredientsArray) { // cria e adm
 }
 
 export function manageRecipeInProgress(newArray, type, id) {
+  if (localStorage.getItem('inProgressRecipes') === null) {
+    saveRecipeInProgress(type, id, newArray);
+  }
   localStorage.setItem('inProgressRecipes', JSON.stringify({
     ...JSON.parse(localStorage.getItem('inProgressRecipes')),
     [type]: {
