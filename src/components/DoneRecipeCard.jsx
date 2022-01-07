@@ -53,47 +53,49 @@ export default function DoneRecipeCard({ recipe, index }) {
           width={ 130 }
         />
       </Link>
-      <div style={ { display: 'flex', alignContent: 'space-between' } }>
-        <span className="recipe-type" data-testid={ `${index}-horizontal-top-text` }>
-          { `${alcoholicOrNot.length > 0 ? alcoholicOrNot : area} - ${category}` }
-        </span>
-        <button
-          type="button"
-          className="media-btn"
-          onClick={ () => showIndividualToast(link.join('/')) }
-          style={ { justifySelf: 'flex-end' } }
-        >
-          <img
-            data-testid={ `${index}-horizontal-share-btn` }
-            src={ shareIcon }
-            alt="Share Icon"
-            className="media-btn-img"
-          />
-        </button>
-        {showToast}
-      </div>
-      <Link to={ `/${type}s/${id}` }>
-        <h6
-          data-testid={ `${index}-horizontal-name` }
-        >
-          {name}
-        </h6>
-      </Link>
-      <span data-testid={ `${index}-horizontal-done-date` }>
-        { `Feita em: ${doneDate}` }
-      </span>
       <div>
-        Tags:&nbsp;
-        { tags.map((tag) => (
-          <div
-            key={ tag }
-            className="badge rounded-pill"
-            data-testid={ `0-${tag}-horizontal-tag` }
+        {showToast}
+        <div style={ { display: 'flex', justifyContent: 'space-between', width: 180 } }>
+          <span className="recipe-type" data-testid={ `${index}-horizontal-top-text` }>
+            { `${alcoholicOrNot.length > 0 ? alcoholicOrNot : area} - ${category}` }
+          </span>
+          <button
+            type="button"
+            className="media-btn"
+            onClick={ () => showIndividualToast(link.join('/')) }
+            style={ { justifySelf: 'flex-end' } }
           >
-            { tag }
+            <img
+              data-testid={ `${index}-horizontal-share-btn` }
+              src={ shareIcon }
+              alt="Share Icon"
+              className="media-btn-img"
+            />
+          </button>
+        </div>
+        <Link to={ `/${type}s/${id}` }>
+          <h6
+            data-testid={ `${index}-horizontal-name` }
+          >
+            {name}
+          </h6>
+        </Link>
+        <span data-testid={ `${index}-horizontal-done-date` }>
+          { `Feita em: ${doneDate}` }
+        </span>
+        <div>
+          Tags:&nbsp;
+          { tags.map((tag) => (
+            <div
+              key={ tag }
+              className="badge rounded-pill"
+              data-testid={ `0-${tag}-horizontal-tag` }
+            >
+              { tag }
 &nbsp;
-          </div>
-        )) }
+            </div>
+          )) }
+        </div>
       </div>
     </div>
   );

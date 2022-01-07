@@ -63,33 +63,35 @@ export default function FavoriteRecipeCard({ recipe, index, removeFavorite }) {
             </h6>
           </Link>
         </div>
-        <button
-          type="button"
-          className="media-btn"
-          onClick={ () => showIndividualToast(link.join('/')) }
-          style={ { marginTop: 20 } }
-        >
-          <img
-            data-testid={ `${index}-horizontal-share-btn` }
-            src={ shareIcon }
-            alt="Share Icon"
-            className="media-btn-img"
-          />
-        </button>
-        {showToast}
-        <button
-          type="button"
-          className="media-btn"
-          style={ { marginTop: 20 } }
-          onClick={ () => removeFavorite(index) }
-        >
-          <img
-            data-testid={ `${index}-horizontal-favorite-btn` }
-            src={ blackHeartIcon }
-            alt="Share Icon"
-            className="media-btn-img"
-          />
-        </button>
+        <div style={ { display: 'flex', justifyContent: 'space-between', width: 150 } }>
+          <button
+            type="button"
+            className="media-btn"
+            onClick={ () => showIndividualToast(link.join('/')) }
+            style={ { marginTop: 20 } }
+          >
+            <img
+              data-testid={ `${index}-horizontal-share-btn` }
+              src={ shareIcon }
+              alt="Share Icon"
+              className="media-btn-img"
+            />
+          </button>
+          {showToast}
+          <button
+            type="button"
+            className="media-btn"
+            style={ { marginTop: 20 } }
+            onClick={ () => removeFavorite(index) }
+          >
+            <img
+              data-testid={ `${index}-horizontal-favorite-btn` }
+              src={ blackHeartIcon }
+              alt="Share Icon"
+              className="media-btn-img"
+            />
+          </button>
+        </div>
       </div>
     </div>
   );
