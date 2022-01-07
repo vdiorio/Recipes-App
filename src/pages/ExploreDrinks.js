@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Explore.css';
 import { useHistory } from 'react-router-dom';
 import GenericHeader from '../components/GenericHeader';
+import Footer from '../components/Footer';
 
 export default function ExploreDrinks() {
   const [idDrinksRandom, setIdDrinksRandom] = useState();
@@ -47,6 +48,7 @@ export default function ExploreDrinks() {
           </button>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

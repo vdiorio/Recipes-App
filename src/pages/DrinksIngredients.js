@@ -1,13 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import ReactLoading from 'react-loading';
+import { useLocation, Link } from 'react-router-dom';
 import fetchDrinkAPI from '../helpers/FetchDrinkAPI';
 import './DrinksIngredients.css';
 import GenericHeader from '../components/GenericHeader';
+import Footer from '../components/Footer';
+import contextAPI from '../context/ContextAPI';
 
 export default function DrinksIngredients() {
   const [ingredientsList, setIngredientsList] = useState([]);
-  const value = 'Explorar Ingredientes';
+  const { setExploreDrinks, setHistoryString } = useContext(contextAPI);
+  const location = useLocation();
   const CARDS_LIMIT = 12;
+  const value = 'Explorar Ingredientes';
+
+  function setByIngredient(ingredientName) {
+    setHistoryString(location.pathname);
+    fetchDrinkAPI(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredientName}`).then((r) => {
+      setExploreDrinks(r.drinks.filter((_m, i) => i < CARDS_LIMIT));
+    });
+  }
 
   useEffect(() => {
     fetchDrinkAPI('https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list')
@@ -19,35 +31,40 @@ export default function DrinksIngredients() {
     <div>
       <GenericHeader value={ value } />
       <div className="ingredients-list">
-        {ingredientsList
-          ? ingredientsList.map((ingredient, index) => (
-            <div
-              className="ingredient"
-              key={ index }
-              data-testid={ `${index}-ingredient-card` }
-            >
-              <img
-                className="ingredient-img"
-                src={ `https://www.thecocktaildb.com/images/ingredients/${ingredient.strIngredient1}-Small.png` }
-                alt={ ingredient.strIngredient1 }
-                data-testid={ `${index}-card-img` }
-              />
-              <p
-                data-testid={ `${index}-card-name` }
-                className="ingredient-name"
+        {
+          ingredientsList
+            ? ingredientsList.map((ingredient, index) => (
+              <Link
+                to="/bebidas"
+                className="ingredient"
+                key={ index }
+                data-testid={ `${index}-ingredient-card` }
+                onClick={ () => setByIngredient(ingredient.strIngredient1) }
               >
-                {ingredient.strIngredient1}
-              </p>
-            </div>
-          ))
-          : (
-            <ReactLoading
-              type="spinningBubbles"
-              color="cyan"
-              height={ 30 }
-              width={ 30 }
-            />)}
+                <img
+                  className="ingredient-img"
+                  src={ `https://www.thecocktaildb.com/images/ingredients/${ingredient.strIngredient1}-Small.png` }
+                  alt={ ingredient.strIngredient1 }
+                  data-testid={ `${index}-card-img` }
+                />
+                <p
+                  data-testid={ `${index}-card-name` }
+                  className="ingredient-name"
+                >
+                  {ingredient.strIngredient1}
+                </p>
+              </Link>
+            ))
+            : (
+              <ReactLoading
+                type="spinningBubbles"
+                color="cyan"
+                height={ 30 }
+                width={ 30 }
+              />)
+        }
       </div>
+      <Footer />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import ReactLoading from 'react-loading';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import FetchFoodApi from '../helpers/FetchFoodApi';
 import ContextAPI from '../context/ContextAPI';
 import RecipeCard from '../components/RecipeCard';
@@ -8,8 +9,9 @@ import CategoryButtons from '../components/CategoryButtons';
 import '../components/RecipeCard.css';
 
 export default function Foods() {
+  const { setFoods, foods, exploreFoods,
+    historyString, setHistoryString } = useContext(ContextAPI);
   const text = 'Comidas';
-  const { setFoods, foods } = useContext(ContextAPI);
   const [categories, setCategories] = useState([]);
   const [categoryFilter, setFilter] = useState('All');
   const MAX_CARDS = 12;
@@ -24,6 +26,7 @@ export default function Foods() {
   }, [setFoods]);
 
   const handleFilterChange = (filter) => {
+    setHistoryString('');
     if (filter !== categoryFilter && filter !== 'All') {
       setFoods([]);
       const URI = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${filter}`;
@@ -38,6 +41,27 @@ export default function Foods() {
       });
     }
   };
+
+  function whatToRender() {
+    console.log(document.referrer);
+    return historyString.includes('/explorar/comidas/ingredientes')
+      ? exploreFoods.map((food, index) => (
+        <RecipeCard
+          recipe={ food }
+          key={ `${food.idMeal}${index}` }
+          index={ index }
+          place="main"
+        />))
+      : (
+        foods.map((food, index) => (
+          <RecipeCard
+            recipe={ food }
+            key={ food.idMeal }
+            index={ index }
+            place="main"
+          />))
+      );
+  }
 
   return (
     <div>
@@ -67,14 +91,7 @@ export default function Foods() {
       >
         {
           foods.length > 0
-            ? foods.map((food, index) => (
-              <RecipeCard
-                recipe={ food }
-                key={ food.idMeal }
-                index={ index }
-                place="main"
-              />))
-            : (
+            ? whatToRender() : (
               <ReactLoading
                 type="spinningBubbles"
                 color="cyan"
@@ -82,7 +99,9 @@ export default function Foods() {
                 width={ 30 }
               />)
         }
+
       </div>
+      <Footer />
     </div>
   );
 }
