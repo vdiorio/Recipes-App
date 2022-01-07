@@ -19,8 +19,8 @@ export default function Header({ text }) {
           <img
             src={ profileIcon }
             alt="profile-icon"
-            data-testid="profile-top-btn"
             className="profile-button"
+            data-testid="profile-top-btn"
           />
         </button>
         <h1 data-testid="page-title">

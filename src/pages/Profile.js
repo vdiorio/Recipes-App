@@ -5,7 +5,8 @@ import GenericHeader from '../components/GenericHeader';
 
 export default function Profile() {
   const value = 'Perfil';
-  const { email } = JSON.parse(localStorage.getItem('user'));
+  const localStorageReturn = localStorage.getItem('user');
+  const email = localStorageReturn === null ? '' : JSON.parse(localStorageReturn);
 
   return (
     <div>

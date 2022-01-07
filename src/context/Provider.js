@@ -177,6 +177,8 @@ function Provider({ children }) {
     return 'Iniciar Receita';
   }
 
+  const goesTo = (path) => history.push(`/${path}`);
+
   const context = { foods,
     showToast,
     drinks,
@@ -199,6 +201,7 @@ function Provider({ children }) {
     linkToInProgress,
     showComponent,
     setShowComponent,
+    goesTo,
   };
   return (
     <AppContext.Provider value={ context }>
