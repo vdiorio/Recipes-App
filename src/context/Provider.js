@@ -179,7 +179,7 @@ function Provider({ children }) {
     return 'Iniciar Receita';
   }
 
-  const goesTo = (path = '') => history.push(`/${path}`);
+  const goesTo = (path) => history.push(`/${path}`);
 
   const context = { foods,
     showToast,
