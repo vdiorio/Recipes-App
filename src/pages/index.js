@@ -18,11 +18,13 @@ import Profile from './Profile';
 import EndedRecipes from './EndedRecipes';
 import FavoritesRecipes from './FavoritesRecipes';
 import PageNotFound from './NotFound';
+import WelcomePage from './WelcomePage';
 
 function Routes() {
   return (
     <Switch>
-      <Route exact path="/" component={ Login } />
+      <Route exact path="/" component={ WelcomePage } />
+      <Route exact path="/login" component={ Login } />
       <Route exact path="/comidas" component={ Foods } />
       <Route exact path="/bebidas" component={ Drinks } />
       <Route exact path="/comidas/:id" component={ FoodsRecipes } />

@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useState } from 'react';
 import ReactLoading from 'react-loading';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import shareIcon from '../images/shareIcon.svg';
 import './FoodsInProgress.css';
 import fetchFoodAPI from '../helpers/FetchFoodApi';

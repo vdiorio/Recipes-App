@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import ReactLoading from 'react-loading';
 // import placeHolder from '../tests/placeHolder';
 import shareIcon from '../images/shareIcon.svg';

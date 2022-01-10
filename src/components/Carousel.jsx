@@ -4,7 +4,7 @@ import RecipeCard from './RecipeCard';
 // import ContextAPI from '../context/ContextAPI';
 import './Carousel.css';
 import leftArrow from '../images/leftArrow.svg';
-import rightArrow from '../images/rightArrow.svg';
+// import rightArrow from '../images/rightArrow.svg';
 import fetchFoodAPI from '../helpers/FetchFoodApi';
 import fetchDrinkAPI from '../helpers/FetchDrinkAPI';
 

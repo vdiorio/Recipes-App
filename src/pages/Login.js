@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { SaveLocalStorage } from '../helpers/SaveLocalStorage';
 import rockGlass from '../images/rockGlass.svg';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -41,7 +40,9 @@ function Login() {
   return (
 
     <div className="meals">
-      <span className="logo">TRYBE</span>
+      <h1 className="text-3xl font-bold underline text-red-600">TRYBE</h1>
+      <h2 className="font-bold underline text-red-600">TRYBE</h2>
+
       <object
         className="rocksGlass"
         type="image/svg+xml"
