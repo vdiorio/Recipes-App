@@ -1,7 +1,18 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import tw from 'twin.macro';
 import { Link } from 'react-router-dom';
 
+const ImgCard = tw.img`
+rounded-2xl
+w-full
+h-28
+`;
+
+const TextFoodCard = tw.h6`
+  text-gray-600 
+  font-family[Itim, cursive]
+`;
 export default function RecipeCard({ recipe, index, place }) {
   const recipeType = recipe.idDrink ? 'Drink' : 'Meal'; // Detecta se está recebendo drinks ou comidas
   const linkReference = recipe.idDrink ? 'bebidas' : 'comidas'; // Detecta se está recebendo drinks ou comidas
@@ -14,20 +25,19 @@ export default function RecipeCard({ recipe, index, place }) {
       to={ `/${linkReference}/${id}` }
       data-testid={ `${index}-recipe-card` }
     >
-      <img
+      <ImgCard
         className={ place === 'main' ? 'card-img-top' : 'recommended-image' }
         src={ image }
         alt={ `${recipe.strArea} meal` }
         data-testid={ `${index}-card-img` }
       />
-      <h5
-        className="card-title"
+      <TextFoodCard
         data-testid={
           place === 'main' ? `${index}-card-name` : `${index}-recomendation-title`
         }
       >
         {name}
-      </h5>
+      </TextFoodCard>
     </Link>
   );
 }

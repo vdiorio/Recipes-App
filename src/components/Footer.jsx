@@ -1,15 +1,32 @@
 import React, { useContext } from 'react';
+import tw from 'twin.macro';
 import AppContext from '../context/ContextAPI';
 import drinkIcon from '../images/drinkIcon.svg';
 import exploreIcon from '../images/exploreIcon.svg';
 import mealIcon from '../images/mealIcon.svg';
-import './Footer.css';
+
+const FooterContainer = tw.header`
+bg-white
+fixed
+w-full
+bottom-0
+left-0
+flex
+content-center
+justify-between
+border-b-0
+border-gray-600
+flex-row
+opacity-50
+hover:opacity-100
+p-3
+`;
 
 export default function Footer() {
   const { goesTo } = useContext(AppContext);
 
   return (
-    <footer data-testid="footer">
+    <FooterContainer data-testid="footer">
       <button type="button" onClick={ () => goesTo('bebidas') }>
         <img
           src={ drinkIcon }
@@ -23,6 +40,6 @@ export default function Footer() {
       <button type="button" onClick={ () => goesTo('comidas') }>
         <img src={ mealIcon } alt="Garfo e faca" data-testid="food-bottom-btn" />
       </button>
-    </footer>
+    </FooterContainer>
   );
 }

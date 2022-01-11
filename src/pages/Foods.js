@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import ReactLoading from 'react-loading';
+import tw from 'twin.macro';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import FetchFoodApi from '../helpers/FetchFoodApi';
@@ -8,10 +9,39 @@ import RecipeCard from '../components/RecipeCard';
 import CategoryButtons from '../components/CategoryButtons';
 import '../components/RecipeCard.css';
 
+const MainContainer = tw.main`
+  w-screen
+  h-screen
+  flex
+  flex-col
+`;
+
+const CategoriesContainer = tw.div`
+  w-full  
+  fixed
+  top-14
+`;
+const CardsContainer = tw.div`
+  w-full
+  flex
+  flex-col
+
+  
+`;
+
+const CardsFoodDiv = tw.div`
+  w-full
+  h-full
+  flex
+  flex-wrap
+  justify-evenly
+
+`;
+
 export default function Foods() {
   const { setFoods, foods, exploreFoods,
     historyString, setHistoryString } = useContext(ContextAPI);
-  const text = 'Comidas';
+  const text = 'Foods';
   const [categories, setCategories] = useState([]);
   const [categoryFilter, setFilter] = useState('All');
   const MAX_CARDS = 12;
@@ -64,44 +94,42 @@ export default function Foods() {
   }
 
   return (
-    <div>
+    <MainContainer>
       <Header text={ text } />
-      {window.scroll(0, 0)}
-      {
-        categories.length > 0
-          ? ( // Cria um container para os botões de categoria, o botão "TODOS" e mapeia as categorias de acordo com o retorno da API
-            <CategoryButtons
-              handleFilterChange={ handleFilterChange }
-              categories={ categories }
-              filter={ categoryFilter }
-            />
-          )
-          : (
-            <div className="spinner-border text-primary" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </div>)
-      }
-      <div
-        className="card-container"
-        style={ {
-          display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: 'space-evenly',
-        } }
-      >
+      <CategoriesContainer>
         {
-          foods.length > 0
-            ? whatToRender() : (
-              <ReactLoading
-                type="spinningBubbles"
-                color="cyan"
-                height={ 30 }
-                width={ 30 }
-              />)
+          categories.length > 0
+            ? ( // Cria um container para os botões de categoria, o botão "TODOS" e mapeia as categorias de acordo com o retorno da API
+              <CategoryButtons
+                handleFilterChange={ handleFilterChange }
+                categories={ categories }
+                filter={ categoryFilter }
+              />
+            )
+            : (
+              <div className="spinner-border text-primary" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>)
         }
 
-      </div>
+      </CategoriesContainer>
+      <CardsContainer>
+        <CardsFoodDiv>
+          {
+            foods.length > 0
+              ? whatToRender() : (
+                <ReactLoading
+                  type="spinningBubbles"
+                  color="cyan"
+                  height={ 30 }
+                  width={ 30 }
+                />)
+          }
+
+        </CardsFoodDiv>
+        <div className="w-full h-16" />
+      </CardsContainer>
       <Footer />
-    </div>
+    </MainContainer>
   );
 }

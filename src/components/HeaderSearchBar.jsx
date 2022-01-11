@@ -1,8 +1,35 @@
 import React, { useState, useContext } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
+import tw from 'twin.macro';
 import AppContext from '../context/ContextAPI';
 import foodRadio from '../helpers/foodRadio';
 import drinkRadio from '../helpers/drinkRadio';
+
+const SearchContainer = tw.header`
+  w-full
+  px-3
+`;
+
+const FormInputsSearch = tw.form`
+  w-full
+  px-3
+  flex
+  flex-row
+  justify-between
+  my-2
+  font-serif
+`;
+
+const InputSearch = tw.input`
+  w-full
+  px-2
+  bg-gray-100
+  rounded-2xl
+  h-8
+  border-2
+  text-center
+  border-black
+`;
 
 export default function HeaderSearchBar() {
   const { setFoods, setShowComponent, setDrinks } = useContext(AppContext);
@@ -73,16 +100,16 @@ export default function HeaderSearchBar() {
   };
 
   return (
-    <div>
+    <SearchContainer>
       <div>
-        <input
+        <InputSearch
           type="text"
-          placeholder="pesquisar receita"
+          placeholder="search recipes"
           data-testid="search-input"
           onChange={ ({ target: { value } }) => setInput(value) }
         />
       </div>
-      <form>
+      <FormInputsSearch>
         <label htmlFor="ingrediente">
           <input
             type="radio"
@@ -92,7 +119,7 @@ export default function HeaderSearchBar() {
             data-testid="ingredient-search-radio"
             onChange={ ({ target }) => handleChange(target) }
           />
-          Ingrediente
+          &nbsp;Ingredients
         </label>
         <label htmlFor="nome">
           <input
@@ -103,7 +130,7 @@ export default function HeaderSearchBar() {
             data-testid="name-search-radio"
             onChange={ ({ target }) => handleChange(target) }
           />
-          Nome
+          &nbsp;By name
         </label>
         <label htmlFor="primeira-letra">
           <input
@@ -114,18 +141,19 @@ export default function HeaderSearchBar() {
             data-testid="first-letter-search-radio"
             onChange={ ({ target }) => handleChange(target) }
           />
-          Primeira letra
+          &nbsp;First letter
         </label>
-      </form>
-      <div>
+      </FormInputsSearch>
+      <div className="my-2 flex justify-center">
         <button
+          className="bg-yellow-300 rounded-md w-40 font-bold"
           type="button"
           data-testid="exec-search-btn"
           onClick={ () => ingredientResponse(input, radioInput) }
         >
-          Buscar
+          Search
         </button>
       </div>
-    </div>
+    </SearchContainer>
   );
 }
