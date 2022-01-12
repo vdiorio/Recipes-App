@@ -1,15 +1,27 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import tw from 'twin.macro';
-import { Link } from 'react-router-dom';
 
 const ImgCard = tw.img`
 rounded-2xl
-w-full
-h-28
+p-0
+w-80
+h-52
+object-cover
+sm:w-96
+sm:h-64
+`;
+const LinkContainer = tw.button`
+text-decoration[none]
+p-0
+m-4
 `;
 
 const TextFoodCard = tw.h6`
+  text-left
+  m-2
+  sm:text-2xl
   text-gray-600 
   font-family[Itim, cursive]
 `;
@@ -19,10 +31,17 @@ export default function RecipeCard({ recipe, index, place }) {
   const name = recipe[`str${recipeType}`]; // Acessa a propriedade de acordo com o tipo de receita recebido
   const image = recipe[`str${recipeType}Thumb`];
   const id = recipe[`id${recipeType}`];
+  const history = useHistory();
+
+  const handleClick = (link) => {
+    history.push(link);
+  };
+
   return (
-    <Link
+    <LinkContainer
+      type="button"
       className={ place === 'main' ? 'card' : 'recommended-card' }
-      to={ `/${linkReference}/${id}` }
+      onClick={ () => handleClick(`/${linkReference}/${id}`) }
       data-testid={ `${index}-recipe-card` }
     >
       <ImgCard
@@ -38,7 +57,7 @@ export default function RecipeCard({ recipe, index, place }) {
       >
         {name}
       </TextFoodCard>
-    </Link>
+    </LinkContainer>
   );
 }
 

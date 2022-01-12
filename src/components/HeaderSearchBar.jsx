@@ -17,7 +17,9 @@ const FormInputsSearch = tw.form`
   flex-row
   justify-between
   my-2
-  font-serif
+  text-gray-600 
+  font-family[Itim, cursive]
+  sm:justify-evenly
 `;
 
 const InputSearch = tw.input`
@@ -146,7 +148,7 @@ export default function HeaderSearchBar() {
       </FormInputsSearch>
       <div className="my-2 flex justify-center">
         <button
-          className="bg-yellow-300 rounded-md w-40 font-bold"
+          className="bg-yellow-300 rounded-md w-40 font-bold sm:w-80"
           type="button"
           data-testid="exec-search-btn"
           onClick={ () => ingredientResponse(input, radioInput) }

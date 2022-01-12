@@ -1,14 +1,12 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
+import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from 'react-icons/io';
 import RecipeCard from './RecipeCard';
-// import ContextAPI from '../context/ContextAPI';
 import './Carousel.css';
-import leftArrow from '../images/leftArrow.svg';
-// import rightArrow from '../images/rightArrow.svg';
 import fetchFoodAPI from '../helpers/FetchFoodApi';
 import fetchDrinkAPI from '../helpers/FetchDrinkAPI';
 
-export default function Carousel({ genre }) {
+export default function CarouselPhotos({ genre }) {
   const [recommended, setRecommended] = useState([]);
   const [current, setCurrent] = useState(0);
   const MAX_CARDS = 6;
@@ -30,13 +28,13 @@ export default function Carousel({ genre }) {
   }, [genre]);
 
   function previousSlides() {
-    const INDEX_LIMIT = 4;
-    setCurrent(current === 0 ? INDEX_LIMIT : current - 2);
+    const INDEX_LIMIT = 5;
+    setCurrent(current === 0 ? INDEX_LIMIT : current - 1);
   }
 
   function nextSlides() {
-    const INDEX_LIMIT = 4;
-    setCurrent(current === INDEX_LIMIT ? 0 : current + 2);
+    const INDEX_LIMIT = 5;
+    setCurrent(current === INDEX_LIMIT ? 0 : current + 1);
   }
 
   function drinksRecommendation() {
@@ -46,16 +44,18 @@ export default function Carousel({ genre }) {
         data-testid={ `${index}-recomendation-card` }
         className={
           current === index // verificando card atual
-          || current + 1 === index ? `recommended active ${
+            ? `recommended active ${
               index % 2 === 0 ? 'left' : 'right' // verificando posicao do card
             }` : 'recommended'
         }
       >
+
         <RecipeCard
           recipe={ drink }
           index={ index }
           place="carousel"
         />
+
       </div>
     ));
   }
@@ -67,7 +67,7 @@ export default function Carousel({ genre }) {
         data-testid={ `${index}-recomendation-card` }
         className={
           current === index // verificando card atual
-          || current + 1 === index ? `recommended active ${
+            ? `recommended active ${
               index % 2 === 0 ? 'left' : 'right' // verificando posicao do card
             }` : 'recommended'
         }
@@ -77,32 +77,36 @@ export default function Carousel({ genre }) {
           index={ index }
           place="carousel"
         />
+
       </div>
     ));
   }
 
   return (
+
     <div className="carousel">
       <button type="button" className="slider previous" onClick={ previousSlides }>
-        <img src={ leftArrow } alt="previous" />
+        <IoIosArrowDropleftCircle />
       </button>
+
       <div className="carousel-container">
         {genre.includes('Meal')
-      && (
-        drinksRecommendation()
-      )}
+        && (
+          drinksRecommendation()
+        )}
         {genre.includes('Drink')
-      && (
-        foodsRecommendation()
-      )}
+        && (
+          foodsRecommendation()
+        )}
+
       </div>
       <button type="button" className="slider next" onClick={ nextSlides }>
-        <img src={ rightArrow } alt="next" />
+        <IoIosArrowDroprightCircle />
       </button>
     </div>
   );
 }
 
-Carousel.propTypes = {
+CarouselPhotos.propTypes = {
   genre: PropTypes.string.isRequired,
 };

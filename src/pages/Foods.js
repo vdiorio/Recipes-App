@@ -14,25 +14,31 @@ const MainContainer = tw.main`
   h-screen
   flex
   flex-col
+  content-center
+  sm:w-5/6
+  sm:mx-auto
 `;
 
 const CategoriesContainer = tw.div`
   w-full  
   fixed
   top-14
+  flex
+  justify-center
+  sm:w-5/6
 `;
 const CardsContainer = tw.div`
   w-full
   flex
   flex-col
-
-  
+  mt-32
 `;
 
 const CardsFoodDiv = tw.div`
   w-full
   h-full
   flex
+  flex-row
   flex-wrap
   justify-evenly
 

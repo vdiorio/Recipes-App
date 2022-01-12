@@ -11,7 +11,13 @@ const NavCategories = tw.div`
   border-b-0
   px-3
   m-1.5
+  z-20
   text-gray-600
+  sm:mx-auto
+  sm:left-auto
+  text-gray-600 
+  sm:h-10
+  font-family[Itim, cursive]
 
 `;
 export default function CategoryButtons({ handleFilterChange, categories, filter }) {

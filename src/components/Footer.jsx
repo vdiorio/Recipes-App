@@ -20,6 +20,9 @@ flex-row
 opacity-50
 hover:opacity-100
 p-3
+sm:w-5/6
+sm:mx-auto
+sm:left-auto
 `;
 
 export default function Footer() {

@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useState } from 'react';
 import ReactLoading from 'react-loading';
+import tw from 'twin.macro';
+import styled from 'styled-components';
 import shareIcon from '../images/shareIcon.svg';
 import './FoodsInProgress.css';
 import fetchFoodAPI from '../helpers/FetchFoodApi';
@@ -9,6 +11,41 @@ import favorite from '../images/whiteHeartIcon.svg';
 import favoriteChecked from '../images/blackHeartIcon.svg';
 import IngredientsCheckList from '../components/IngredientsCheckList';
 
+const MainContainer = tw.main`
+  w-full
+`;
+
+const TextRecipeContainer = tw.h6`
+w-full
+p-3
+text-gray-600 
+font-family[Itim, cursive]
+`;
+
+const TitleRecipe = tw.h6`
+  text-gray-600 
+  font-family[Itim, cursive]
+  text-3xl
+`;
+
+const ButtonStartRecipe = styled.button`   
+  transform: translateX(-50%);
+
+  ${tw`
+  bg-yellow-300
+  w-48
+  h-10
+  rounded-3xl
+  font-bold 
+  drop-shadow-lg
+  bottom-0
+  left-1/2
+  fixed
+  text-center
+  z-30
+  hover:w-56
+  `}
+  `;
 export default function FoodsInProgress({ match, location }) {
   const {
     shareRecipe, showToast, handleFavorite, handleFinish,
@@ -51,7 +88,7 @@ export default function FoodsInProgress({ match, location }) {
   }, [urlID, pathName]);
 
   return (
-    <div className="all">
+    <MainContainer>
       { foodSelected ? (
         <div>
           <img
@@ -60,8 +97,7 @@ export default function FoodsInProgress({ match, location }) {
             data-testid="recipe-photo"
             className="recipe-photo"
           />
-          <div className="title-share-favorite">
-            <h1 data-testid="recipe-title">{foodSelected[0].strMeal}</h1>
+          <div className="absolute  top-4 right-4">
             <button
               type="button"
               data-testid="share-btn"
@@ -89,22 +125,29 @@ export default function FoodsInProgress({ match, location }) {
               />
             </button>
           </div>
-          <p data-testid="recipe-category">{foodSelected[0].strCategory}</p>
-          <IngredientsCheckList
-            recipeData={ foodSelected[0] }
-            type={ type }
-            urlID={ urlID }
-            onChange={ () => checkDisabled() }
-          />
-          <h3>Instructions</h3>
-          <p
-            data-testid="instructions"
-            className="instructions-in-progress"
-          >
-            {foodSelected[0].strInstructions}
+          <TextRecipeContainer>
+            <TitleRecipe
+              data-testid="recipe-title"
+            >
+              {foodSelected[0].strMeal}
+            </TitleRecipe>
+            <p data-testid="recipe-category">{foodSelected[0].strCategory}</p>
+            <IngredientsCheckList
+              recipeData={ foodSelected[0] }
+              type={ type }
+              urlID={ urlID }
+              onChange={ () => checkDisabled() }
+            />
+            <h3 className="font-bold underline my-2 ">Instructions</h3>
+            <p
+              data-testid="instructions"
+              className="instructions-in-progress"
+            >
+              {foodSelected[0].strInstructions}
 
-          </p>
-          <button
+            </p>
+          </TextRecipeContainer>
+          <ButtonStartRecipe
             type="button"
             data-testid="finish-recipe-btn"
             className="finish-recipe-btn"
@@ -112,7 +155,7 @@ export default function FoodsInProgress({ match, location }) {
             onClick={ () => handleFinish(foodSelected[0]) }
           >
             Finalizar Receita
-          </button>
+          </ButtonStartRecipe>
           {showToast}
         </div>
       ) : (
@@ -123,7 +166,7 @@ export default function FoodsInProgress({ match, location }) {
           width={ 30 }
         />
       )}
-    </div>
+    </MainContainer>
   );
 }
 

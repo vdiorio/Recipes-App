@@ -20,6 +20,9 @@ const HeaderContinainer = tw.header`
   flex-col
   px-3
   z-10
+  sm:w-5/6
+  sm:mx-auto
+  sm:left-auto
 `;
 
 const HeaderNav = tw.nav`
