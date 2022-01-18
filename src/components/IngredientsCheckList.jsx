@@ -26,7 +26,7 @@ export default function IngredientsCheckList({ recipeData, type, urlID, onChange
   }, [type, urlID]);
   return (
     <div onChange={ () => onChange() }>
-      <h3 className="font-bold underline my-2">Ingredients</h3>
+      <h3 className="underline my-2">Ingredients</h3>
       { ingredientsAndMeasures(recipeData, type, '', [type, urlID]) }
     </div>
   );

@@ -11,7 +11,7 @@ const CardContainerCarousel = tw.div`
   w-full
   content-center
 `;
-export default function CarouselPhotos({ genre }) {
+export default function Carousel({ genre }) {
   const [recommended, setRecommended] = useState([]);
   const [current, setCurrent] = useState(0);
   const MAX_CARDS = 6;
@@ -112,6 +112,6 @@ export default function CarouselPhotos({ genre }) {
   );
 }
 
-CarouselPhotos.propTypes = {
+Carousel.propTypes = {
   genre: PropTypes.string.isRequired,
 };

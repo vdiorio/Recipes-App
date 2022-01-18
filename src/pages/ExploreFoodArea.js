@@ -1,14 +1,37 @@
 import React, { useEffect, useState, useContext } from 'react';
 import ReactLoading from 'react-loading';
+import tw from 'twin.macro';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import { MainContainer } from './HTMLcomponets';
 import './Explore.css';
 import RecipeCard from '../components/RecipeCard';
 import ContextAPI from '../context/ContextAPI';
 import FetchFoodApi from '../helpers/FetchFoodApi';
 
+const CategoriesContainer = tw.div`
+  w-full
+  bg-white
+  fixed
+  top-16
+  flex
+  justify-center
+  sm:w-5/6
+  font-family[Itim, cursive]
+`;
+
+const CardsContainer = tw.div`
+  w-full
+  flex
+  flex-col
+  mt-32
+  justify-between
+  items-center
+  sm:flex-row
+  sm:flex-wrap
+`;
 export default function ExploreFoodArea() {
-  const value = 'Explorar Origem';
+  const value = 'Explore By Local';
   const [areaOfFoods, setAreaOfFoods] = useState([]);
   const [selectedArea, setSelectedArea] = useState('All');
   const { setFoods, foods } = useContext(ContextAPI);
@@ -38,45 +61,39 @@ export default function ExploreFoodArea() {
   });
 
   return (
-    <div>
+    <MainContainer>
       <Header text={ value } />
-      <div className="text-center m-1">
-        <div>
-          <select
-            className="form-control"
-            data-testid="explore-by-area-dropdown"
-            id="selectArea"
-            value={ selectedArea }
-            onChange={ ({ target }) => setSelectedArea(target.value) }
-          >
-            <option
-              value="All"
-              data-testid="All-option"
-            >
-              All
-            </option>
-            { areaOfFoods
-              ? areaOfFoods.map((areas) => (
-                <option
-                  key={ areas.strArea }
-                  data-testid={ `${areas.strArea}-option` }
-                  value={ areas.strArea }
-                >
-                  {areas.strArea}
-                </option>
-              ))
-              : <option> - </option>}
-          </select>
 
-        </div>
-        <div
-          className="card-container"
-          style={ {
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'space-evenly',
-          } }
+      <CategoriesContainer>
+        <select
+          className="w-32 rounded-xl h-8 p-1 m-1"
+          data-testid="explore-by-area-dropdown"
+          id="selectArea"
+          value={ selectedArea }
+          onChange={ ({ target }) => setSelectedArea(target.value) }
         >
+          <option
+            value="All"
+            data-testid="All-option"
+          >
+            All
+          </option>
+          { areaOfFoods
+            ? areaOfFoods.map((areas) => (
+              <option
+                key={ areas.strArea }
+                data-testid={ `${areas.strArea}-option` }
+                value={ areas.strArea }
+              >
+                {areas.strArea}
+              </option>
+            ))
+            : <option> - </option>}
+        </select>
+
+      </CategoriesContainer>
+      <div className="w-full flex justify-center">
+        <CardsContainer className="content-center">
           {
             foods.length > 0
               ? foods.map((food, index) => (
@@ -94,9 +111,9 @@ export default function ExploreFoodArea() {
                   width={ 30 }
                 />)
           }
-        </div>
+        </CardsContainer>
       </div>
       <Footer />
-    </div>
+    </MainContainer>
   );
 }

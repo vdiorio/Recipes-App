@@ -6,7 +6,6 @@
 }
 
 .btn-explore {
-  background-color: #e84a5f;
   border-radius: 2rem;
   height: 100px;
   margin: 20px;
@@ -14,7 +13,6 @@
 }
 
 .btn-explore:hover {
-  background-color: #ff847c;
   color: white;
   height: 117px;
   width: 200px;

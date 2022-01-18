@@ -1,11 +1,25 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
+import tw from 'twin.macro';
 import './DoneRecipeCard.css';
 import { Link } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 
 const copy = require('clipboard-copy');
 
+const FoodDoneContainer = tw.div`
+  border-2
+  border-yellow-300
+  text-gray-600
+  rounded-md
+  flex
+  content-start
+  items-center
+  flex-grow
+  font-family[Itim, cursive]
+  m-2.5
+  flex-flow[column row]
+  `;
 export default function DoneRecipeCard({ recipe, index }) {
   const [showToast, setShowToast] = useState(
     <span className="copied-link">Link copiado!</span>,
@@ -40,23 +54,25 @@ export default function DoneRecipeCard({ recipe, index }) {
   link[3] = `${type}s`;
   link[4] = id; // Tratamento do link para o botão de compartilhamento
   return (
-    <div // Container do card
-      className="done-card"
+    <FoodDoneContainer // Container do card
       data-testid={ `${index}-recipe-card` }
     >
       <Link to={ `/${type}s/${id}` }>
         <img
-          className="card-image"
+          className="card-image p-1"
           src={ image }
           alt={ `${area} meal` }
           data-testid={ `${index}-horizontal-image` }
           width={ 130 }
         />
       </Link>
-      <div>
+      <div className="w-full text-gray-700">
         {showToast}
-        <div style={ { display: 'flex', justifyContent: 'space-between', width: 180 } }>
-          <span className="recipe-type" data-testid={ `${index}-horizontal-top-text` }>
+        <div className="flex justify-between mr-3">
+          <span
+            data-testid={ `${index}-horizontal-top-text` }
+            className="text-xl font-medium"
+          >
             { `${alcoholicOrNot.length > 0 ? alcoholicOrNot : area} - ${category}` }
           </span>
           <button
@@ -69,13 +85,14 @@ export default function DoneRecipeCard({ recipe, index }) {
               data-testid={ `${index}-horizontal-share-btn` }
               src={ shareIcon }
               alt="Share Icon"
-              className="media-btn-img"
+              className=""
             />
           </button>
         </div>
         <Link to={ `/${type}s/${id}` }>
           <h6
             data-testid={ `${index}-horizontal-name` }
+            className="text-gray-600"
           >
             {name}
           </h6>
@@ -83,21 +100,21 @@ export default function DoneRecipeCard({ recipe, index }) {
         <span data-testid={ `${index}-horizontal-done-date` }>
           { `Feita em: ${doneDate}` }
         </span>
-        <div>
+        <div className="flex">
           Tags:&nbsp;
           { tags.map((tag) => (
             <div
               key={ tag }
-              className="badge rounded-pill"
+              className="bg-yellow-200 mx-1"
               data-testid={ `0-${tag}-horizontal-tag` }
             >
               { tag }
-&nbsp;
+              &nbsp;
             </div>
           )) }
         </div>
       </div>
-    </div>
+    </FoodDoneContainer>
   );
 }
 

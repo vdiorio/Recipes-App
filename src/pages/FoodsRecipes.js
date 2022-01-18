@@ -4,12 +4,12 @@ import ReactLoading from 'react-loading';
 import tw from 'twin.macro';
 import styled from 'styled-components';
 import shareIcon from '../images/shareIcon.svg';
-import Carousel from '../components/Carousel';
 import './FoodsRecipes.css';
 import fetchFoodAPI from '../helpers/FetchFoodApi';
 import ContextAPI from '../context/ContextAPI';
 import favorite from '../images/whiteHeartIcon.svg';
 import favoriteChecked from '../images/blackHeartIcon.svg';
+import NewCarousel from '../components/NewCarousel';
 
 const MainContainer = tw.main`
   w-screen
@@ -24,22 +24,22 @@ const RecipeHeader = tw.div`
   sm:flex
   sm:content-center
   sm:w-5/6
-  sm:mx-auto
+  sm:mx-auto sm:mb-10
 `;
 
 const TextRecipeContainer = tw.h6`
 w-full
-p-3
+p-3 sm:text-center sm:mb-6
 text-gray-600 
 font-family[Itim, cursive]
-sm:text-2xl
+sm:text-2xl sm:p-0
 `;
 
 const TitleRecipe = tw.h6`
   text-gray-600 
   font-family[Itim, cursive]
   text-3xl
-  sm:text-5xl
+  sm:text-5xl sm: text-left
 `;
 
 const MidiaContainer = tw.div`
@@ -50,7 +50,6 @@ const MidiaContainer = tw.div`
   text-gray-600 
   content-center
   sm:flex-row
-  height[400px]
   w-full
   mb-16
 `;
@@ -69,8 +68,10 @@ const ButtonStartRecipe = styled.button`
   text-center
   z-30
   hover:w-56
-  sm:hover:w-96 sm:hover:bg-yellow-500
-  sm:w-80 sm:h-16 sm:text-2xl
+  hover:h-12
+  hover:bg-yellow-500
+  sm:hover:w-96
+  sm:w-80 sm:h-14 sm:text-2xl
   `}
   `;
 
@@ -125,7 +126,7 @@ export default function FoodsRecipes({ match, location }) {
                 src={ foodSelected[0].strMealThumb }
                 alt={ foodSelected[0].strMeal }
                 data-testid="recipe-photo"
-                className="sm:w-4/5 sm:mx-auto"
+                className="sm:w-4/5 sm:mx-auto sm:mt-4"
               />
             </div>
             <div className="absolute  top-4 right-4 w-fit sm:right-1/4">
@@ -167,7 +168,7 @@ export default function FoodsRecipes({ match, location }) {
               </TitleRecipe>
               <p
                 data-testid="recipe-category"
-                className="italic"
+                className="italic sm:text-left"
               >
                 {foodSelected[0].strCategory}
               </p>
@@ -200,7 +201,7 @@ export default function FoodsRecipes({ match, location }) {
                 <iframe
                   data-testid="video"
                   title="Recipe Video"
-                  className="w-4/5 h-4/5"
+                  className="sm:h-80 sm:w-11/12"
                   src={ foodSelected[0].strYoutube.replace('watch?v=', 'embed/') }
                 >
                   <p>Your browser does not support this content</p>
@@ -208,7 +209,7 @@ export default function FoodsRecipes({ match, location }) {
             </div>
             <div className="flex flex-col w-full h-full items-center">
               <h3 className="my-3 text-xl underline">Recomendadas</h3>
-              <Carousel
+              <NewCarousel
                 genre="Meal"
               />
             </div>

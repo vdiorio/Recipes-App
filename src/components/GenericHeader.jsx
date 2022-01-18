@@ -8,23 +8,31 @@ import './Header.css';
 const HeaderContinainer = tw.header`
   bg-white
   fixed
-  w-full
+  w-screen
   top-0
   left-0
-  mx-3
+  flex
+  content-center
+  justify-center
+  border-gray-600
+  flex-col
+  px-3
   z-10
 `;
 
 const HeaderNav = tw.nav`
   w-full
-  h-14
+  h-16
   flex
   flex-row
-  text-center
+  justify-between
   text-3xl
   items-center
   z-20
   font-family[Anton]
+  sm:w-5/6
+  sm:mx-auto
+  sm:left-auto
 
 `;
 export default function GenericHeader({ value }) {
@@ -39,7 +47,7 @@ export default function GenericHeader({ value }) {
         >
           <FaUserEdit />
         </button>
-        <div className="w-full text-center absolute">
+        <div className="w-screen text-center fixed left-0">
           <h1 data-testid="page-title">
             { value }
           </h1>
