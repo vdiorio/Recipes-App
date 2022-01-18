@@ -1,11 +1,16 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from 'react-icons/io';
+import tw from 'twin.macro';
 import RecipeCard from './RecipeCard';
 import './Carousel.css';
 import fetchFoodAPI from '../helpers/FetchFoodApi';
 import fetchDrinkAPI from '../helpers/FetchDrinkAPI';
 
+const CardContainerCarousel = tw.div`
+  w-full
+  content-center
+`;
 export default function CarouselPhotos({ genre }) {
   const [recommended, setRecommended] = useState([]);
   const [current, setCurrent] = useState(0);
@@ -39,7 +44,7 @@ export default function CarouselPhotos({ genre }) {
 
   function drinksRecommendation() {
     return recommended.map((drink, index) => (
-      <div
+      <CardContainerCarousel
         key={ drink.idDrink }
         data-testid={ `${index}-recomendation-card` }
         className={
@@ -56,7 +61,7 @@ export default function CarouselPhotos({ genre }) {
           place="carousel"
         />
 
-      </div>
+      </CardContainerCarousel>
     ));
   }
 

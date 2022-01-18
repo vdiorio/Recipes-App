@@ -44,6 +44,7 @@ const ButtonStartRecipe = styled.button`
   text-center
   z-30
   hover:w-56
+  disabled:bg-yellow-100
   `}
   `;
 export default function FoodsInProgress({ match, location }) {

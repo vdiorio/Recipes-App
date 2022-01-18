@@ -17,13 +17,6 @@
   transition-duration: 1s;
 }
 
-/* .recommended.left {
-  left: 10px;
-}
-.recommended.right {
-  right: 10px;
-} */
-
 .card-title {
   color: black;
   padding-left: 5px;
@@ -32,7 +25,7 @@
 
 .carousel {
   height: 240px;
-  width: 350px;
+  width: 100%;
   display: flex;
   position: relative;
   box-sizing: border-box;
