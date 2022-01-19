@@ -117,7 +117,6 @@ export default function FoodsInProgress({ match, location }) {
               />
             </div>
             <div className="absolute  top-4 right-4 w-fit sm:right-1/4">
-              {' '}
               <button
                 type="button"
                 data-testid="share-btn"

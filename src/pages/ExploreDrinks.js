@@ -1,12 +1,35 @@
+/* eslint-disable react/jsx-max-depth */
 import React, { useEffect, useState } from 'react';
 import './Explore.css';
 import { useHistory } from 'react-router-dom';
+import tw from 'twin.macro';
+import { FaRegSurprise } from 'react-icons/fa';
 import GenericHeader from '../components/GenericHeader';
 import Footer from '../components/Footer';
+import { MainContainer, PrincipalContainer } from './HTMLcomponets';
 
+const iconFood = 'https://cdn-icons.flaticon.com/png/512/3025/premium/3025900.png?token=exp=1642607603~hmac=1cba848c0faa67e2511b965308577e43';
+
+const ButtonsContainer = tw.div`
+  flex
+  flex-col
+  content-center
+  items-center
+  sm:flex-row
+  sm:justify-center
+  w-full
+`;
+const ButtonsExplorer = tw.button`
+  bg-yellow-400
+  hover:bg-yellow-500
+  flex
+  items-center
+  justify-center
+
+`;
 export default function ExploreDrinks() {
   const [idDrinksRandom, setIdDrinksRandom] = useState();
-  const value = 'Explorar Bebidas';
+  const value = 'Explore Drinks';
 
   const history = useHistory();
   const handleClick = (page) => {
@@ -24,31 +47,37 @@ export default function ExploreDrinks() {
   });
 
   return (
-    <div>
-      <GenericHeader value={ value } />
-      <div className="text-center m-1">
-        <h2>Explorar Bebidas</h2>
-        <div className="fourth-color d-flex flex-column explore-containter">
-          <button
-            type="button"
-            className="btn btn-explore"
-            data-testid="explore-by-ingredient"
-            onClick={ () => handleClick('explorar/bebidas/ingredientes') }
-          >
-            Por Ingredientes
-          </button>
+    <div className="bg-drinks w-screen h-screen bg-cover">
+      <MainContainer>
 
-          <button
-            type="button"
-            className="btn btn-explore"
-            data-testid="explore-surprise"
-            onClick={ () => handleClick(`bebidas/${idDrinksRandom}`) }
-          >
-            Me Surpreenda!
-          </button>
-        </div>
-      </div>
-      <Footer />
+        <GenericHeader value={ value } />
+        <PrincipalContainer className="text-center m-1">
+          <ButtonsContainer>
+            <ButtonsExplorer
+              type="button"
+              className="btn btn-explore"
+              data-testid="explore-by-ingredient"
+              onClick={ () => handleClick('explorar/bebidas/ingredientes') }
+            >
+              <img src={ iconFood } alt="" className="w-7 h-7 m-1" />
+              By Ingredients
+            </ButtonsExplorer>
+
+            <ButtonsExplorer
+              type="button"
+              className="btn btn-explore"
+              data-testid="explore-surprise"
+              onClick={ () => handleClick(`bebidas/${idDrinksRandom}`) }
+            >
+              <h1 className="text-2xl m-1">
+                <FaRegSurprise />
+              </h1>
+              Surprise Me!
+            </ButtonsExplorer>
+          </ButtonsContainer>
+        </PrincipalContainer>
+        <Footer />
+      </MainContainer>
     </div>
   );
 }
