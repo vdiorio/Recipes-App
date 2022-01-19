@@ -16,7 +16,7 @@ export default function EndedRecipes() {
     setRecipes(recipes);
   }, []);
 
-  const value = 'Receitas Feitas';
+  const value = 'Recipes Done';
   const categorias = ['all', 'food', 'drink']; // Array para economizar código repetitivo
 
   return (

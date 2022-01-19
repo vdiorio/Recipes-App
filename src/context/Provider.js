@@ -30,11 +30,11 @@ function Provider({ children }) {
       splitted[3]}/${splitted[4]}`;
     copy(link);
     setShowToast(
-      <span className="copied-link copied-link--active">Link copiado!</span>,
+      <span className="copied-link copied-link--active">Link copied!</span>,
     );
     setTimeout(() => {
       setShowToast(
-        <span className="copied-link">Link copiado!</span>,
+        <span className="copied-link">Link copied!</span>,
       );
     }, THREE_SECONDS);
   }
@@ -172,9 +172,9 @@ function Provider({ children }) {
     if (localStorage.getItem('inProgressRecipes') !== null
     && JSON.parse(localStorage.getItem('inProgressRecipes'))[type] !== undefined
     && JSON.parse(localStorage.getItem('inProgressRecipes'))[type][urlID] !== undefined) {
-      return 'Continuar Receita';
+      return 'Continue Recipe';
     }
-    return 'Iniciar Receita';
+    return 'Start Recipe';
   }
 
   const goesTo = (path) => history.push(`/${path}`);

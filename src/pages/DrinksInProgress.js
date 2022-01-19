@@ -185,7 +185,7 @@ export default function DrinksInProgress({ match, location }) {
             disabled={ isDisabled }
             onClick={ () => handleFinish(drinkSelected[0]) }
           >
-            Finalizar Receita
+            Finish Recipe
           </ButtonStartRecipe>
           {showToast}
         </div>

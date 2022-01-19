@@ -47,7 +47,7 @@ const CardsFoodDiv = tw.div`
 export default function Foods() {
   const { setFoods, foods, exploreFoods,
     historyString, setHistoryString } = useContext(ContextAPI);
-  const text = 'Foods';
+  const text = 'Foods Recipes';
   const [categories, setCategories] = useState([]);
   const [categoryFilter, setFilter] = useState('All');
   const MAX_CARDS = 12;

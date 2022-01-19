@@ -181,7 +181,7 @@ export default function FoodsInProgress({ match, location }) {
             disabled={ isDisabled }
             onClick={ () => handleFinish(foodSelected[0]) }
           >
-            Finalizar Receita
+            Finish Recipe
           </ButtonStartRecipe>
           {showToast}
         </div>

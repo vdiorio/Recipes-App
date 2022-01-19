@@ -9,7 +9,7 @@ import GenericHeader from '../components/GenericHeader';
 import Footer from '../components/Footer';
 import { MainContainer } from './HTMLcomponets';
 
-export const PrincipalContainer = tw.div`
+const PrincipalContainer = tw.div`
 w-full
 flex
 my-32

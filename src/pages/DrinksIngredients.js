@@ -1,18 +1,58 @@
 import React, { useContext, useEffect, useState } from 'react';
 import ReactLoading from 'react-loading';
-import { useLocation, Link } from 'react-router-dom';
+import tw from 'twin.macro';
+import { useLocation, useHistory } from 'react-router-dom';
 import fetchDrinkAPI from '../helpers/FetchDrinkAPI';
 import './DrinksIngredients.css';
 import GenericHeader from '../components/GenericHeader';
 import Footer from '../components/Footer';
 import contextAPI from '../context/ContextAPI';
+import { MainContainer } from './HTMLcomponets';
+
+const PrincipalContainer = tw.div`
+w-full
+flex
+my-32
+items-center
+font-family[Itim, cursive]
+flex-row
+flex-wrap
+justify-around
+`;
+
+const ImgCard = tw.img`
+rounded-2xl
+p-0
+w-24
+sm:w-40
+`;
+const LinkContainer = tw.button`
+p-0
+m-4
+border-2
+border-yellow-200
+flex
+flex-col
+items-center
+w-40
+sm:w-60
+`;
+
+const TextFoodCard = tw.h6`
+  text-center
+  m-2
+  sm:text-2xl
+  text-gray-600 
+  font-family[Itim, cursive]
+`;
 
 export default function DrinksIngredients() {
   const [ingredientsList, setIngredientsList] = useState([]);
   const { setExploreDrinks, setHistoryString } = useContext(contextAPI);
   const location = useLocation();
   const CARDS_LIMIT = 12;
-  const value = 'Explorar Ingredientes';
+  const value = 'Explore By Ingredients';
+  const history = useHistory();
 
   function setByIngredient(ingredientName) {
     setHistoryString(location.pathname);
@@ -27,33 +67,37 @@ export default function DrinksIngredients() {
         .filter((_item, index) => index < CARDS_LIMIT)));
   }, []);
 
+  const handleClick = (link) => {
+    setByIngredient(link);
+    history.push('/bebidas');
+  };
+
   return (
-    <div>
+    <MainContainer>
       <GenericHeader value={ value } />
-      <div className="ingredients-list">
+      <PrincipalContainer>
         {
           ingredientsList
             ? ingredientsList.map((ingredient, index) => (
-              <Link
-                to="/bebidas"
+              <LinkContainer
+                type="button"
                 className="ingredient"
                 key={ index }
                 data-testid={ `${index}-ingredient-card` }
-                onClick={ () => setByIngredient(ingredient.strIngredient1) }
+                onClick={ () => handleClick(ingredient.strIngredient1) }
+
               >
-                <img
-                  className="ingredient-img"
+                <ImgCard
                   src={ `https://www.thecocktaildb.com/images/ingredients/${ingredient.strIngredient1}-Small.png` }
                   alt={ ingredient.strIngredient1 }
                   data-testid={ `${index}-card-img` }
                 />
-                <p
+                <TextFoodCard
                   data-testid={ `${index}-card-name` }
-                  className="ingredient-name"
                 >
                   {ingredient.strIngredient1}
-                </p>
-              </Link>
+                </TextFoodCard>
+              </LinkContainer>
             ))
             : (
               <ReactLoading
@@ -63,8 +107,8 @@ export default function DrinksIngredients() {
                 width={ 30 }
               />)
         }
-      </div>
+      </PrincipalContainer>
       <Footer />
-    </div>
+    </MainContainer>
   );
 }
