@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-max-depth */
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import './DoneRecipeCard.css';
@@ -40,57 +41,53 @@ export default function FavoriteRecipeCard({ recipe, index, removeFavorite }) {
   link[4] = id; // Tratamento do link para o botão de compartilhamento
   return (
     <div // Container do card
-      className="done-card"
+      className=" rounded-lg border-2 border-yellow-300 m-2
+       flex flex-col text-gray-600 w-64 p-2 items-center"
       data-testid={ `${index}-recipe-card` }
     >
       <Link to={ `/${type}s/${id}` }>
         <img
-          className="card-image"
+          className="w-40"
           src={ image }
           alt={ `${area} meal` }
           data-testid={ `${index}-horizontal-image` }
-          width={ 130 }
         />
       </Link>
-      <div>
-        <div>
-          <span className="recipe-type" data-testid={ `${index}-horizontal-top-text` }>
-            { `${alcoholicOrNot.length > 0 ? alcoholicOrNot : area} - ${category}` }
-          </span>
+      <div className="w-full text-center">
+        <span data-testid={ `${index}-horizontal-top-text` }>
+          { `${alcoholicOrNot.length > 0 ? alcoholicOrNot : area} - ${category}` }
+        </span>
+        <div className="flex items-center flex-row justify-center">
           <Link to={ `/${type}s/${id}` }>
-            <h6 data-testid={ `${index}-horizontal-name` }>
+            <h6 data-testid={ `${index}-horizontal-name` } className="text-gray-600">
               {name}
             </h6>
           </Link>
-        </div>
-        <div style={ { display: 'flex', justifyContent: 'space-between', width: 150 } }>
-          <button
-            type="button"
-            className="media-btn"
-            onClick={ () => showIndividualToast(link.join('/')) }
-            style={ { marginTop: 20 } }
-          >
-            <img
-              data-testid={ `${index}-horizontal-share-btn` }
-              src={ shareIcon }
-              alt="Share Icon"
-              className="media-btn-img"
-            />
-          </button>
-          {showToast}
-          <button
-            type="button"
-            className="media-btn"
-            style={ { marginTop: 20 } }
-            onClick={ () => removeFavorite(index) }
-          >
-            <img
-              data-testid={ `${index}-horizontal-favorite-btn` }
-              src={ blackHeartIcon }
-              alt="Share Icon"
-              className="media-btn-img"
-            />
-          </button>
+          <div className="mx-5 flex flex-row justify-around">
+            <button
+              type="button"
+              onClick={ () => showIndividualToast(link.join('/')) }
+            >
+              <img
+                data-testid={ `${index}-horizontal-share-btn` }
+                src={ shareIcon }
+                alt="Share Icon"
+                className="w-6 mx-2"
+              />
+            </button>
+            {showToast}
+            <button
+              type="button"
+              onClick={ () => removeFavorite(index) }
+            >
+              <img
+                data-testid={ `${index}-horizontal-favorite-btn` }
+                src={ blackHeartIcon }
+                alt="Share Icon"
+                className="w-7 mx-2"
+              />
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -129,7 +129,7 @@ export default function FoodsRecipes({ match, location }) {
                 className="sm:w-4/5 sm:mx-auto sm:mt-4"
               />
             </div>
-            <div className="absolute  top-4 right-4 w-fit sm:right-1/4">
+            <div className="absolute top-4 right-4 w-fit sm:right-1/4">
               <button
                 type="button"
                 data-testid="share-btn"
@@ -208,7 +208,7 @@ export default function FoodsRecipes({ match, location }) {
                 </iframe>)}
             </div>
             <div className="flex flex-col w-full h-full items-center">
-              <h3 className="my-3 text-xl underline">Recomendadas</h3>
+              <h3 className="my-3 text-xl underline">Recomended</h3>
               <NewCarousel
                 genre="Meal"
               />
@@ -217,7 +217,6 @@ export default function FoodsRecipes({ match, location }) {
           <ButtonStartRecipe
             type="button"
             data-testid="start-recipe-btn"
-            className="star-recipe-btn"
             style={ buttonVisible }
             onClick={ () => handleStartRecipe(
               pathName,
