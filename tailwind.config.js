@@ -9,6 +9,7 @@ module.exports = {
         'food-explore': 'url(\'./images/bg-explore.jpg\')',
         foods: 'url(\'./images/bg-foods.jpg\')',
         'icon-food': 'url(\'./images/ingredientes.png\')',
+        'food-profile': 'url(\'./images/bg-profile.jpg\')',
       },
     },
   },
