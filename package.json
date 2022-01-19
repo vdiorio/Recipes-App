@@ -33,19 +33,13 @@
     "websocket-extensions": ">=0.1.4"
   },
   "scripts": {
-    "cy": "cypress run",
-    "cy:open": "cypress open",
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
     "test-coverage": "react-scripts test --coverage --watchAll=false",
-    "eject": "react-scripts eject",
-    "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json . --ext .js,.jsx",
-    "lint:styles": "npx stylelint '**/*.css'"
+    "eject": "react-scripts eject"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
+  
   "browserslist": {
     "production": [
       ">0.2%",
