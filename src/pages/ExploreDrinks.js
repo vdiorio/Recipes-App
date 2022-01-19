@@ -8,7 +8,7 @@ import GenericHeader from '../components/GenericHeader';
 import Footer from '../components/Footer';
 import { MainContainer, PrincipalContainer } from './HTMLcomponets';
 
-const iconFood = 'https://cdn-icons.flaticon.com/png/512/3025/premium/3025900.png?token=exp=1642607603~hmac=1cba848c0faa67e2511b965308577e43';
+const icondrink = 'https://cdn-icons-png.flaticon.com/512/2907/2907410.png';
 
 const ButtonsContainer = tw.div`
   flex
@@ -59,7 +59,7 @@ export default function ExploreDrinks() {
               data-testid="explore-by-ingredient"
               onClick={ () => handleClick('explorar/bebidas/ingredientes') }
             >
-              <img src={ iconFood } alt="" className="w-7 h-7 m-1" />
+              <img src={ icondrink } alt="" className="w-7 h-7 m-1" />
               By Ingredients
             </ButtonsExplorer>
 
