@@ -69,7 +69,7 @@ This project is under the MIT license. See the [LICENSE](https://github.com/Raph
 
 ---
 
-Made with ♥ by Raphael Taglialegna,[Arthur][Artrok], [Valdeci de Moura][Valdeci97], [Vitor Diorio][Vdiorio], [Rodrigo Moreira][MoreiraRodri]   :wave: [Get in touch!](https://www.linkedin.com/in/raphaeltaglialegna/)
+Made with ♥ by Raphael Taglialegna, [Arthur][Artrok], [Valdeci de Moura][Valdeci97], [Vitor Diorio][Vdiorio], [Rodrigo Moreira][MoreiraRodri]   :wave: [Get in touch!](https://www.linkedin.com/in/raphaeltaglialegna/)
 
 [nodejs]: https://nodejs.org/
 [npm]: https://www.npmjs.com/
