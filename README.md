@@ -9,13 +9,13 @@
   Recipes App with React.js and Hooks.
 </h4>
 <p align="center">
-  <img alt="GitHub" src="https://img.shields.io/github/license/RaphaelTaglialegna/Recipes-App">
-  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/RaphaelTaglialegna/Recipes-App">
-  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/RaphaelTaglialegna/Recipes-App">
-  <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/RaphaelTaglialegna/Recipes-App">
-  <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/RaphaelTaglialegna/Recipes-App">
-  <img alt="GitHub issues" src="https://img.shields.io/github/issues/RaphaelTaglialegna/Recipes-App">
-  <img alt="AppVeyor tests (branch)" src="https://img.shields.io/appveyor/tests/RaphaelTaglialegna/Recipes-App/main">
+  <img alt="GitHub" src="https://img.shields.io/github/license/vdiorio/Recipes-App">
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/vdiorio/Recipes-App">
+  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/vdiorio/Recipes-App">
+  <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/vdiorio/Recipes-App">
+  <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/vdiorio/Recipes-App">
+  <img alt="GitHub issues" src="https://img.shields.io/github/issues/vdiorio/Recipes-App">
+  <img alt="AppVeyor tests (branch)" src="https://img.shields.io/appveyor/tests/vdiorio/Recipes-App/main">
 </p>
 Recipes App Project was developed in group and was the last project in Front-End module. The requirements to develope this app is: 
  <br>
@@ -32,7 +32,7 @@ Recipes App Project was developed in group and was the last project in Front-End
 
 <br />
 
-Link [Recipes App](https://recipes-app-swart.vercel.app)
+Link [Recipes App](https://recipes-app-mu.vercel.app)
 
 <br />
 
@@ -54,7 +54,7 @@ To clone and run this application, you'll need [Git](https://git-scm.com), [Node
 
 ```bash
 # Clone this repository
-$ git clone git@github.com:RaphaelTaglialegna/Recipes-App.git
+$ git clone git@github.com:vdiorio/Recipes-App.git
 
 # Go into the repository
 $ cd Recipes-App
@@ -65,11 +65,11 @@ $ npm install --force
 ```
 
 ## :memo: License
-This project is under the MIT license. See the [LICENSE](https://github.com/RaphaelTaglialegna/Recipes-App/blob/main/LICENSE) for more information.
+This project is under the MIT license. See the [LICENSE](https://github.com/vdiorio/Recipes-App/blob/main/LICENSE) for more information.
 
 ---
 
-Made with ♥ by Raphael Taglialegna, [Arthur][Artrok], [Valdeci de Moura][Valdeci97], [Vitor Diorio][Vdiorio], [Rodrigo Moreira][MoreiraRodri]   :wave: [Get in touch!](https://www.linkedin.com/in/raphaeltaglialegna/)
+Made with ♥ by Vitor Diorio, [Arthur][Artrok], [Valdeci de Moura][Valdeci97], Raphael Taglialegna][RaphaelTaglialegna], [Rodrigo Moreira][MoreiraRodri]   :wave: [Get in touch!](https://www.linkedin.com/in/vitordiorio/)
 
 [nodejs]: https://nodejs.org/
 [npm]: https://www.npmjs.com/
