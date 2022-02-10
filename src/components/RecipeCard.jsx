@@ -28,10 +28,12 @@ const TextFoodCard = tw.h6`
 export default function RecipeCard({ recipe, index, place }) {
   const recipeType = recipe.idDrink ? 'Drink' : 'Meal'; // Detecta se está recebendo drinks ou comidas
   const linkReference = recipe.idDrink ? 'bebidas' : 'comidas'; // Detecta se está recebendo drinks ou comidas
-  const name = recipe[`str${recipeType}`]; // Acessa a propriedade de acordo com o tipo de receita recebido
+  const fname = recipe[`str${recipeType}`] || ''; // Acessa a propriedade de acordo com o tipo de receita recebido
   const image = recipe[`str${recipeType}Thumb`];
   const id = recipe[`id${recipeType}`];
   const history = useHistory();
+  const name = fname.length > 28 ? `${fname.substring(1, 33)}...` : fname;
+
 
   const handleClick = (link) => {
     history.push(link);
