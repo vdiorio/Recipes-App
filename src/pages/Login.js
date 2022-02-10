@@ -103,9 +103,9 @@ const InputContainer = styled.input`
 `;
 
 function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [isButtonDisable, setIsButtonDisable] = useState(true);
+  const [email, setEmail] = useState('any@email.com');
+  const [password, setPassword] = useState('anypassword');
+  const [isButtonDisable, setIsButtonDisable] = useState(false);
   const history = useHistory();
 
   const isDisabled = () => {
@@ -152,6 +152,7 @@ function Login() {
               placeholder="Email"
               value={ email }
               onChange={ handleChangeEmail }
+              disabled
             />
           </LabelForm>
           <LabelForm htmlFor="password">
@@ -164,6 +165,7 @@ function Login() {
               placeholder="Password"
               value={ password }
               onChange={ handleChangePassword }
+              disabled
             />
           </LabelForm>
           <ButtonLogin
